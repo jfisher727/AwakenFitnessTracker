@@ -1,0 +1,19 @@
+[project]
+name = "AwakenFitnessTracker"
+dynamic = ["version"]
+requires-python = ">= 3.11"
+description = "Backend App for the AwakenFit Fitness Tracker Application"
+license = {text = "MIT License"}
+authors = [
+    {name = "Jason Fisher", email = "jason.fisher15@gmail.com"},
+]
+
+
+[project.urls]
+Repository = "https://github.com/jfisher727/AwakenFitnessTracker"
+
+[tool.isort]
+profile = "black"
+
+[tool.black]
+line-length = 120
