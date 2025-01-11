@@ -5,7 +5,7 @@ from .base_object import BaseModel
 
 
 class Workout(BaseModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="workouts")
     start_time = models.DateTimeField(auto_now_add=True)
     stop_time = models.DateTimeField(auto_now_add=True)
     template = models.BooleanField(default=False)

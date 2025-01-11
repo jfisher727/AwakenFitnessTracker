@@ -17,8 +17,8 @@ class Set(BaseModel):
         (STANDARD, STANDARD),
         (SUPER_SET, SUPER_SET),
     ]
-    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
-    workout = models.ForeignKey(Workout, on_delete=models.CASCADE)
+    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, related_name="sets")
+    workout = models.ForeignKey(Workout, on_delete=models.CASCADE, related_name="sets")
     sequence_number = models.IntegerField(default=1)
     completed_reps = models.IntegerField(default=0)
     min_reps = models.IntegerField(default=0)
