@@ -11,4 +11,4 @@ class Exercise(BaseModel):
     movement = models.ForeignKey(Movement, on_delete=models.CASCADE)
 
     def __str__(self):
-        return ", ".join([self.movement, self.intensity])
+        return ", ".join([str(self.movement), str(self.intensity)])

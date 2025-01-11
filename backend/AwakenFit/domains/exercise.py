@@ -19,6 +19,10 @@ class ExerciseDomain(object):
         pass
 
     @staticmethod
+    def is_valid_id(id: int) -> bool:
+        return Exercise.objects.filter(id=id).exists()
+
+    @staticmethod
     def create_exercise(movement_id: int, intensity: int, notes: str) -> Exercise:
         movement = MovementDomain.get_by_id(movement_id)
 

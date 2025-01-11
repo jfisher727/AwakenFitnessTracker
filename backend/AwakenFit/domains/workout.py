@@ -6,6 +6,8 @@ from ..domains import UserDomain
 
 
 class WorkoutDomain(object):
+    MAX_NOTES_LENGTH = 495
+
     @staticmethod
     def get_by_id(id: int) -> Workout:
         return Workout.objects.get(pk=id)
@@ -19,6 +21,17 @@ class WorkoutDomain(object):
         return Workout.objects.filter(id=id).exists()
 
     @staticmethod
+    def is_valid_template(id: int) -> bool:
+        return Workout.objects.filter(id=id, template=True).exists()
+
+    @staticmethod
     def create_workout(user_id: int, start_time: datetime, stop_time: datetime, template: bool, notes: str) -> Workout:
-        user = UserDomain.get_by_id(user_id)
-        return Workout.objects.create(user, start_time, stop_time, template, notes)
+        created_record = None
+        if UserDomain.is_valid_id(user_id):
+            user = UserDomain.get_by_id(user_id)
+            if len(notes) > WorkoutDomain.MAX_NOTES_LENGTH:
+                notes = notes[: WorkoutDomain.MAX_NOTES_LENGTH]
+            created_record = Workout.objects.create(
+                user=user, start_time=start_time, stop_time=stop_time, template=template, notes=notes
+            )
+        return created_record

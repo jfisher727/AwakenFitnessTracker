@@ -10,10 +10,12 @@ class Set(BaseModel):
     DROP = "Drop Set"
     REST_PAUSE = "Rest Pause Set"
     STANDARD = "Standard Set"
+    SUPER_SET = "Super Set"
     SET_TYPE_CHOICES = [
         (DROP, DROP),
         (REST_PAUSE, REST_PAUSE),
         (STANDARD, STANDARD),
+        (SUPER_SET, SUPER_SET),
     ]
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
     workout = models.ForeignKey(Workout, on_delete=models.CASCADE)
@@ -27,4 +29,4 @@ class Set(BaseModel):
     parent_set = models.ForeignKey("Set", on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return ", ".join([self.workout, self.exercise, self.set_type])
+        return ", ".join([str(self.workout), str(self.exercise), self.set_type])

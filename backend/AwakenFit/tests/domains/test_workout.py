@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth.models import User
 from django.test import TestCase
 
@@ -37,4 +39,17 @@ class WorkoutDomainTest(TestCase):
         self.assertFalse(WorkoutDomain.is_valid_id(12345), "Workout ID should not have been valid")
 
     def test_create_workout(self):
+        existing_workouts = len(Workout.objects.all())
+
+        result = WorkoutDomain.create_workout(
+            self.test_user.id, datetime.now(), datetime.now(), False, "These are test workout notes"
+        )
+
+        updated_workouts = len(Workout.objects.all())
+
+        self.assertIsNotNone(result, "Should have resulted in a new Workout being returned")
+        self.assertNotEqual(existing_workouts, updated_workouts, "New workout should have been created")
+        self.assertEqual(existing_workouts + 1, updated_workouts)
+
+    def test_create_workout_bad_input(self):
         pass
