@@ -22,8 +22,9 @@ class Set(BaseModel):
     min_reps = models.IntegerField(default=0)
     max_reps = models.IntegerField(default=0)
     weight = models.IntegerField(default=0)
+    duration = models.CharField(max_length=20, blank=True)
     set_type = models.CharField(max_length=30, choices=SET_TYPE_CHOICES, default=STANDARD)
-    parent_set = models.ForeignKey("Set", on_delete=models.CASCADE)
+    parent_set = models.ForeignKey("Set", on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return ", ".join([self.workout, self.exercise, self.set_type])

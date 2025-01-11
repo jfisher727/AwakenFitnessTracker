@@ -1,0 +1,40 @@
+from django.contrib.auth.models import User
+from django.test import TestCase
+
+from ...models import Workout
+
+from ...domains import WorkoutDomain
+
+
+class WorkoutDomainTest(TestCase):
+    def setUp(self):
+        self.test_user = User.objects.create_user("testusername", "testemail@email.com", "testpassword1")
+        self.test_workout = Workout.objects.create(user=self.test_user, template=True, notes="Test Template")
+        self.test_workout2 = Workout.objects.create(user=self.test_user, template=False, notes="Test Workout")
+
+    def test_get_by_id(self):
+        self.assertEqual(
+            self.test_workout,
+            WorkoutDomain.get_by_id(self.test_workout.id),
+            "Failed to get the expected record back",
+        )
+        self.assertEqual(
+            self.test_workout2,
+            WorkoutDomain.get_by_id(self.test_workout2.id),
+            "Failed to get the expected record back",
+        )
+
+    def test_get_by_id_set(self):
+        id_set = set([self.test_workout.id, self.test_workout2.id])
+        result = WorkoutDomain.get_by_id_set(id_set)
+        self.assertEqual(2, len(result), "Did not get the appropriate number of records back")
+        test_exercises = [self.test_workout, self.test_workout2]
+        for entry in result:
+            self.assertTrue(entry in test_exercises, "Query returned an unexpected record")
+
+    def test_is_valid_id(self):
+        self.assertTrue(WorkoutDomain.is_valid_id(self.test_workout.id), "Workout ID should have been valid")
+        self.assertFalse(WorkoutDomain.is_valid_id(12345), "Workout ID should not have been valid")
+
+    def test_create_workout(self):
+        pass
