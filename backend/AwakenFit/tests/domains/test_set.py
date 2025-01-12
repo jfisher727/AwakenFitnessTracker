@@ -28,20 +28,21 @@ class SetDomainTest(TestCase):
             equipment_type=Movement.BARBELL,
             movement_type=Movement.STRENGTH,
         )
-        self.test_exercise = Exercise.objects.create(
-            movement=self.test_movement, intensity=1, notes="Test Exercise notes"
-        )
-        self.test_exercise2 = Exercise.objects.create(
-            movement=self.test_movement2, intensity=1, notes="Test Exercise notes"
-        )
+
         self.test_workout = Workout.objects.create(user=self.test_user, template=False, notes="Test Workout")
         self.test_workout2 = Workout.objects.create(user=self.test_user, template=True, notes="Test Template Workout")
+
+        self.test_exercise = Exercise.objects.create(
+            movement=self.test_movement, workout=self.test_workout, intensity=1, notes="Test Exercise notes"
+        )
+        self.test_exercise2 = Exercise.objects.create(
+            movement=self.test_movement2, workout=self.test_workout2, intensity=1, notes="Test Exercise notes"
+        )
 
         self.COMPLETED_REPS_1 = 10
         self.WEIGHT_1 = 135
         self.test_set = Set.objects.create(
             exercise=self.test_exercise,
-            workout=self.test_workout,
             completed_reps=self.COMPLETED_REPS_1,
             weight=self.WEIGHT_1,
         )
@@ -49,13 +50,11 @@ class SetDomainTest(TestCase):
         self.WEIGHT_2 = 155
         self.test_set2 = Set.objects.create(
             exercise=self.test_exercise,
-            workout=self.test_workout,
             completed_reps=self.COMPLETED_REPS_2,
             weight=self.WEIGHT_2,
         )
         self.test_set3 = Set.objects.create(
             exercise=self.test_exercise2,
-            workout=self.test_workout,
             completed_reps=self.COMPLETED_REPS_1,
             weight=self.WEIGHT_1,
         )
@@ -87,13 +86,6 @@ class SetDomainTest(TestCase):
         for entry in result:
             self.assertTrue(entry in test_sets, "Query returned an unexpected record")
 
-    def test_get_by_workout_id(self):
-        result = SetDomain.get_by_workout_id(self.test_workout.id)
-        self.assertEqual(3, len(result), "Did not get the appropriate number of records back")
-        test_sets = [self.test_set, self.test_set2, self.test_set3]
-        for entry in result:
-            self.assertTrue(entry in test_sets, "Query returned an unexpected record")
-
     def test_calculate_one_rep_max(self):
         expected_result = int(((self.WEIGHT_1 * self.COMPLETED_REPS_1) / 30.48) + self.WEIGHT_1)
         self.assertEqual(
@@ -115,7 +107,7 @@ class SetDomainTest(TestCase):
     def test_create_parent_non_standard_set(self):
         existing_sets = len(Set.objects.all())
 
-        result = SetDomain.create_parent_non_standard_set(self.test_exercise.id, self.test_workout.id, Set.SUPER_SET)
+        result = SetDomain.create_parent_non_standard_set(self.test_exercise.id, Set.SUPER_SET)
 
         self.assertIsNotNone(result, "Should have resulted in a Set record being returned")
 
@@ -126,7 +118,7 @@ class SetDomainTest(TestCase):
     def test_create_parent_non_stardard_set_bad_input(self):
         existing_sets = len(Set.objects.all())
 
-        result = SetDomain.create_parent_non_standard_set(12345, 6789, Set.SUPER_SET)
+        result = SetDomain.create_parent_non_standard_set(12345, Set.SUPER_SET)
 
         self.assertIsNone(result, "Should have resulted in a None being returned")
 
@@ -136,9 +128,7 @@ class SetDomainTest(TestCase):
     def test_create_template_set(self):
         existing_sets = len(Set.objects.all())
 
-        result = SetDomain.create_template_set(
-            self.test_exercise.id, self.test_workout2.id, sequence_number=1, min_reps=4, max_reps=6
-        )
+        result = SetDomain.create_template_set(self.test_exercise.id, sequence_number=1, min_reps=4, max_reps=6)
 
         self.assertIsNotNone(result, "Should have resulted in a Set record being returned")
 
@@ -149,7 +139,7 @@ class SetDomainTest(TestCase):
     def test_create_template_set_bad_input(self):
         existing_sets = len(Set.objects.all())
 
-        result = SetDomain.create_template_set(12345, 67890, sequence_number=1, min_reps=4, max_reps=6)
+        result = SetDomain.create_template_set(12345, sequence_number=1, min_reps=4, max_reps=6)
 
         self.assertIsNone(result, "Should not have resulted in a Set record being returned")
 
@@ -161,7 +151,6 @@ class SetDomainTest(TestCase):
 
         result = SetDomain.create_completed_set(
             self.test_exercise.id,
-            self.test_workout.id,
             1,
             completed_reps=self.COMPLETED_REPS_1,
             weight=self.WEIGHT_1,
@@ -178,7 +167,6 @@ class SetDomainTest(TestCase):
 
         result = SetDomain.create_completed_set(
             12345,
-            67890,
             1,
             completed_reps=self.COMPLETED_REPS_1,
             weight=self.WEIGHT_1,

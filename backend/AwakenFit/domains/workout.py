@@ -25,6 +25,13 @@ class WorkoutDomain(object):
         return Workout.objects.filter(id=id, template=True).exists()
 
     @staticmethod
+    def get_by_user_id(id: int) -> list[Workout]:
+        selected_records = None
+        if UserDomain.is_valid_id(id):
+            selected_records = Workout.objects.filter(user__id=id).all()
+        return selected_records
+
+    @staticmethod
     def create_workout(user_id: int, start_time: datetime, stop_time: datetime, template: bool, notes: str) -> Workout:
         created_record = None
         if UserDomain.is_valid_id(user_id):

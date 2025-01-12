@@ -34,6 +34,10 @@ class MovementDomain(object):
         return Movement.objects.filter(movement_type=movement).all()
 
     @staticmethod
+    def is_valid_id(id: int) -> bool:
+        return Movement.objects.filter(id=id).exists()
+
+    @staticmethod
     def create_movement(
         name: str,
         description: str,

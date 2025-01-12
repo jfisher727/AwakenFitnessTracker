@@ -1,9 +1,7 @@
-from ..models import Workout
 from ..models import Exercise
 from ..models import Set
 
 from ..domains import ExerciseDomain
-from ..domains import WorkoutDomain
 
 
 class SetDomain(object):
@@ -21,10 +19,6 @@ class SetDomain(object):
         return Set.objects.filter(exercise__id=id).all()
 
     @staticmethod
-    def get_by_workout_id(id: int) -> list[Set]:
-        return Set.objects.filter(workout__id=id).all()
-
-    @staticmethod
     def calculate_one_rep_max(input: Set) -> int:
         return int(((input.weight * input.completed_reps) / 30.48) + input.weight)
 
@@ -35,17 +29,14 @@ class SetDomain(object):
     @staticmethod
     def create_parent_non_standard_set(
         exercise_id: int,
-        workout_id: int,
         set_type: str,
     ) -> Set:
         created_record = None
-        if ExerciseDomain.is_valid_id(exercise_id) and WorkoutDomain.is_valid_id(workout_id):
+        if ExerciseDomain.is_valid_id(exercise_id):
             exercise = ExerciseDomain.get_by_id(exercise_id)
-            workout = WorkoutDomain.get_by_id(workout_id)
 
             created_record = SetDomain._create_set(
                 exercise,
-                workout,
                 set_type=set_type,
             )
         return created_record
@@ -53,7 +44,6 @@ class SetDomain(object):
     @staticmethod
     def create_template_set(
         exercise_id: int,
-        workout_id: int,
         sequence_number: int,
         min_reps: int = 0,
         max_reps: int = 0,
@@ -62,13 +52,11 @@ class SetDomain(object):
         parent_set: Set = None,
     ) -> Set:
         created_record = None
-        if ExerciseDomain.is_valid_id(exercise_id) and WorkoutDomain.is_valid_template(workout_id):
-            workout = WorkoutDomain.get_by_id(workout_id)
+        if ExerciseDomain.is_valid_id(exercise_id):
             exercise = ExerciseDomain.get_by_id(exercise_id)
 
             created_record = SetDomain._create_set(
                 exercise,
-                workout,
                 sequence_number=sequence_number,
                 min_reps=min_reps,
                 max_reps=max_reps,
@@ -81,7 +69,6 @@ class SetDomain(object):
     @staticmethod
     def create_completed_set(
         exercise_id: int,
-        workout_id: int,
         sequence_number: int,
         completed_reps: int = 0,
         weight: int = 0,
@@ -90,13 +77,11 @@ class SetDomain(object):
         parent_set: Set = None,
     ) -> Set:
         created_record = None
-        if ExerciseDomain.is_valid_id(exercise_id) and WorkoutDomain.is_valid_id(workout_id):
+        if ExerciseDomain.is_valid_id(exercise_id):
             exercise = ExerciseDomain.get_by_id(exercise_id)
-            workout = WorkoutDomain.get_by_id(workout_id)
 
             created_record = SetDomain._create_set(
                 exercise,
-                workout,
                 sequence_number=sequence_number,
                 completed_reps=completed_reps,
                 weight=weight,
@@ -109,7 +94,6 @@ class SetDomain(object):
     @staticmethod
     def _create_set(
         exercise: Exercise,
-        workout: Workout,
         sequence_number: int = 1,
         completed_reps: int = 0,
         min_reps: int = 0,
@@ -121,7 +105,6 @@ class SetDomain(object):
     ) -> Set:
         return Set.objects.create(
             exercise=exercise,
-            workout=workout,
             sequence_number=sequence_number,
             completed_reps=completed_reps,
             min_reps=min_reps,

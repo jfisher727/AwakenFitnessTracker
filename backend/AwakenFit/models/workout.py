@@ -12,4 +12,4 @@ class Workout(BaseModel):
     notes = models.CharField(max_length=500)
 
     def __str__(self):
-        return ", ".join([self.user.username, self.start_time])
+        return ", ".join([self.user.username, str(self.start_time)])
