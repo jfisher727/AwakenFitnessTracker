@@ -19,6 +19,10 @@ class SetDomain(object):
         return Set.objects.filter(exercise__id=id).all()
 
     @staticmethod
+    def get_by_user_id(id: int) -> list[Set]:
+        return Set.objects.select_related("exercise__workout__user").filter(exercise__workout__user__id=id).all()
+
+    @staticmethod
     def calculate_one_rep_max(input: Set) -> int:
         return int(((input.weight * input.completed_reps) / 30.48) + input.weight)
 

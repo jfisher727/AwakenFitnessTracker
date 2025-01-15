@@ -54,13 +54,13 @@ class WorkoutDomainTest(TestCase):
         )
 
     def test_create_workout(self):
-        existing_workouts = len(Workout.objects.all())
+        existing_workouts = Workout.objects.count()
 
         result = WorkoutDomain.create_workout(
             self.test_user.id, datetime.now(), datetime.now(), False, "These are test workout notes"
         )
 
-        updated_workouts = len(Workout.objects.all())
+        updated_workouts = Workout.objects.count()
 
         self.assertIsNotNone(result, "Should have resulted in a new Workout being returned")
         self.assertNotEqual(existing_workouts, updated_workouts, "New workout should have been created")

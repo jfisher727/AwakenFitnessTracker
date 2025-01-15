@@ -105,49 +105,49 @@ class SetDomainTest(TestCase):
         )
 
     def test_create_parent_non_standard_set(self):
-        existing_sets = len(Set.objects.all())
+        existing_sets = Set.objects.count()
 
         result = SetDomain.create_parent_non_standard_set(self.test_exercise.id, Set.SUPER_SET)
 
         self.assertIsNotNone(result, "Should have resulted in a Set record being returned")
 
-        updated_sets = len(Set.objects.all())
+        updated_sets = Set.objects.count()
         self.assertNotEqual(existing_sets, updated_sets, "New Set should have been created")
         self.assertEqual(existing_sets + 1, updated_sets)
 
     def test_create_parent_non_stardard_set_bad_input(self):
-        existing_sets = len(Set.objects.all())
+        existing_sets = Set.objects.count()
 
         result = SetDomain.create_parent_non_standard_set(12345, Set.SUPER_SET)
 
         self.assertIsNone(result, "Should have resulted in a None being returned")
 
-        updated_sets = len(Set.objects.all())
+        updated_sets = Set.objects.count()
         self.assertEqual(existing_sets, updated_sets, "New Set should not have been created")
 
     def test_create_template_set(self):
-        existing_sets = len(Set.objects.all())
+        existing_sets = Set.objects.count()
 
         result = SetDomain.create_template_set(self.test_exercise.id, sequence_number=1, min_reps=4, max_reps=6)
 
         self.assertIsNotNone(result, "Should have resulted in a Set record being returned")
 
-        updated_sets = len(Set.objects.all())
+        updated_sets = Set.objects.count()
         self.assertNotEqual(existing_sets, updated_sets, "New Set should have been created")
         self.assertEqual(existing_sets + 1, updated_sets)
 
     def test_create_template_set_bad_input(self):
-        existing_sets = len(Set.objects.all())
+        existing_sets = Set.objects.count()
 
         result = SetDomain.create_template_set(12345, sequence_number=1, min_reps=4, max_reps=6)
 
         self.assertIsNone(result, "Should not have resulted in a Set record being returned")
 
-        updated_sets = len(Set.objects.all())
+        updated_sets = Set.objects.count()
         self.assertEqual(existing_sets, updated_sets, "New Set should not have been created")
 
     def test_create_completed_set(self):
-        existing_sets = len(Set.objects.all())
+        existing_sets = Set.objects.count()
 
         result = SetDomain.create_completed_set(
             self.test_exercise.id,
@@ -158,12 +158,12 @@ class SetDomainTest(TestCase):
 
         self.assertIsNotNone(result, "Should have resulted in a Set record being returned")
 
-        updated_sets = len(Set.objects.all())
+        updated_sets = Set.objects.count()
         self.assertNotEqual(existing_sets, updated_sets, "New Set should have been created")
         self.assertEqual(existing_sets + 1, updated_sets)
 
     def test_create_completed_set_bad_input(self):
-        existing_sets = len(Set.objects.all())
+        existing_sets = Set.objects.count()
 
         result = SetDomain.create_completed_set(
             12345,
@@ -174,7 +174,7 @@ class SetDomainTest(TestCase):
 
         self.assertIsNone(result, "Should not have resulted in a Set record being returned")
 
-        updated_sets = len(Set.objects.all())
+        updated_sets = Set.objects.count()
         self.assertEqual(existing_sets, updated_sets, "New Set should not have been created")
 
     def test_create_set(self):

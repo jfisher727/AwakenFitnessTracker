@@ -81,7 +81,7 @@ class MovementDomainTest(TestCase):
         self.assertEqual(4, len(result), "Did not get the appropriate number of records back")
 
     def test_create_movement(self):
-        existing_movements = len(Movement.objects.all())
+        existing_movements = Movement.objects.count()
 
         result = MovementDomain.create_movement(
             "Test Movement",
@@ -93,13 +93,13 @@ class MovementDomainTest(TestCase):
         )
         self.assertIsNotNone(result, "Should have resulted in a Movement record being returned")
 
-        updated_movements = len(Movement.objects.all())
+        updated_movements = Movement.objects.count()
 
         self.assertNotEqual(existing_movements, updated_movements, "New movement should have been created")
         self.assertEqual(existing_movements + 1, updated_movements)
 
     def test_create_movement_long_name(self):
-        existing_movements = len(Movement.objects.all())
+        existing_movements = Movement.objects.count()
 
         result = MovementDomain.create_movement(
             "A" * (MovementDomain.MAX_NAME_LENGTH + 5),
@@ -112,11 +112,11 @@ class MovementDomainTest(TestCase):
 
         self.assertIsNotNone(result, "Should have resulted in created a new record")
         self.assertEqual(len(result.name), MovementDomain.MAX_NAME_LENGTH, "Name should have been truncated")
-        updated_movements = len(Movement.objects.all())
+        updated_movements = Movement.objects.count()
         self.assertEqual(existing_movements + 1, updated_movements)
 
     def test_create_movement_long_description(self):
-        existing_movements = len(Movement.objects.all())
+        existing_movements = Movement.objects.count()
 
         result = MovementDomain.create_movement(
             "Test Movement",
@@ -131,11 +131,11 @@ class MovementDomainTest(TestCase):
         self.assertEqual(
             len(result.description), MovementDomain.MAX_DESCRIPTION_LENGTH, "Name should have been truncated"
         )
-        updated_movements = len(Movement.objects.all())
+        updated_movements = Movement.objects.count()
         self.assertEqual(existing_movements + 1, updated_movements)
 
     def test_create_movement_bad_primary_muscle_group(self):
-        existing_movements = len(Movement.objects.all())
+        existing_movements = Movement.objects.count()
 
         result = MovementDomain.create_movement(
             "Test Movement",
@@ -147,11 +147,11 @@ class MovementDomainTest(TestCase):
         )
 
         self.assertIsNone(result, "Should not have resulted in created a new record")
-        updated_movements = len(Movement.objects.all())
+        updated_movements = Movement.objects.count()
         self.assertEqual(existing_movements, updated_movements)
 
     def test_create_movement_bad_secondary_muscle_group(self):
-        existing_movements = len(Movement.objects.all())
+        existing_movements = Movement.objects.count()
 
         result = MovementDomain.create_movement(
             "Test Movement",
@@ -163,11 +163,11 @@ class MovementDomainTest(TestCase):
         )
 
         self.assertIsNone(result, "Should not have resulted in created a new record")
-        updated_movements = len(Movement.objects.all())
+        updated_movements = Movement.objects.count()
         self.assertEqual(existing_movements, updated_movements)
 
     def test_create_movement_bad_equipment(self):
-        existing_movements = len(Movement.objects.all())
+        existing_movements = Movement.objects.count()
 
         result = MovementDomain.create_movement(
             "Test Movement",
@@ -179,11 +179,11 @@ class MovementDomainTest(TestCase):
         )
 
         self.assertIsNone(result, "Should not have resulted in created a new record")
-        updated_movements = len(Movement.objects.all())
+        updated_movements = Movement.objects.count()
         self.assertEqual(existing_movements, updated_movements)
 
     def test_create_movement_bad_movement(self):
-        existing_movements = len(Movement.objects.all())
+        existing_movements = Movement.objects.count()
 
         result = MovementDomain.create_movement(
             "Test Movement",
@@ -195,5 +195,5 @@ class MovementDomainTest(TestCase):
         )
 
         self.assertIsNone(result, "Should not have resulted in created a new record")
-        updated_movements = len(Movement.objects.all())
+        updated_movements = Movement.objects.count()
         self.assertEqual(existing_movements, updated_movements)

@@ -66,18 +66,18 @@ class ExerciseDomainTest(TestCase):
         self.assertEqual(2, len(result), "Did not receive the expected number of records")
 
     def test_create_exercise(self):
-        existing_exercises = len(Exercise.objects.all())
+        existing_exercises = Exercise.objects.count()
 
         result = ExerciseDomain.create_exercise(self.test_movement.id, self.test_workout.id, 1, "Test Create Exercise")
 
         self.assertIsNotNone(result, "Should have resulted in an Exercise record being returned")
 
-        updated_exercises = len(Exercise.objects.all())
+        updated_exercises = Exercise.objects.count()
         self.assertNotEqual(existing_exercises, updated_exercises, "New exercise should have been created")
         self.assertEqual(existing_exercises + 1, updated_exercises)
 
     def test_create_exercise_long_notes(self):
-        existing_exercises = len(Exercise.objects.all())
+        existing_exercises = Exercise.objects.count()
 
         result = ExerciseDomain.create_exercise(
             self.test_movement.id, self.test_workout.id, 1, "A" * (ExerciseDomain.MAX_NOTE_LENGTH + 5)
@@ -85,7 +85,7 @@ class ExerciseDomainTest(TestCase):
 
         self.assertIsNotNone(result, "Should have resulted in an Exercise record being returned")
 
-        updated_exercises = len(Exercise.objects.all())
+        updated_exercises = Exercise.objects.count()
         self.assertNotEqual(existing_exercises, updated_exercises, "New exercise should have been created")
         self.assertEqual(existing_exercises + 1, updated_exercises)
         self.assertTrue(len(result.notes) <= ExerciseDomain.MAX_NOTE_LENGTH)
