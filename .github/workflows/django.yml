@@ -27,4 +27,7 @@ jobs:
         pip install -r backend/requirements.txt
     - name: Run Tests
       run: |
-        python backend/manage.py test
+        python backend/manage.py test AwakenFit
+    - name: Run Black
+      run: |
+        python -m black . -l 120
