@@ -18,6 +18,7 @@ class Movement(BaseModel):
     GLUTES = "Glutes"
     HAMSTRING = "Hamstring"
     LATS = "Lats"
+    NONE = "None"
     QUADRICEPS = "Quadriceps"
     SHOULDERS = "Shoulders"
     TRAPEZIUS = "Trapezius"
@@ -32,6 +33,7 @@ class Movement(BaseModel):
         (GLUTES, GLUTES),
         (HAMSTRING, HAMSTRING),
         (LATS, LATS),
+        (NONE, NONE),
         (QUADRICEPS, QUADRICEPS),
         (SHOULDERS, SHOULDERS),
         (TRAPEZIUS, TRAPEZIUS),
@@ -75,8 +77,8 @@ class Movement(BaseModel):
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=500)
     primary_muscle_group = models.CharField(max_length=30, choices=MUSCLE_CHOICES, default=ABDOMINALS)
-    secondary_muscle_group = models.CharField(max_length=30, choices=MUSCLE_CHOICES, default=ABDOMINALS)
-    equpment_type = models.CharField(max_length=30, choices=EQUIPMENT_CHOICES, default=NONE)
+    secondary_muscle_group = models.CharField(max_length=30, choices=MUSCLE_CHOICES, default=NONE)
+    equipment_type = models.CharField(max_length=30, choices=EQUIPMENT_CHOICES, default=NONE)
     movement_type = models.CharField(max_length=30, choices=MOVEMENT_TYPE_CHOICES, default=STRENGTH)
 
     def __str__(self):

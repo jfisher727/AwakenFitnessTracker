@@ -1,7 +1,7 @@
 from .movement import Movement
 
-from .exercise import Exercise
-
 from .workout import Workout
+
+from .exercise import Exercise
 
 from .set import Set
