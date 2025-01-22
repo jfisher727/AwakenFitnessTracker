@@ -2,6 +2,9 @@ from django.contrib.auth.models import User
 
 
 class UserDomain(object):
+
+    ERROR_MESSAGES = {"UNAUTHENTICATED": "Must be logged in to perform that action."}
+
     @staticmethod
     def is_valid_id(id: int) -> bool:
         return User.objects.filter(id=id).exists()

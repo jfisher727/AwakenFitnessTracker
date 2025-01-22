@@ -1,3 +1,5 @@
+from graphql_relay import from_global_id
+
 from ..models import Exercise
 
 from ..domains import UserDomain
@@ -7,6 +9,7 @@ from ..domains import WorkoutDomain
 
 class ExerciseDomain(object):
     MAX_NOTE_LENGTH = 495
+    ERROR_MESSAGES = {"INVALID_INTENSITY": "Intensity value should fall in the range of 1 to 10."}
 
     @staticmethod
     def get_by_id(id: int) -> Exercise:
@@ -25,6 +28,17 @@ class ExerciseDomain(object):
     @staticmethod
     def is_valid_id(id: int) -> bool:
         return Exercise.objects.filter(id=id).exists()
+
+    @staticmethod
+    def validate_exercise(exercise) -> list[str]:
+        errors = list()
+
+        if not MovementDomain.is_valid_id(from_global_id(exercise.movement_id)):
+            errors.append(MovementDomain.ERROR_MESSAGES["INVALID_ID"])
+        if exercise.intensity and (exercise.intensity < 1 or exercise.intensity > 10):
+            errors.append(ExerciseDomain.ERROR_MESSAGES["INVALID_INTENSITY"])
+
+        return errors
 
     @staticmethod
     def create_exercise(movement_id: int, workout_id: int, intensity: int, notes: str) -> Exercise:

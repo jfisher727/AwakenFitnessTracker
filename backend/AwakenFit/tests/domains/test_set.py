@@ -1,12 +1,21 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 
+from graphene import Int
+
 from ...models import Movement
 from ...models import Exercise
 from ...models import Workout
 from ...models import Set
 
 from ...domains import SetDomain
+
+from ...schema.set import (
+    SetCreateCompletedInput,
+    SetCreateTemplateInput,
+    SetCreateCompletedParentInput,
+    SetCreateTemplateParentInput,
+)
 
 
 class SetDomainTest(TestCase):
@@ -103,6 +112,63 @@ class SetDomainTest(TestCase):
             SetDomain.calculate_set_volume(self.test_set2),
             "The calculated set volume was not correct",
         )
+
+    def test_validate_template_standard_set(self):
+        ONE_MINUTE_DURATION = "00H01M00S"
+        standard_template_set = type(
+            "SetCreateCompletedInput",
+            (object,),
+            {"sequence_number": 1, "min_reps": 1, "max_reps": 6},
+        )
+        standard_template_set2 = type(
+            "SetCreateCompletedInput",
+            (object,),
+            {"sequence_number": 1, "duration": ONE_MINUTE_DURATION},
+        )
+        self.assertEqual(
+            0,
+            len(SetDomain.validate_template_standard_set(standard_template_set)),
+            "No errors should have been returned",
+        )
+        self.assertEqual(
+            0,
+            len(SetDomain.validate_template_standard_set(standard_template_set2)),
+            "No errors should have been returned",
+        )
+
+    def test_validate_completed_standard_set(self):
+        ONE_MINUTE_DURATION = "00H01M00S"
+        standard_completed_set = type(
+            "SetCreateCompletedInput",
+            (object,),
+            {"sequence_number": 1, "completed_reps": self.COMPLETED_REPS_1, "weight": self.WEIGHT_1},
+        )
+        standard_completed_set2 = type(
+            "SetCreateCompletedInput",
+            (object,),
+            {"sequence_number": 1, "duration": ONE_MINUTE_DURATION, "weight": self.WEIGHT_1},
+        )
+
+        result = SetDomain.validate_completed_standard_set(standard_completed_set)
+        self.assertEqual(
+            0,
+            len(result),
+            "No errors should have been returned",
+        )
+
+        result2 = SetDomain.validate_completed_standard_set(standard_completed_set2)
+        self.assertEqual(
+            0,
+            len(result2),
+            "No errors should have been returned",
+        )
+
+    def test_validate_standard_set_bad_input(self):
+        standard_completed_set = None
+        standard_template_set = None
+
+    def test_validate_non_standard_set(self):
+        pass
 
     def test_create_parent_non_standard_set(self):
         existing_sets = Set.objects.count()

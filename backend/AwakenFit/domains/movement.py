@@ -6,6 +6,7 @@ from ..models import Movement
 class MovementDomain(object):
     MAX_NAME_LENGTH = 250
     MAX_DESCRIPTION_LENGTH = 495
+    ERROR_MESSAGES = {"INVALID_ID": "The ID provided is not a valid movement"}
 
     @staticmethod
     def get_by_id(id: int) -> Movement:
