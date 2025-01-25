@@ -47,6 +47,10 @@ class SetNode(DjangoObjectType):
             return SetDomain.calculate_set_volume(selected_set)
         return None
 
+    @classmethod
+    def get_queryset(cls, queryset, info):
+        return SetDomain.filter_queryset_by_user(queryset, info.context.user)
+
 
 class SetCreateTemplateInput(InputObjectType):
     sequence_number = Int(required=True)

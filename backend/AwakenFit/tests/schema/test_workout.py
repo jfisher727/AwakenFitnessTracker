@@ -113,7 +113,7 @@ class WorkoutSchemaTest(GraphQLTestCase):
             }
             """,
             operation_name="workout",
-            variables={"id": "V29ya291dE5vZGU6MQ=="},
+            variables={"id": to_global_id("WorkoutNode", self.test_workout.id)},
         )
 
         content = json.loads(response.content)

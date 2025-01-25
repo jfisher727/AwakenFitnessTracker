@@ -1,5 +1,8 @@
 from typing import Optional
 
+from django.db.models import QuerySet
+from django.contrib.auth.models import User
+
 from graphql_relay import from_global_id
 
 from ..models import Exercise
@@ -30,6 +33,10 @@ class ExerciseDomain(object):
     @staticmethod
     def is_valid_id(id: int) -> bool:
         return Exercise.objects.filter(id=id).exists()
+
+    @staticmethod
+    def filter_queryset_by_user(queryset: QuerySet, user: User) -> QuerySet:
+        return queryset.filter(workout__user=user)
 
     @staticmethod
     def validate_exercise(exercise) -> list[str]:

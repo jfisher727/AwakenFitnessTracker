@@ -1,5 +1,8 @@
 from typing import Optional
 
+from django.db.models import QuerySet
+from django.contrib.auth.models import User
+
 from ..models import Exercise
 from ..models import Set
 
@@ -43,6 +46,10 @@ class SetDomain(object):
     @staticmethod
     def calculate_set_volume(input: Set) -> int:
         return input.completed_reps * input.weight
+
+    @staticmethod
+    def filter_queryset_by_user(queryset: QuerySet, user: User) -> QuerySet:
+        return queryset.filter(exercise__workout__user=user)
 
     @staticmethod
     def validate_template_standard_set(standard_set) -> list[str]:

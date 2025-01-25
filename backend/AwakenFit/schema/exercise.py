@@ -33,7 +33,7 @@ class ExerciseNode(DjangoObjectType):
 
     @classmethod
     def get_queryset(cls, queryset, info):
-        return ExerciseDomain.get_by_user_id(info.context.user.id)
+        return ExerciseDomain.filter_queryset_by_user(queryset, info.context.user.id)
 
 
 class ExerciseCreateTemplateInput(InputObjectType):
