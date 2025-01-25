@@ -18,21 +18,21 @@ class ExerciseDomain(object):
 
     @staticmethod
     def get_by_id(id: int) -> Exercise:
-        return Exercise.objects.get(pk=id)
+        return Exercise.objects.select_related("movement", "workout").get(pk=id)
 
     @staticmethod
     def get_by_id_set(id_set: list[id]) -> list[Exercise]:
-        return Exercise.objects.filter(id__in=id_set).all()
+        return Exercise.objects.select_related("movement", "workout").filter(id__in=id_set).all()
 
     @staticmethod
     def get_by_user_id(id: int) -> list[Exercise]:
         if UserDomain.is_valid_id(id):
-            return Exercise.objects.filter(workout__user__id=id).all()
+            return Exercise.objects.select_related("movement", "workout").filter(workout__user__id=id).all()
         return None
 
     @staticmethod
     def is_valid_id(id: int) -> bool:
-        return Exercise.objects.filter(id=id).exists()
+        return Exercise.objects.select_related("movement", "workout").filter(id=id).exists()
 
     @staticmethod
     def filter_queryset_by_user(queryset: QuerySet, user: User) -> QuerySet:

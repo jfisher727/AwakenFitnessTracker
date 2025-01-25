@@ -21,15 +21,15 @@ class SetDomain(object):
 
     @staticmethod
     def get_by_id(id: int) -> Set:
-        return Set.objects.get(pk=id)
+        return Set.objects.select_related("exercise").get(pk=id)
 
     @staticmethod
     def get_by_id_set(id_set: list[int]) -> list[Set]:
-        return Set.objects.filter(id__in=id_set).all()
+        return Set.objects.select_related("exercise").filter(id__in=id_set).all()
 
     @staticmethod
     def get_by_exercise_id(id: int) -> list[Set]:
-        return Set.objects.filter(exercise__id=id).all()
+        return Set.objects.select_related("exercise").filter(exercise__id=id).all()
 
     @staticmethod
     def get_by_user_id(id: int) -> list[Set]:
