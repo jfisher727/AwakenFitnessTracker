@@ -16,7 +16,7 @@ class Set(BaseModel):
         (STANDARD, STANDARD),
         (SUPER_SET, SUPER_SET),
     ]
-    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, related_name="sets")
+    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE, related_name="sets", null=True)
     sequence_number = models.IntegerField(default=1)
     completed_reps = models.IntegerField(default=0)
     min_reps = models.IntegerField(default=0)
@@ -24,7 +24,7 @@ class Set(BaseModel):
     weight = models.IntegerField(default=0)
     duration = models.CharField(max_length=20, blank=True)
     set_type = models.CharField(max_length=30, choices=SET_TYPE_CHOICES, default=STANDARD)
-    parent_set = models.ForeignKey("Set", on_delete=models.CASCADE, null=True)
+    parent_set = models.ForeignKey("Set", on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return ", ".join([str(self.workout), str(self.exercise), self.set_type])
+        return ", ".join([str(self.exercise), self.set_type])

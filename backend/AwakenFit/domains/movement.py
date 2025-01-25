@@ -1,3 +1,5 @@
+from typing import Optional
+
 from django.db.models import Q
 
 from ..models import Movement
@@ -6,6 +8,7 @@ from ..models import Movement
 class MovementDomain(object):
     MAX_NAME_LENGTH = 250
     MAX_DESCRIPTION_LENGTH = 495
+    ERROR_MESSAGES = {"INVALID_ID": "The ID provided is not a valid movement"}
 
     @staticmethod
     def get_by_id(id: int) -> Movement:
@@ -45,7 +48,7 @@ class MovementDomain(object):
         secondary_muscle_group: str,
         equipment: str,
         movement_type: str,
-    ) -> Movement:
+    ) -> Optional[Movement]:
         created_record = None
         valid_input = True
 

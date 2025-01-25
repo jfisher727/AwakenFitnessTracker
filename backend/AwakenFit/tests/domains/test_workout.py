@@ -14,6 +14,7 @@ class WorkoutDomainTest(TestCase):
         self.test_user2 = User.objects.create_user("testusername2", "testemail2@email.com", "testpassword2")
         self.test_workout = Workout.objects.create(user=self.test_user, template=True, notes="Test Template")
         self.test_workout2 = Workout.objects.create(user=self.test_user, template=False, notes="Test Workout")
+        self.test_workout3 = Workout.objects.create(user=self.test_user2, template=False, notes="Test Workout")
 
     def test_get_by_id(self):
         self.assertEqual(
@@ -50,8 +51,17 @@ class WorkoutDomainTest(TestCase):
             2, len(WorkoutDomain.get_by_user_id(self.test_user.id)), "Did not get the expected number of records"
         )
         self.assertEqual(
-            0, len(WorkoutDomain.get_by_user_id(self.test_user2.id)), "Did not get the expected number of records"
+            1, len(WorkoutDomain.get_by_user_id(self.test_user2.id)), "Did not get the expected number of records"
         )
+
+    def test_filter_queryset_by_user(self):
+        queryset = Workout.objects.all()
+
+        result = WorkoutDomain.filter_queryset_by_user(queryset, self.test_user)
+        self.assertEqual(2, len(result), "Expected two items in the queryset")
+
+        result2 = WorkoutDomain.filter_queryset_by_user(queryset, self.test_user2)
+        self.assertEqual(1, len(result2), "Expected one item in the queryset")
 
     def test_create_workout(self):
         existing_workouts = Workout.objects.count()

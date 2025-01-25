@@ -1,4 +1,8 @@
+from typing import Optional
 from datetime import datetime
+
+from django.db.models import QuerySet
+from django.contrib.auth.models import User
 
 from ..models import Workout
 
@@ -32,7 +36,13 @@ class WorkoutDomain(object):
         return selected_records
 
     @staticmethod
-    def create_workout(user_id: int, start_time: datetime, stop_time: datetime, template: bool, notes: str) -> Workout:
+    def filter_queryset_by_user(queryset: QuerySet, user: User) -> QuerySet:
+        return queryset.filter(user=user)
+
+    @staticmethod
+    def create_workout(
+        user_id: int, start_time: datetime, stop_time: datetime, template: bool, notes: str
+    ) -> Optional[Workout]:
         created_record = None
         if UserDomain.is_valid_id(user_id):
             user = UserDomain.get_by_id(user_id)

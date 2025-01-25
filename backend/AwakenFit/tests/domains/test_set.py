@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 
+from graphene import Int
+
 from ...models import Movement
 from ...models import Exercise
 from ...models import Workout
@@ -10,6 +12,7 @@ from ...domains import SetDomain
 
 
 class SetDomainTest(TestCase):
+
     def setUp(self):
         self.test_user = User.objects.create_user("testusername", "testemail@email.com", "testpassword1")
         self.test_movement = Movement.objects.create(
@@ -85,6 +88,13 @@ class SetDomainTest(TestCase):
         test_sets = [self.test_set, self.test_set2]
         for entry in result:
             self.assertTrue(entry in test_sets, "Query returned an unexpected record")
+
+    def test_get_by_user_id(self):
+        self.assertEqual(3, SetDomain.get_by_user_id(self.test_user.id).count(), "Expected three sets to be returned")
+
+    def test_is_valid_id(self):
+        self.assertTrue(SetDomain.is_valid_id(self.test_set.id), "ID should have been valid")
+        self.assertFalse(SetDomain.is_valid_id(12345), "ID should not have been valid")
 
     def test_calculate_one_rep_max(self):
         expected_result = int(((self.WEIGHT_1 * self.COMPLETED_REPS_1) / 30.48) + self.WEIGHT_1)

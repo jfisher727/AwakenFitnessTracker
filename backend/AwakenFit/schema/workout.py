@@ -1,0 +1,173 @@
+from datetime import datetime
+
+from graphql_relay import from_global_id
+
+from graphene import Mutation, Node, ObjectType, InputObjectType, Field, List, DateTime, String
+
+from graphene_django import DjangoObjectType
+from graphene_django.filter import DjangoFilterConnectionField
+
+from ..models import Workout
+
+from ..domains import UserDomain, WorkoutDomain, ExerciseDomain, SetDomain
+from ..domains.mutation import MutationDomain
+
+from .exercise import ExerciseCreateTemplateInput, ExerciseCreateCompletedInput
+from .message import MessageNode
+
+
+class WorkoutNode(DjangoObjectType):
+    class Meta:
+        model = Workout
+        interfaces = (Node,)
+        description = ""
+        filter_fields = {
+            "id": ["exact"],
+        }
+        fields = (
+            "id",
+            "start_time",
+            "stop_time",
+            "template",
+            "notes",
+        )
+
+    @classmethod
+    def get_queryset(cls, queryset, info):
+        return WorkoutDomain.filter_queryset_by_user(queryset, info.context.user)
+
+
+class WorkoutCreateTemplateInput(InputObjectType):
+    notes = String(required=False)
+    exercises = List(ExerciseCreateTemplateInput, required=True)
+
+
+class WorkoutCreateCompletedInput(InputObjectType):
+    exercises = List(ExerciseCreateCompletedInput, required=True)
+    start_time = DateTime(required=True)
+    stop_time = DateTime(required=True)
+    notes = String(required=False)
+
+
+class WorkoutCreateTemplate(Mutation):
+    class Arguments:
+        input = WorkoutCreateTemplateInput(required=True)
+
+    workout = Field(WorkoutNode)
+    errors = List(MessageNode)
+
+    @classmethod
+    def mutate(cls, root, info, input: WorkoutCreateTemplateInput):
+        workout = None
+        user = None
+        errors = list()
+
+        if not info.context.user.is_authenticated:
+            errors.append(MessageNode(message=UserDomain.ERROR_MESSAGES["UNAUTHENTICATED"]))
+        else:
+            user = info.context.user
+
+        errors.extend(MutationDomain.validate_workout_template_input(input))
+
+        if len(errors) == 0:
+            workout = WorkoutDomain.create_workout(user.id, datetime.now(), datetime.now(), True, input.notes)
+            for entry in input.exercises:
+                created_exercise = ExerciseDomain.create_exercise(
+                    from_global_id(entry.movement_id).id,
+                    workout.id,
+                    entry.intensity if entry.intensity is not None else 0,
+                    entry.notes if entry.notes is not None else "",
+                )
+
+                if entry.standard_sets:
+                    for standard_set in entry.standard_sets:
+                        SetDomain.create_template_set(
+                            created_exercise.id,
+                            standard_set.sequence_number,
+                            standard_set.min_reps if standard_set.min_reps is not None else 0,
+                            standard_set.max_reps if standard_set.max_reps is not None else 0,
+                            standard_set.duration if standard_set.duration is not None else "",
+                        )
+                if entry.non_standard_sets:
+                    for non_standard_set in entry.non_standard_sets:
+                        parent_set = SetDomain.create_parent_non_standard_set(
+                            created_exercise.id, non_standard_set.set_type
+                        )
+                        for associated_set in non_standard_set.associated_sets:
+                            SetDomain.create_template_set(
+                                created_exercise.id,
+                                associated_set.sequence_number,
+                                associated_set.min_reps if associated_set.min_reps is not None else 0,
+                                associated_set.max_reps if associated_set.max_reps is not None else 0,
+                                associated_set.duration if associated_set.duration is not None else "",
+                                parent_set=parent_set,
+                            )
+
+        return WorkoutCreateTemplate(workout=workout, errors=errors)
+
+
+class WorkoutCreateCompleted(Mutation):
+    class Arguments:
+        input = WorkoutCreateCompletedInput(required=True)
+
+    workout = Field(WorkoutNode)
+    errors = List(MessageNode)
+
+    @classmethod
+    def mutate(cls, root, info, input: WorkoutCreateCompletedInput):
+        workout = None
+        user = None
+        errors = list()
+
+        if not info.context.user.is_authenticated:
+            errors.append(MessageNode(message=UserDomain.ERROR_MESSAGES["UNAUTHENTICATED"]))
+        else:
+            user = info.context.user
+
+        errors.extend(MutationDomain.validate_workout_completed_input(input))
+
+        if len(errors) == 0:
+            workout = WorkoutDomain.create_workout(user.id, input.start_time, input.stop_time, False, input.notes)
+            for entry in input.exercises:
+                created_exercise = ExerciseDomain.create_exercise(
+                    from_global_id(entry.movement_id).id,
+                    workout.id,
+                    entry.intensity if entry.intensity is not None else 0,
+                    entry.notes if entry.notes is not None else "",
+                )
+
+                if entry.standard_sets:
+                    for standard_set in entry.standard_sets:
+                        SetDomain.create_completed_set(
+                            created_exercise.id,
+                            standard_set.sequence_number,
+                            standard_set.completed_reps if standard_set.completed_reps is not None else 0,
+                            standard_set.weight if standard_set.weight is not None else 0,
+                            standard_set.duration if standard_set.duration is not None else "",
+                        )
+                if entry.non_standard_sets:
+                    for non_standard_set in entry.non_standard_sets:
+                        parent_set = SetDomain.create_parent_non_standard_set(
+                            created_exercise.id, non_standard_set.set_type
+                        )
+                        for associated_set in non_standard_set.associated_sets:
+                            SetDomain.create_completed_set(
+                                created_exercise.id,
+                                associated_set.sequence_number,
+                                associated_set.completed_reps if associated_set.completed_reps is not None else 0,
+                                associated_set.weight if associated_set.weight is not None else 0,
+                                associated_set.duration if associated_set.duration is not None else "",
+                                parent_set=parent_set,
+                            )
+
+        return WorkoutCreateCompleted(workout=workout, errors=errors)
+
+
+class Query(ObjectType):
+    workout = Node.Field(WorkoutNode)
+    workouts = DjangoFilterConnectionField(WorkoutNode)
+
+
+class Mutation(ObjectType):
+    workout_create_template = WorkoutCreateTemplate.Field()
+    workout_create_completed = WorkoutCreateCompleted.Field()
