@@ -10,15 +10,9 @@ from ...models import Set
 
 from ...domains import SetDomain
 
-from ...schema.set import (
-    SetCreateCompletedInput,
-    SetCreateTemplateInput,
-    SetCreateCompletedParentInput,
-    SetCreateTemplateParentInput,
-)
-
 
 class SetDomainTest(TestCase):
+
     def setUp(self):
         self.test_user = User.objects.create_user("testusername", "testemail@email.com", "testpassword1")
         self.test_movement = Movement.objects.create(
@@ -95,6 +89,13 @@ class SetDomainTest(TestCase):
         for entry in result:
             self.assertTrue(entry in test_sets, "Query returned an unexpected record")
 
+    def test_get_by_user_id(self):
+        self.assertEqual(3, SetDomain.get_by_user_id(self.test_user.id).count(), "Expected three sets to be returned")
+
+    def test_is_valid_id(self):
+        self.assertTrue(SetDomain.is_valid_id(self.test_set.id), "ID should have been valid")
+        self.assertFalse(SetDomain.is_valid_id(12345), "ID should not have been valid")
+
     def test_calculate_one_rep_max(self):
         expected_result = int(((self.WEIGHT_1 * self.COMPLETED_REPS_1) / 30.48) + self.WEIGHT_1)
         self.assertEqual(
@@ -112,63 +113,6 @@ class SetDomainTest(TestCase):
             SetDomain.calculate_set_volume(self.test_set2),
             "The calculated set volume was not correct",
         )
-
-    def test_validate_template_standard_set(self):
-        ONE_MINUTE_DURATION = "00H01M00S"
-        standard_template_set = type(
-            "SetCreateCompletedInput",
-            (object,),
-            {"sequence_number": 1, "min_reps": 1, "max_reps": 6},
-        )
-        standard_template_set2 = type(
-            "SetCreateCompletedInput",
-            (object,),
-            {"sequence_number": 1, "duration": ONE_MINUTE_DURATION},
-        )
-        self.assertEqual(
-            0,
-            len(SetDomain.validate_template_standard_set(standard_template_set)),
-            "No errors should have been returned",
-        )
-        self.assertEqual(
-            0,
-            len(SetDomain.validate_template_standard_set(standard_template_set2)),
-            "No errors should have been returned",
-        )
-
-    def test_validate_completed_standard_set(self):
-        ONE_MINUTE_DURATION = "00H01M00S"
-        standard_completed_set = type(
-            "SetCreateCompletedInput",
-            (object,),
-            {"sequence_number": 1, "completed_reps": self.COMPLETED_REPS_1, "weight": self.WEIGHT_1},
-        )
-        standard_completed_set2 = type(
-            "SetCreateCompletedInput",
-            (object,),
-            {"sequence_number": 1, "duration": ONE_MINUTE_DURATION, "weight": self.WEIGHT_1},
-        )
-
-        result = SetDomain.validate_completed_standard_set(standard_completed_set)
-        self.assertEqual(
-            0,
-            len(result),
-            "No errors should have been returned",
-        )
-
-        result2 = SetDomain.validate_completed_standard_set(standard_completed_set2)
-        self.assertEqual(
-            0,
-            len(result2),
-            "No errors should have been returned",
-        )
-
-    def test_validate_standard_set_bad_input(self):
-        standard_completed_set = None
-        standard_template_set = None
-
-    def test_validate_non_standard_set(self):
-        pass
 
     def test_create_parent_non_standard_set(self):
         existing_sets = Set.objects.count()

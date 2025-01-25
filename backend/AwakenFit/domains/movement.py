@@ -1,3 +1,5 @@
+from typing import Optional
+
 from django.db.models import Q
 
 from ..models import Movement
@@ -46,7 +48,7 @@ class MovementDomain(object):
         secondary_muscle_group: str,
         equipment: str,
         movement_type: str,
-    ) -> Movement:
+    ) -> Optional[Movement]:
         created_record = None
         valid_input = True
 

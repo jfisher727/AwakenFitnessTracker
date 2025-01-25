@@ -1,3 +1,5 @@
+from typing import Optional
+
 from graphql_relay import from_global_id
 
 from ..models import Exercise
@@ -33,7 +35,7 @@ class ExerciseDomain(object):
     def validate_exercise(exercise) -> list[str]:
         errors = list()
 
-        if not MovementDomain.is_valid_id(from_global_id(exercise.movement_id)):
+        if not MovementDomain.is_valid_id(from_global_id(exercise.movement_id).id):
             errors.append(MovementDomain.ERROR_MESSAGES["INVALID_ID"])
         if exercise.intensity and (exercise.intensity < 1 or exercise.intensity > 10):
             errors.append(ExerciseDomain.ERROR_MESSAGES["INVALID_INTENSITY"])
@@ -41,7 +43,7 @@ class ExerciseDomain(object):
         return errors
 
     @staticmethod
-    def create_exercise(movement_id: int, workout_id: int, intensity: int, notes: str) -> Exercise:
+    def create_exercise(movement_id: int, workout_id: int, intensity: int, notes: str) -> Optional[Exercise]:
         created_record = None
         if MovementDomain.is_valid_id(movement_id) and WorkoutDomain.is_valid_id(workout_id):
             movement = MovementDomain.get_by_id(movement_id)

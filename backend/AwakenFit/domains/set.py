@@ -1,3 +1,5 @@
+from typing import Optional
+
 from ..models import Exercise
 from ..models import Set
 
@@ -11,6 +13,7 @@ class SetDomain(object):
         "TEMPLATE_SETS": "Template sets should contain min_reps/max_reps or duration, not both.",
         "INVALID_VALUE": "Provided a value that should be greater than 0.",
         "BAD_TEMPLATE_REPS": "Please make sure min_reps is less than max_reps for templates.",
+        "MISSING_SET_TYPE": "Please be sure to include set_type for non-standard sets.",
     }
 
     @staticmethod
@@ -30,6 +33,10 @@ class SetDomain(object):
         return Set.objects.select_related("exercise__workout__user").filter(exercise__workout__user__id=id).all()
 
     @staticmethod
+    def is_valid_id(id: int) -> bool:
+        return Set.objects.filter(id=id).exists()
+
+    @staticmethod
     def calculate_one_rep_max(input: Set) -> int:
         return int(((input.weight * input.completed_reps) / 30.48) + input.weight)
 
@@ -41,12 +48,10 @@ class SetDomain(object):
     def validate_template_standard_set(standard_set) -> list[str]:
         errors = list()
 
-        if (hasattr(standard_set, "min_reps") or hasattr(standard_set, "max_reps")) and hasattr(
-            standard_set, "duration"
-        ):
+        if (standard_set.min_reps or standard_set.max_reps) and standard_set.duration:
             errors.append(SetDomain.ERROR_MESSAGES["TEMPLATE_SETS"])
 
-        if hasattr(standard_set, "max_reps") and hasattr(standard_set, "min_reps"):
+        if standard_set.min_reps and standard_set.max_reps:
             if standard_set.min_reps > standard_set.max_reps:
                 errors.append(SetDomain.ERROR_MESSAGES["BAD_TEMPLATE_REPS"])
 
@@ -55,21 +60,16 @@ class SetDomain(object):
     @staticmethod
     def validate_completed_standard_set(standard_set) -> list[str]:
         errors = list()
-        if hasattr(standard_set, "sequence_number") and standard_set.sequence_number < 1:
+        if standard_set.sequence_number and standard_set.sequence_number < 1:
             errors.append(SetDomain.ERROR_MESSAGES["INVALID_VALUE"])
-        if hasattr(standard_set, "completed_reps") and standard_set.completed_reps < 1:
+        if standard_set.completed_reps and standard_set.completed_reps < 1:
             errors.append(SetDomain.ERROR_MESSAGES["INVALID_VALUE"])
-        if hasattr(standard_set, "weight") and standard_set.weight < 1:
+        if standard_set.weight and standard_set.weight < 1:
             errors.append(SetDomain.ERROR_MESSAGES["INVALID_VALUE"])
 
-        if hasattr(standard_set, "completed_reps") and hasattr(standard_set, "duration"):
-            # if standard_set.completed_reps and standard_set.duration:
+        if standard_set.completed_reps and standard_set.duration:
             errors.append(SetDomain.ERROR_MESSAGES["COMPLETED_SETS"])
-        if not (
-            hasattr(standard_set, "completed_reps")
-            or hasattr(standard_set, "weight")
-            or hasattr(standard_set, "duration")
-        ):
+        if not (standard_set.completed_reps or standard_set.weight or standard_set.duration):
             errors.append(SetDomain.ERROR_MESSAGES["COMPLETED_SETS"])
 
         return errors
@@ -78,11 +78,13 @@ class SetDomain(object):
     def validate_template_non_standard_set(non_standard_set) -> list[str]:
         errors = list()
 
-        if non_standard_set.set_type not in Set.SET_TYPE_CHOICES:
+        if not non_standard_set.set_type:
+            errors.append(SetDomain.ERROR_MESSAGES["MISSING_SET_TYPE"])
+        elif not any(non_standard_set.set_type in choice for choice in Set.SET_TYPE_CHOICES):
             errors.append(SetDomain.ERROR_MESSAGES["INVALID_SET_TYPE"])
 
         for standard_set in non_standard_set.associated_sets:
-            errors.append(SetDomain.validate_template_standard_set(standard_set))
+            errors.extend(SetDomain.validate_template_standard_set(standard_set))
 
         return errors
 
@@ -90,11 +92,13 @@ class SetDomain(object):
     def validate_completed_non_standard_set(non_standard_set) -> list[str]:
         errors = list()
 
-        if non_standard_set.set_type not in Set.SET_TYPE_CHOICES:
+        if not non_standard_set.set_type:
+            errors.append(SetDomain.ERROR_MESSAGES["MISSING_SET_TYPE"])
+        elif not any(non_standard_set.set_type in choice for choice in Set.SET_TYPE_CHOICES):
             errors.append(SetDomain.ERROR_MESSAGES["INVALID_SET_TYPE"])
 
         for standard_set in non_standard_set.associated_sets:
-            errors.append(SetDomain.validate_completed_standard_set(standard_set))
+            errors.extend(SetDomain.validate_completed_standard_set(standard_set))
 
         return errors
 
@@ -102,7 +106,7 @@ class SetDomain(object):
     def create_parent_non_standard_set(
         exercise_id: int,
         set_type: str,
-    ) -> Set:
+    ) -> Optional[Set]:
         created_record = None
         if ExerciseDomain.is_valid_id(exercise_id):
             exercise = ExerciseDomain.get_by_id(exercise_id)
@@ -122,7 +126,7 @@ class SetDomain(object):
         duration: str = "",
         set_type: str = Set.STANDARD,
         parent_set: Set = None,
-    ) -> Set:
+    ) -> Optional[Set]:
         created_record = None
         if ExerciseDomain.is_valid_id(exercise_id):
             exercise = ExerciseDomain.get_by_id(exercise_id)
@@ -147,7 +151,7 @@ class SetDomain(object):
         duration: str = "",
         set_type: str = Set.STANDARD,
         parent_set: Set = None,
-    ) -> Set:
+    ) -> Optional[Set]:
         created_record = None
         if ExerciseDomain.is_valid_id(exercise_id):
             exercise = ExerciseDomain.get_by_id(exercise_id)
@@ -174,7 +178,7 @@ class SetDomain(object):
         duration: str = "",
         set_type: str = Set.STANDARD,
         parent_set: Set = None,
-    ) -> Set:
+    ) -> Optional[Set]:
         return Set.objects.create(
             exercise=exercise,
             sequence_number=sequence_number,

@@ -1,9 +1,11 @@
-from graphene import Node, InputObjectType, List, Int, String, ID
+from graphene import Node, ObjectType, InputObjectType, List, Int, String, ID
 
 from graphene_django import DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
 
 from ..models import Exercise
+
+from ..domains import ExerciseDomain
 
 from .set import (
     SetCreateTemplateInput,
@@ -29,6 +31,10 @@ class ExerciseNode(DjangoObjectType):
             "workout",
         )
 
+    @classmethod
+    def get_queryset(cls, queryset, info):
+        return ExerciseDomain.get_by_user_id(info.context.user.id)
+
 
 class ExerciseCreateTemplateInput(InputObjectType):
     movement_id = ID(required=True)
@@ -46,6 +52,6 @@ class ExerciseCreateCompletedInput(InputObjectType):
     non_standard_sets = List(SetCreateCompletedParentInput, required=False)
 
 
-class Query(object):
+class Query(ObjectType):
     exercise = Node.Field(ExerciseNode)
     exercises = DjangoFilterConnectionField(ExerciseNode)

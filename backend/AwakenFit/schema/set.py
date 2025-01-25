@@ -1,9 +1,13 @@
-from graphene import Node, List, InputObjectType, Int, String
+from typing import Optional
+
+from graphene import Node, List, ObjectType, InputObjectType, Int, String
 
 from graphene_django import DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
 
 from ..models import Set
+
+from ..domains import SetDomain
 
 
 class SetNode(DjangoObjectType):
@@ -11,6 +15,7 @@ class SetNode(DjangoObjectType):
         model = Set
         interfaces = (Node,)
         description = ""
+        convert_choices_to_enum = False
         filter_fields = {
             "id": ["exact"],
         }
@@ -26,6 +31,21 @@ class SetNode(DjangoObjectType):
             "set_type",
             "parent_set",
         )
+
+    one_rep_max = Int()
+    volume = Int()
+
+    def resolve_one_rep_max(self, info) -> Optional[int]:
+        if SetDomain.is_valid_id(self.id):
+            selected_set = SetDomain.get_by_id(self.id)
+            return SetDomain.calculate_one_rep_max(selected_set)
+        return None
+
+    def resolve_volume(self, info) -> Optional[int]:
+        if SetDomain.is_valid_id(self.id):
+            selected_set = SetDomain.get_by_id(self.id)
+            return SetDomain.calculate_set_volume(selected_set)
+        return None
 
 
 class SetCreateTemplateInput(InputObjectType):
@@ -52,6 +72,6 @@ class SetCreateCompletedParentInput(InputObjectType):
     associated_sets = List(SetCreateCompletedInput, required=True)
 
 
-class Query(object):
+class Query(ObjectType):
     set = Node.Field(SetNode)
     sets = DjangoFilterConnectionField(SetNode)

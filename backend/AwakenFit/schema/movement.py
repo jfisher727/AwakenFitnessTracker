@@ -1,4 +1,4 @@
-from graphene import Node
+from graphene import Node, ObjectType
 
 from graphene_django import DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
@@ -12,6 +12,7 @@ class MovementNode(DjangoObjectType):
         model = Movement
         interfaces = (Node,)
         description = ""
+        convert_choices_to_enum = False
         filter_fields = {
             "id": ["exact"],
             "name": ["exact", "icontains", "istartswith"],
@@ -27,6 +28,6 @@ class MovementNode(DjangoObjectType):
         )
 
 
-class Query(object):
+class Query(ObjectType):
     movement = Node.Field(MovementNode)
     movements = DjangoFilterConnectionField(MovementNode)
