@@ -16,6 +16,9 @@ class MovementNode(DjangoObjectType):
         filter_fields = {
             "id": ["exact"],
             "name": ["exact", "icontains", "istartswith"],
+            "primary_muscle_group": ["exact"],
+            "equipment_type": ["exact"],
+            "movement_type": ["exact"],
         }
         fields = (
             "id",
