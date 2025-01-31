@@ -173,3 +173,6 @@ cython_debug/
 #MacOS files
 .DS_STORE
 */.DS_STORE
+
+#Node Modules
+frontent/node_modules/*
