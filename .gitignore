@@ -174,5 +174,25 @@ cython_debug/
 .DS_STORE
 */.DS_STORE
 
-#Node Modules
-frontent/node_modules/*
+# Node modules
+frontend/node_modules/
+
+# Xcode
+frontend/ios/build/
+*.xcuserdatad/
+*.xccheckout
+
+# Android
+frontend/android/app/build/
+frontend/android/app/outputs/
+frontend/android/.gradle/
+frontend/android/local.properties
+frontend/android/bin/
+frontend/android/captures/
+
+# Metro Bundler Cache
+frontend/.expo/
+frontend/web-build/
+
+# Other
+*.swp
