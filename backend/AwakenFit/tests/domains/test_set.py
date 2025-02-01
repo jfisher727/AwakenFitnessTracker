@@ -1,8 +1,6 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from graphene import Int
-
 from ...models import Movement
 from ...models import Exercise
 from ...models import Workout

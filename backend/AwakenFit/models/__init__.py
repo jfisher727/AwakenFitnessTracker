@@ -1,3 +1,5 @@
+from .chat_log import ChatLog
+
 from .movement import Movement
 
 from .workout import Workout
