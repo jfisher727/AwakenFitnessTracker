@@ -40,7 +40,7 @@ class ChatLogDomain(object):
         return queryset.filter(user=user)
 
     @staticmethod
-    def create_ai_chat_log(user: User, role_type: str, message: str, include_in_future: bool) -> ChatLog:
+    def create_chat_log(user: User, role_type: str, message: str, include_in_future: bool) -> ChatLog:
         return ChatLog.objects.create(
             user=user, role_type=role_type, message=message, include_in_future=include_in_future
         )

@@ -77,5 +77,5 @@ class AiChatLogTest(TestCase):
         for entry in result:
             self.assertEqual(entry.user, self.test_user, "The resulting entry was not for our test user")
 
-    def test_create_ai_chat_log(self):
+    def test_create_chat_log(self):
         pass

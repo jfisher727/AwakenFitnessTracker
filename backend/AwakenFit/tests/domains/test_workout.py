@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.utils import timezone
 from django.contrib.auth.models import User
 from django.test import TestCase
 
@@ -67,7 +68,7 @@ class WorkoutDomainTest(TestCase):
         existing_workouts = Workout.objects.count()
 
         result = WorkoutDomain.create_workout(
-            self.test_user.id, datetime.now(), datetime.now(), False, "These are test workout notes"
+            self.test_user.id, timezone.now(), timezone.now(), False, "These are test workout notes"
         )
 
         updated_workouts = Workout.objects.count()

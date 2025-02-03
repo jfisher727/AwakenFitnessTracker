@@ -1,11 +1,12 @@
 import json
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from graphql_relay import to_global_id
 
 from graphene_django.utils.testing import GraphQLTestCase
 
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 from ...models import Movement, Workout, Exercise, Set
 
@@ -196,8 +197,8 @@ class WorkoutSchemaTest(GraphQLTestCase):
             operation_name="workoutCreateCompleted",
             variables={
                 "notes": "Mutation Test Note",
-                "startTime": datetime.now().isoformat(),
-                "stopTime": (datetime.now() + timedelta(minutes=30)).isoformat(),
+                "startTime": timezone.now().isoformat(),
+                "stopTime": (timezone.now() + timedelta(minutes=30)).isoformat(),
                 "exercises": [
                     {
                         "movementId": to_global_id("Movement", self.test_movement.id),
