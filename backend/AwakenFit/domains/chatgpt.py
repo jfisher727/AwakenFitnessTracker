@@ -20,6 +20,9 @@ class ChatGPTDomain(object):
         self.user = user
 
     def generate_workout_template(user_goals):
+        # user goals should be in the format of:
+        # I want to <lose weight, gain muscle, workout more, etc>. I can workout <number of times per week>.
+        # (optional) I have <dumbbells, barbell, ect> available to me.
         pass
 
     def evaluate_past_workouts():

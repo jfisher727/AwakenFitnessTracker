@@ -31,7 +31,7 @@ class WorkoutDomain(object):
     def get_by_user_id(id: int) -> list[Workout] | None:
         selected_records = None
         if UserDomain.is_valid_id(id):
-            selected_records = Workout.objects.filter(user__id=id).all()
+            selected_records = Workout.objects.filter(user__id=id).prefetch_related("exercises").all()
         return selected_records
 
     @staticmethod

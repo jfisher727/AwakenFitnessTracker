@@ -45,10 +45,14 @@ class AiChatLogTest(TestCase):
         )
 
     def test_get_by_id_set(self):
-        pass
+        result = ChatLogDomain.get_by_id_set([self.test_chat_log.id, self.test_chat_log2.id])
+        self.assertEqual(2, len(result))
+        self.assertEqual(self.test_chat_log, result[0])
+        self.assertEqual(self.test_chat_log2, result[1])
 
     def test_get_by_user_id(self):
-        pass
+        result = ChatLogDomain.get_by_user_id(self.test_user.id)
+        self.assertEqual(2, len(result))
 
     def test_get_by_user_id_filter_and_limit(self):
         all_user_log = ChatLog.objects.filter(user=self.test_user3).all().count()
@@ -78,4 +82,10 @@ class AiChatLogTest(TestCase):
             self.assertEqual(entry.user, self.test_user, "The resulting entry was not for our test user")
 
     def test_create_chat_log(self):
-        pass
+        existing_chat_logs = ChatLog.objects.all().count()
+
+        ChatLogDomain.create_chat_log(self.test_user, ChatLog.USER, "This is a test message", False)
+
+        current_chat_logs = ChatLog.objects.all().count()
+        self.assertNotEqual(current_chat_logs, existing_chat_logs, "Count should have changed")
+        self.assertEqual(current_chat_logs, existing_chat_logs + 1)
