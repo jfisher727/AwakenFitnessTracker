@@ -175,24 +175,51 @@ cython_debug/
 */.DS_STORE
 
 # Node modules
-frontend/node_modules/
+frontend/AwakenFit/node_modules/
 
 # Xcode
-frontend/ios/build/
+frontend/AwakenFit/ios/build/
 *.xcuserdatad/
 *.xccheckout
 
 # Android
-frontend/android/app/build/
-frontend/android/app/outputs/
-frontend/android/.gradle/
-frontend/android/local.properties
-frontend/android/bin/
-frontend/android/captures/
+frontend/AwakenFit/android/app/build/
+frontend/AwakenFit/android/app/outputs/
+frontend/AwakenFit/android/.gradle/
+frontend/AwakenFit/android/local.properties
+frontend/AwakenFit/android/bin/
+frontend/AwakenFit/android/captures/
 
 # Metro Bundler Cache
-frontend/.expo/
-frontend/web-build/
+frontend/AwakenFit/.expo/
+frontend/AwakenFit/web-build/
+frontend/AwakenFit/dist/
 
 # Other
 *.swp
+
+# Native
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Metro
+.metro-health-check*
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macOS
+.DS_Store
+*.pem
+
+# local env files
+.env*.local
+
+# typescript
+*.tsbuildinfo
