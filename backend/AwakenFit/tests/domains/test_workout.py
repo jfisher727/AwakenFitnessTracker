@@ -1,12 +1,10 @@
-from datetime import datetime
-
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from ...models import Workout
+from AwakenFit.models import Workout
 
-from ...domains import WorkoutDomain
+from AwakenFit.domains import workout as WorkoutDomain
 
 
 class WorkoutDomainTest(TestCase):

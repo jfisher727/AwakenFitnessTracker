@@ -4,7 +4,7 @@ from django.db import models
 
 from .base_object import BaseModel
 
-from ..models import Exercise
+from AwakenFit.models import Exercise
 
 
 class Set(BaseModel):

@@ -2,7 +2,7 @@ from django.conf import settings
 
 from openai import OpenAI
 
-from ..domains import ChatLogDomain
+from AwakenFit.domains import chat_log as ChatLogDomain
 
 
 class ChatGPTDomain(object):

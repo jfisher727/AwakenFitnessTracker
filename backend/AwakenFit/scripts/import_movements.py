@@ -5,7 +5,7 @@ import pandas as pd
 
 from rapidfuzz import fuzz, process
 
-from ..models import Movement
+from AwakenFit.models import Movement
 
 CURRENT_FILE_PATH = Path(__file__).resolve()
 MOVEMENT_CSV = CURRENT_FILE_PATH.parent.parent / "fixtures" / "movements.csv"

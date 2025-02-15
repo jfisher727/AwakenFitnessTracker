@@ -8,7 +8,7 @@ from graphene_django.utils.testing import GraphQLTestCase
 from django.contrib.auth.models import User
 from django.utils import timezone
 
-from ...models import Movement, Workout, Exercise, Set
+from AwakenFit.models import Movement, Workout, Exercise, Set
 
 
 class WorkoutSchemaTest(GraphQLTestCase):

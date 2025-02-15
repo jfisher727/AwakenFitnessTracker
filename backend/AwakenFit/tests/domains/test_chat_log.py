@@ -3,9 +3,9 @@ from datetime import datetime
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from ...models import ChatLog
+from AwakenFit.models import ChatLog
 
-from ...domains import ChatLogDomain
+from AwakenFit.domains import chat_log as ChatLogDomain
 
 
 class AiChatLogTest(TestCase):

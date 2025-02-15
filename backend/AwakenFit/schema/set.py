@@ -5,9 +5,9 @@ from graphene import Node, List, ObjectType, InputObjectType, Int, String
 from graphene_django import DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
 
-from ..models import Set
+from AwakenFit.models import Set
 
-from ..domains import SetDomain
+from AwakenFit.domains import set as SetDomain
 
 
 class SetNode(DjangoObjectType):

@@ -2,10 +2,9 @@ import json
 
 from django.db import models
 
-from .base_object import BaseModel
+from AwakenFit.models.base_object import BaseModel
 
-from ..models import Movement
-from ..models import Workout
+from AwakenFit.models import Movement, Workout
 
 
 class Exercise(BaseModel):

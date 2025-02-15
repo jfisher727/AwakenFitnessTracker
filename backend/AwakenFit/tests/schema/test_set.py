@@ -6,8 +6,8 @@ from graphene_django.utils.testing import GraphQLTestCase
 
 from django.contrib.auth.models import User
 
-from ...models import Movement, Workout, Exercise, Set
-from ...domains import SetDomain
+from AwakenFit.models import Movement, Workout, Exercise, Set
+from AwakenFit.domains import set as SetDomain
 
 
 class SetSchemaTest(GraphQLTestCase):
