@@ -7,6 +7,8 @@ from graphene import Mutation, Node, ObjectType, InputObjectType, Field, List, D
 from graphene_django import DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
 
+from django.utils import timezone
+
 from ..models import Workout
 
 from ..domains import UserDomain, WorkoutDomain, ExerciseDomain, SetDomain
@@ -70,7 +72,7 @@ class WorkoutCreateTemplate(Mutation):
         errors.extend(MutationDomain.validate_workout_template_input(input))
 
         if len(errors) == 0:
-            workout = WorkoutDomain.create_workout(user.id, datetime.now(), datetime.now(), True, input.notes)
+            workout = WorkoutDomain.create_workout(user.id, timezone.now(), timezone.now(), True, input.notes)
             for entry in input.exercises:
                 created_exercise = ExerciseDomain.create_exercise(
                     from_global_id(entry.movement_id).id,

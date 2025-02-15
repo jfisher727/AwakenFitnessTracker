@@ -131,3 +131,5 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+CHATGPT_API_KEY = env("CHATGPT_API_KEY", default="unable-to-fetch-key")

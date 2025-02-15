@@ -1,4 +1,3 @@
-from typing import Optional
 from datetime import datetime
 
 from django.db.models import QuerySet
@@ -29,10 +28,10 @@ class WorkoutDomain(object):
         return Workout.objects.filter(id=id, template=True).exists()
 
     @staticmethod
-    def get_by_user_id(id: int) -> list[Workout]:
+    def get_by_user_id(id: int) -> list[Workout] | None:
         selected_records = None
         if UserDomain.is_valid_id(id):
-            selected_records = Workout.objects.filter(user__id=id).all()
+            selected_records = Workout.objects.filter(user__id=id).prefetch_related("exercises").all()
         return selected_records
 
     @staticmethod
@@ -42,7 +41,7 @@ class WorkoutDomain(object):
     @staticmethod
     def create_workout(
         user_id: int, start_time: datetime, stop_time: datetime, template: bool, notes: str
-    ) -> Optional[Workout]:
+    ) -> Workout | None:
         created_record = None
         if UserDomain.is_valid_id(user_id):
             user = UserDomain.get_by_id(user_id)
