@@ -3,9 +3,9 @@ from graphene import Node, ObjectType, InputObjectType, List, Int, String, ID
 from graphene_django import DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
 
-from ..models import Exercise
+from AwakenFit.models import Exercise
 
-from ..domains import ExerciseDomain
+from AwakenFit.domains import exercise as ExerciseDomain
 
 from .set import (
     SetCreateTemplateInput,

@@ -9,10 +9,14 @@ from graphene_django.filter import DjangoFilterConnectionField
 
 from django.utils import timezone
 
-from ..models import Workout
+from AwakenFit.models import Workout
 
-from ..domains import UserDomain, WorkoutDomain, ExerciseDomain, SetDomain
-from ..domains.mutation import MutationDomain
+from AwakenFit.domains import user as UserDomain
+from AwakenFit.domains import workout as WorkoutDomain
+from AwakenFit.domains import exercise as ExerciseDomain
+from AwakenFit.domains import set as SetDomain
+from AwakenFit.domains import mutation as MutationDomain
+
 
 from .exercise import ExerciseCreateTemplateInput, ExerciseCreateCompletedInput
 from .message import MessageNode

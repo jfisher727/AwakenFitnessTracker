@@ -1,7 +1,8 @@
 from django.test import TestCase
 
-from ...models import Movement
-from ...domains import MovementDomain
+from AwakenFit.models import Movement
+
+from AwakenFit.domains import movement as MovementDomain
 
 
 class MovementDomainTest(TestCase):

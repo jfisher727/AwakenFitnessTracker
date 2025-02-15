@@ -6,7 +6,7 @@ from graphene_django.utils.testing import GraphQLTestCase
 
 from django.contrib.auth.models import User
 
-from ...models import Movement, Workout, Exercise
+from AwakenFit.models import Movement, Workout, Exercise
 
 
 class ExerciseSchemaTest(GraphQLTestCase):

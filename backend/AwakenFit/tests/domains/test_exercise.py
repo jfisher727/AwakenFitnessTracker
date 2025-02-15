@@ -1,13 +1,10 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from ...models import Exercise
-from ...models import Movement
-from ...models import Workout
-from ...models import Set
+from AwakenFit.models import Exercise, Movement, Workout, Set
 
-from ...domains import MovementDomain
-from ...domains import ExerciseDomain
+from AwakenFit.domains import movement as MovementDomain
+from AwakenFit.domains import exercise as ExerciseDomain
 
 
 class ExerciseDomainTest(TestCase):

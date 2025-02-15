@@ -3,8 +3,7 @@ from graphene import Node, ObjectType
 from graphene_django import DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
 
-from ..models import Movement
-from ..domains import MovementDomain
+from AwakenFit.models import Movement
 
 
 class MovementNode(DjangoObjectType):

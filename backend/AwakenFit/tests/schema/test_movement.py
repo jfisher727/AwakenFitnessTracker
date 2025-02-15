@@ -1,5 +1,4 @@
 import json
-from datetime import datetime, timedelta
 
 from graphql_relay import to_global_id
 
@@ -7,7 +6,7 @@ from graphene_django.utils.testing import GraphQLTestCase
 
 from django.contrib.auth.models import User
 
-from ...models import Movement, Workout, Exercise, Set
+from AwakenFit.models import Movement
 
 
 class MovementSchemaTest(GraphQLTestCase):
