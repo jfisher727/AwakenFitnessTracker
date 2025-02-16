@@ -33,7 +33,6 @@ SECRET_KEY = env("SECRET_KEY", default="a-very-insecure-key")
 DEBUG = env("DEBUG", default="False") == "True"
 
 ALLOWED_HOSTS = env("ALLOWD_HOSTS", default=["localhost"])
-print(ALLOWED_HOSTS)
 
 
 # Application definition
