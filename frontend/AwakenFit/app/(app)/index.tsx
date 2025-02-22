@@ -37,6 +37,22 @@ export default function Index() {
     function logoutPressed() {
         signOut();
     }
+    /*
+
+                <View>
+                    <FlatList
+                        data={data.movements.edges}
+                        keyExtractor={(item) => item.node.id.toString()}
+                        renderItem={({ item }) => (
+                            <View style={{ padding: 10 }}>
+                                <Text style={{ fontSize: 18, fontWeight: "bold" }}>{item.node.name}</Text>
+                                <Text>{item.node.category}</Text>
+                            </View>
+                        )}
+                    />
+                </View>
+
+    */
 
     return (
         <SafeAreaProvider>

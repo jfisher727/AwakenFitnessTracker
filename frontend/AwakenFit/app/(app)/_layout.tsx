@@ -32,7 +32,7 @@ export default function AppLayout() {
         const token = decoded.token;
         operation.setContext({
             headers: {
-                authorization: token ? `Bearer ${token}` : "",
+                'X-Session-Token': token ? token : "",
             },
         });
         return forward(operation);
