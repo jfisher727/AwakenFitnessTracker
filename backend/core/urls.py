@@ -22,4 +22,6 @@ from django.urls import path, include
 urlpatterns = [
     path("", include("AwakenFit.urls", namespace="awaken")),
     path("admin/", admin.site.urls),
+    path("accounts/", include("allauth.urls")),
+    path("_allauth/", include("allauth.headless.urls")),
 ]
