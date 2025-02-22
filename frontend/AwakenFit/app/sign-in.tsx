@@ -26,7 +26,6 @@ export default function SignIn() {
         setResponse({ fetching: true, content: null });
         const response = await login({ email: email, password: password });
         setResponse({ fetching: false, content: response });
-        console.log(response);
         if (response.status === 200) {
             signIn(response.meta.session_token, response.data.user.username);
             router.replace('/');
