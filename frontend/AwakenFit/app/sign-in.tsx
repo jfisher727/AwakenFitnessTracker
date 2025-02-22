@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { router } from 'expo-router';
 import { Text, TextInput, View, Button, useColorScheme, Platform } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -30,6 +31,8 @@ export default function SignIn() {
         console.log(response);
         if (response.status === 200) {
             signIn(response.meta.session_token, response.data.user.username);
+            console.log('call redirect');
+            router.replace('/');
         }
     }
 

@@ -1,4 +1,4 @@
-import { Text, View, FlatList, useColorScheme } from 'react-native';
+import { Text, View, FlatList, useColorScheme, Button } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { gql, useQuery } from '@apollo/client';
 
@@ -23,7 +23,7 @@ const TEST_QUERY = gql`
 
 export default function Index() {
     const colorScheme = useColorScheme();
-    const { session } = useSession();
+    const { session, signOut } = useSession();
     const { loading, error, data } = useQuery(TEST_QUERY);
 
     if (loading) return <Text>Loading...</Text>;
@@ -32,6 +32,10 @@ export default function Index() {
     var decoded;
     if (session) {
         decoded = JSON.parse(session);
+    }
+
+    function logoutPressed() {
+        signOut();
     }
 
     return (
@@ -43,6 +47,9 @@ export default function Index() {
                     </Text>
                     <Text> {decoded.username} </Text>
                     <Text> {decoded.token} </Text>
+                </View>
+                <View>
+                    <Button title="Log Out" onPress={logoutPressed} color={colorScheme === 'light' ? lightColors.secondaryColor : darkColors.secondaryColor} />
                 </View>
                 <View>
                     <FlatList
