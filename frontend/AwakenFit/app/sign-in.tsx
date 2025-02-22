@@ -5,7 +5,7 @@ import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { useSession } from '@/auth/AuthContext';
 import { globalStyles, lightColors, darkColors } from '@/styles/global';
-import { setup, login } from '@/auth/allauth';
+import { setup, login, Client } from '@/auth/allauth';
 
 
 export default function SignIn() {
@@ -16,22 +16,19 @@ export default function SignIn() {
     const [password, setPassword] = useState('');
     const [response, setResponse] = useState({ fetching: false, content: null });
 
-    var client = "browser";
+    var client = Client.BROWSER;
     if (Platform.OS !== "web") {
-        client = "app";
+        client = Client.APP;
     }
     setup(client, true);
 
     async function loginPressed() {
-        console.log('login pressed');
         setResponse({ fetching: true, content: null });
         const response = await login({ email: email, password: password });
         setResponse({ fetching: false, content: response });
-        console.log(`login response:`);
         console.log(response);
         if (response.status === 200) {
             signIn(response.meta.session_token, response.data.user.username);
-            console.log('call redirect');
             router.replace('/');
         }
     }

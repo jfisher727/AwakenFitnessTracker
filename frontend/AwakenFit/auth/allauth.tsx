@@ -1,12 +1,12 @@
 import { useStorageState } from "@/store/useStorageState";
 
-export const Client = Object.freeze({
+export const Client = {
     APP: "app",
     BROWSER: "browser"
-});
+};
 
 type Settings = {
-    client: "browser" | "app",
+    client: string,
     baseUrl: string,
     withCredentials: boolean
 };
@@ -66,11 +66,6 @@ export const URLs = Object.freeze({
     WEBAUTHN_AUTHENTICATOR: '/account/authenticators/webauthn'
 });
 
-export function getSessionToken() {
-    const [state, setValue] = useStorageState("sessionToken");
-    return [state, setValue];
-}
-
 async function request(method: string, path: string, data: any, headers: any, token: string | null) {
     const options: {
         method: string,
@@ -123,12 +118,6 @@ async function request(method: string, path: string, data: any, headers: any, to
         //setToken(msg.meta.session_token);
         console.log('new session token?');
     }
-    /*
-    if ([401, 410].includes(msg.status) || (msg.status === 200 && msg.meta?.is_authenticated)) {
-        const event = new CustomEvent('allauth.auth.change', { detail: msg });
-        document.dispatchEvent(event);
-    }
-    */
     return msg;
 }
 
@@ -143,6 +132,6 @@ export function setup(client: string, withCredentials: boolean) {
     else {
         settings.client = Client.BROWSER;
     }
-    settings.baseUrl = `/_allauth/${client}/v1`;
+    settings.baseUrl = `/_allauth/${settings.client}/v1`;
     settings.withCredentials = withCredentials;
 }
