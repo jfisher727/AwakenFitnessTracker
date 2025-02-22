@@ -47,6 +47,12 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "graphene_django",
     "django_filters",
+    "allauth",
+    "allauth.account",
+    "allauth.headless",
+    "allauth.usersessions",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
 ]
 
 MIDDLEWARE = [
@@ -57,6 +63,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "core.urls"
@@ -72,9 +79,17 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.request",
             ],
         },
     },
+]
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    "django.contrib.auth.backends.ModelBackend",
+    # `allauth` specific authentication methods, such as login by email
+    "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
 WSGI_APPLICATION = "core.wsgi.application"
@@ -133,3 +148,26 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CHATGPT_API_KEY = env("CHATGPT_API_KEY", default="unable-to-fetch-key")
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+        "OAUTH_PKCE_ENABLED": True,
+    }
+}
+
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_LOGIN_METHODS = {"email"}
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = True
+ACCOUNT_LOGIN_BY_CODE_ENABLED = True
+ACCOUNT_EMAIL_VERIFICATION_BY_CODE_ENABLED = True
+
+HEADLESS_ONLY = True
