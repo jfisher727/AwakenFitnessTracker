@@ -14,7 +14,3 @@ def get_by_id(id: int) -> User:
 
 def get_by_id_set(id_set: list[int]) -> list[User]:
     return User.objects.filter(id__in=id_set).all()
-
-
-def get_by_username(username: str) -> User:
-    return User.objects.get(username=username)
