@@ -147,6 +147,13 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = env("EMAIL_USERNAME")
+EMAIL_HOST_PASSWORD = env("EMAIL_PASSWORD")
+
 CHATGPT_API_KEY = env("CHATGPT_API_KEY", default="unable-to-fetch-key")
 
 SOCIALACCOUNT_PROVIDERS = {
@@ -160,6 +167,13 @@ SOCIALACCOUNT_PROVIDERS = {
         },
         "OAUTH_PKCE_ENABLED": True,
     }
+}
+
+
+HEADLESS_FRONTEND_URLS = {
+    "account_confirm_email": "myapp:///account/verify_email/{key}",
+    "account_reset_password_from_key": "myapp:///account/password/reset/{key}",
+    "account_signup": "myapp:///account/signup",
 }
 
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
