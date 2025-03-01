@@ -1,13 +1,10 @@
-import { useState, useEffect } from 'react';
-import { router, Link } from 'expo-router';
-import { Text, View, Pressable, useColorScheme, Platform } from 'react-native';
+import { useEffect } from 'react';
+import { Link } from 'expo-router';
+import { Text, View, useColorScheme } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { useNavigation } from 'expo-router';
 
-import { useSession } from '@/auth/AuthContext';
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
-import { setup, login, Client } from '@/auth/allauth';
-
 import CustomButton from '@/components/button';
 
 

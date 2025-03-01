@@ -129,16 +129,16 @@ export async function register(data: any) {
     return await request('POST', URLs.SIGNUP, data, null, null);
 }
 
-export async function forgotten_password(data: any) {
+export async function forgottenPassword(data: any) {
     return await request('POST', URLs.REQUEST_PASSWORD_RESET, data, null, null);
 }
 
-export async function password_reset(data: any) {
+export async function passwordReset(data: any) {
     return await request('POST', URLs.RESET_PASSWORD, data, null, null);
 }
 
-export async function verify_email(data: any) {
-    return await request('POST', URLs.VERIFY_EMAIL, data, null, null);
+export async function verifyEmail(data: any, token: string) {
+    return await request('POST', URLs.VERIFY_EMAIL, data, null, token);
 }
 
 export function setup(client: string, withCredentials: boolean) {

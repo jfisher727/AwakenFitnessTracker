@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { router, Link } from 'expo-router';
+import { router, Redirect } from 'expo-router';
 import { Text, View, useColorScheme, Platform } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { useNavigation } from 'expo-router';
@@ -42,9 +42,11 @@ export default function Register() {
         setResponse({ fetching: true, content: null });
         const response = await register({ email: email, username: username, password: password });
         setResponse({ fetching: false, content: response });
-        console.log(response);
-        if (response.status === 200) {
-            console.log("200 status back");
+        if (response.status === 401) {
+            // this is the expected(?) status response
+            signIn(response.meta.session_token, username);
+            router.replace('/account/verify_email');
+            //return <Redirect href="/account/verify_email" />;
         }
 
     }
@@ -109,7 +111,7 @@ export default function Register() {
                                 <></>
                             )
                         }
-                        <CustomButton text="Register" onPress={registerPressed} disabled={response.fetching} />
+                        <CustomButton text="Register" onPress={registerPressed} disabled={response.fetching || !passwordsMatch} />
                     </View>
                 </View>
             </SafeAreaView>

@@ -1,19 +1,19 @@
 import { useState } from 'react';
+import { router } from 'expo-router';
 import { Text, View, Pressable, useColorScheme, Platform } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { useSession } from '@/auth/AuthContext';
 import { lightColors, darkColors } from '@/styles/global';
-import { setup, login, Client } from '@/auth/allauth';
+import { setup, forgottenPassword, Client } from '@/auth/allauth';
 
 import TextInputField from '@/components/text_input';
 
 
 export default function ForgottenPassword() {
     const colorScheme = useColorScheme();
-    const { signIn } = useSession();
 
     const [email, setEmail] = useState('');
+    const [response, setResponse] = useState({ fetching: false, content: null });
 
     var client = Client.BROWSER;
     if (Platform.OS !== "web") {
@@ -22,7 +22,12 @@ export default function ForgottenPassword() {
     setup(client, true);
 
     async function submitPressed() {
-        // do something
+        setResponse({ fetching: true, content: null });
+        const response = await forgottenPassword({ email: email });
+        setResponse({ fetching: false, content: response });
+        if (response.status === 200) {
+            router.replace('/');
+        }
     }
 
 
