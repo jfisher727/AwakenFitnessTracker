@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link } from 'expo-router';
+import { router } from 'expo-router';
 import { Text, View, useColorScheme } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { useNavigation } from 'expo-router';
@@ -15,6 +15,14 @@ export default function Welcome() {
     useEffect(() => {
         navigation.setOptions({ headerShow: false });
     }, [navigation]);
+
+    function registerPressed() {
+        router.navigate(href = "/account/register");
+    }
+
+    function signInPressed() {
+        router.navigate(href = "/account/sign_in");
+    }
 
 
     return (
@@ -42,12 +50,8 @@ export default function Welcome() {
                 </View>
                 <View style={{ paddingTop: '15%' }}>
                     <View style={baseStyles.modal}>
-                        <Link href="account/sign_in" asChild>
-                            <CustomButton text="Sign In" />
-                        </Link>
-                        <Link href="account/register" asChild>
-                            <CustomButton text="Register" />
-                        </Link>
+                        <CustomButton text="Sign In" onPress={signInPressed} disabled={false} />
+                        <CustomButton text="Register" onPress={registerPressed} disabled={false} />
                     </View>
                 </View>
             </SafeAreaView>

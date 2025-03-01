@@ -1,5 +1,6 @@
 import { Text, View, useColorScheme } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
+import { router } from 'expo-router';
 
 import { useSession } from '@/auth/AuthContext';
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
@@ -12,6 +13,10 @@ export default function Profile() {
 
     function logoutPressed() {
         signOut();
+    }
+
+    function verifyEmailPressed() {
+        router.navigate(href = '/account/verify_email')
     }
 
     return (
@@ -30,6 +35,8 @@ export default function Profile() {
                 <View style={{
                     ...baseStyles.modal
                 }}>
+
+                    <CustomButton text="Verify Email" onPress={verifyEmailPressed} disabled={false} />
                     <CustomButton text="Logout" onPress={logoutPressed} disabled={false} />
                 </View>
             </SafeAreaView>

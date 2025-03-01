@@ -7,6 +7,7 @@ import { lightColors, darkColors } from '@/styles/global';
 import { setup, forgottenPassword, Client } from '@/auth/allauth';
 
 import TextInputField from '@/components/text_input';
+import CustomButton from '@/components/button';
 
 
 export default function ForgottenPassword() {
@@ -67,23 +68,7 @@ export default function ForgottenPassword() {
                             inputMode="email"
                             header="Email"
                         />
-                        <Pressable
-                            onPress={submitPressed}
-                            disabled={false}
-                            style={{
-                                padding: 15,
-                                borderRadius: 10,
-                                alignItems: 'center',
-                                marginTop: 10,
-                                marginBottom: 10,
-                                backgroundColor: colorScheme === 'light' ? lightColors.secondaryColor : darkColors.secondaryColor
-                            }}>
-                            <Text
-                                style={{
-                                    fontSize: 25,
-                                    color: colorScheme === 'light' ? lightColors.buttonText : darkColors.buttonText
-                                }}>Submit</Text>
-                        </Pressable>
+                        <CustomButton text='Submit' onPress={submitPressed} disabled={false} />
                     </View>
                 </View>
             </SafeAreaView>

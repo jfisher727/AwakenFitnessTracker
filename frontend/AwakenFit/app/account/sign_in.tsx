@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import { router, Link } from 'expo-router';
 import { Text, View, useColorScheme, Platform } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-import { useNavigation } from 'expo-router';
+import { useNavigation, router } from 'expo-router';
 
 import { useSession } from '@/auth/AuthContext';
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
@@ -39,6 +38,10 @@ export default function SignIn() {
             signIn(response.meta.session_token, response.data.user.username);
             router.replace('/');
         }
+    }
+
+    function forgottenPasswordPressed() {
+        router.navigate(href = '/account/forgotten_password');
     }
 
     return (
@@ -81,12 +84,7 @@ export default function SignIn() {
                             header="Password"
                         />
                         <CustomButton text="Login" onPress={loginPressed} disabled={response.fetching} />
-                        <Link
-                            href="/account/forgotten_password"
-                            asChild
-                        >
-                            <CustomButton text="ForgottenPassword" />
-                        </Link>
+                        <CustomButton text="ForgottenPassword" onPress={forgottenPasswordPressed} disabled={false} />
                     </View>
                 </View>
             </SafeAreaView>

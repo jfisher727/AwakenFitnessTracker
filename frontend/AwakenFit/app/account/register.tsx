@@ -46,7 +46,6 @@ export default function Register() {
             // this is the expected(?) status response
             signIn(response.meta.session_token, username);
             router.replace('/account/verify_email');
-            //return <Redirect href="/account/verify_email" />;
         }
 
     }
