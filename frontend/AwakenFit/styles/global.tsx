@@ -57,33 +57,3 @@ export const baseStyles = StyleSheet.create({
         marginBottom: 10,
     }
 });
-
-const light = StyleSheet.create({
-    container: {
-        backgroundColor: lightColors.background,
-    },
-    header: {
-        color: lightColors.primaryColor
-    },
-    subHeader: {
-        color: lightColors.primaryColor,
-    },
-    button: {
-        backgroundColor: lightColors.secondaryColor,
-    }
-});
-
-const dark = StyleSheet.create({
-    container: {
-        backgroundColor: darkColors.background,
-    },
-    header: {
-        color: darkColors.primaryColor
-    },
-    subHeader: {
-        color: darkColors.primaryColor,
-    },
-    button: {
-        backgroundColor: darkColors.secondaryColor,
-    }
-});
