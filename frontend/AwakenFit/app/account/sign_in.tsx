@@ -19,6 +19,7 @@ export default function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [response, setResponse] = useState({ fetching: false, content: null });
+    const [error, setError] = useState({ show: false, message: '' });
 
     useEffect(() => {
         navigation.setOptions({ headerShow: true, title: "Sign In" });
@@ -36,12 +37,17 @@ export default function SignIn() {
         setResponse({ fetching: false, content: response });
         if (response.status === 200) {
             signIn(response.meta.session_token, response.data.user.username);
-            router.replace('/');
+            router.replace("/");
+        }
+        else {
+            setError({ show: true, message: "Unable to validate username/password" });
+            setEmail("");
+            setPassword("");
         }
     }
 
     function forgottenPasswordPressed() {
-        router.navigate(href = '/account/forgotten_password');
+        router.navigate(href = "/account/forgotten_password");
     }
 
     return (
@@ -49,25 +55,25 @@ export default function SignIn() {
             <SafeAreaView
                 style={{
                     ...baseStyles.container,
-                    backgroundColor: colorScheme === 'light' ? lightColors.background : darkColors.background
+                    backgroundColor: colorScheme === "light" ? lightColors.background : darkColors.background
                 }}>
                 <View>
                     <Text
                         style={{
                             ...baseStyles.header,
-                            color: colorScheme === 'light' ? lightColors.primaryColor : darkColors.primaryColor
+                            color: colorScheme === "light" ? lightColors.primaryColor : darkColors.primaryColor
                         }}>
                         AwakenFit
                     </Text>
                     <Text
                         style={{
                             ...baseStyles.subHeader,
-                            color: colorScheme === 'light' ? lightColors.primaryColor : darkColors.accent
+                            color: colorScheme === "light" ? lightColors.primaryColor : darkColors.accent
                         }}>
                         Sign In
                     </Text>
                 </View>
-                <View style={{ paddingTop: '15%' }}>
+                <View style={{ paddingTop: "15%" }}>
                     <View style={baseStyles.modal}>
                         <TextInputField
                             onChangeText={setEmail}
@@ -83,6 +89,13 @@ export default function SignIn() {
                             inputMode="text"
                             header="Password"
                         />
+                        {
+                            error.show ? (
+                                <Text>{error.message}</Text>)
+                                : (
+                                    <></>
+                                )
+                        }
                         <CustomButton text="Login" onPress={loginPressed} disabled={response.fetching} />
                         <CustomButton text="ForgottenPassword" onPress={forgottenPasswordPressed} disabled={false} />
                     </View>

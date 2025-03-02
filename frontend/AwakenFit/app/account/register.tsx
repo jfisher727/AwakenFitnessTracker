@@ -47,6 +47,9 @@ export default function Register() {
             signIn(response.meta.session_token, username);
             router.replace('/account/verify_email');
         }
+        else {
+            // need to review the error message if the email is already taken or what not
+        }
 
     }
 
