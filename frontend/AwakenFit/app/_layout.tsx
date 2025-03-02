@@ -8,8 +8,7 @@ export default function RootLayout() {
     return (
         <SessionProvider>
             <Stack>
-                <Stack.Screen name="sign-in" />
-                <Stack.Screen name="(app)" />
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             </Stack>
         </SessionProvider>
     );

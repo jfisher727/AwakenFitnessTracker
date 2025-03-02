@@ -125,6 +125,22 @@ export async function login(data: any) {
     return await request('POST', URLs.LOGIN, data, null, null);
 }
 
+export async function register(data: any) {
+    return await request('POST', URLs.SIGNUP, data, null, null);
+}
+
+export async function forgottenPassword(data: any) {
+    return await request('POST', URLs.REQUEST_PASSWORD_RESET, data, null, null);
+}
+
+export async function passwordReset(data: any) {
+    return await request('POST', URLs.RESET_PASSWORD, data, null, null);
+}
+
+export async function verifyEmail(data: any, token: string) {
+    return await request('POST', URLs.VERIFY_EMAIL, data, null, token);
+}
+
 export function setup(client: string, withCredentials: boolean) {
     if (client === 'app') {
         settings.client = Client.APP;
