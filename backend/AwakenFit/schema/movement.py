@@ -29,6 +29,10 @@ class MovementNode(DjangoObjectType):
             "movement_type",
         )
 
+    @classmethod
+    def get_queryset(cls, queryset, info):
+        return queryset.order_by("name")
+
 
 class Query(ObjectType):
     movement = Node.Field(MovementNode)

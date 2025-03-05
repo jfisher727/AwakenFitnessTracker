@@ -81,6 +81,7 @@ export default function SignIn() {
                             secureTextEntry={false}
                             inputMode="email"
                             header="Email"
+                            showHeader={true}
                         />
                         <TextInputField
                             onChangeText={setPassword}
@@ -88,6 +89,7 @@ export default function SignIn() {
                             secureTextEntry={true}
                             inputMode="text"
                             header="Password"
+                            showHeader={true}
                         />
                         {
                             error.show ? (

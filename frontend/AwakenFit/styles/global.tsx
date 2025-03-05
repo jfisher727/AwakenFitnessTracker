@@ -55,5 +55,19 @@ export const baseStyles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 10,
         marginBottom: 10,
+    },
+    spacedRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    selectHeader: {
+        fontSize: 25,
+        margin: 10
+    },
+    selectItem: {
+        borderRadius: 10,
+        padding: 5,
+        fontSize: 15,
     }
 });

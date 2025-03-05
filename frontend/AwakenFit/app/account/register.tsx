@@ -84,6 +84,7 @@ export default function Register() {
                             secureTextEntry={false}
                             inputMode="email"
                             header="Email"
+                            showHeader={true}
                         />
                         <TextInputField
                             onChangeText={setUsername}
@@ -91,6 +92,7 @@ export default function Register() {
                             secureTextEntry={false}
                             inputMode="text"
                             header="Username"
+                            showHeader={true}
                         />
                         <TextInputField
                             onChangeText={setPassword}
@@ -98,6 +100,7 @@ export default function Register() {
                             secureTextEntry={true}
                             inputMode="text"
                             header="Password"
+                            showHeader={true}
                         />
                         <TextInputField
                             onChangeText={setConfirmPassword}
@@ -105,6 +108,7 @@ export default function Register() {
                             secureTextEntry={true}
                             inputMode="text"
                             header="Confirm Password"
+                            showHeader={true}
                         />
                         {
                             !passwordsMatch ? (

@@ -62,6 +62,7 @@ export default function VerifyEmail() {
                         secureTextEntry={false}
                         inputMode="text"
                         header="Code from Email"
+                        showHeader={true}
                     />
                     <CustomButton text="Verify Email" onPress={verifyEmailPressed} disabled={response.fetching} />
                 </View>
