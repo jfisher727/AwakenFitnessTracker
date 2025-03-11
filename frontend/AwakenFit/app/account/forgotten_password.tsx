@@ -6,8 +6,8 @@ import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { lightColors, darkColors } from '@/styles/global';
 import { setup, forgottenPassword, Client } from '@/auth/allauth';
 
-import TextInputField from '@/components/text_input';
-import CustomButton from '@/components/button';
+import TextInputField from '@/components/general/text_input';
+import CustomButton from '@/components/general/button';
 
 
 export default function ForgottenPassword() {

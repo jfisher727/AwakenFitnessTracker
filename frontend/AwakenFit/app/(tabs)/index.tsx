@@ -6,7 +6,7 @@ import { baseStyles, lightColors, darkColors } from '@/styles/global';
 
 import StartWorkout from '@/components/start_workout';
 import WeekReview from '@/components/week_review';
-import HorzontalLine from '@/components/horizonal_line';
+import HorzontalLine from '@/components/general/horizonal_line';
 
 
 export default function Index() {

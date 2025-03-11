@@ -4,7 +4,7 @@ import { useState } from "react";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 import { baseStyles, darkColors, lightColors } from '@/styles/global';
-import TextInputField from './text_input';
+import TextInputField from '@/components/general/text_input';
 
 
 type keyvalue = {
@@ -14,17 +14,17 @@ type keyvalue = {
 
 type params = {
     placeHolder: string,
+    selectedValue: keyvalue,
     options: keyvalue[],
     onSelect: any,
     showSearch: boolean,
 }
 
-export default function DropdownSelect({ placeHolder, options, onSelect, showSearch = false }: params) {
+export default function DropdownSelect({ placeHolder, selectedValue, options, onSelect, showSearch = false }: params) {
     const colorScheme = useColorScheme();
 
     const [showMenu, setShowMenu] = useState(false);
     const [searchText, setSearchText] = useState('');
-    const [selectedValue, setSelectedValue] = useState({ key: '', value: '' });
     let filteredOptions = [...options];
     if (showSearch && searchText.length >= 3) {
         filteredOptions = options.filter((option) => {
@@ -47,8 +47,12 @@ export default function DropdownSelect({ placeHolder, options, onSelect, showSea
     };
 
     const onItemClick = (option: keyvalue) => {
-        setSelectedValue(option);
-        onSelect({ key: option.key, value: option.value });
+        if (isSelected(option)) {
+            onSelect({ key: "", value: "" });
+        }
+        else {
+            onSelect({ key: option.key, value: option.value });
+        }
         setShowMenu(false);
     };
 

@@ -50,7 +50,10 @@ export default function TabsLayout() {
     // This layout can be deferred because it's not the root layout.
     return (
         <ApolloProvider client={client}>
-            <Tabs screenOptions={{ headerShown: false, tabBarActiveTintColor: colorScheme === 'light' ? lightColors.primaryColor : darkColors.primaryColor }}>
+            <Tabs screenOptions={{
+                headerShown: false,
+                tabBarActiveTintColor: colorScheme === 'light' ? lightColors.primaryColor : darkColors.primaryColor
+            }}>
                 <Tabs.Screen
                     name="index"
                     options={{
@@ -70,6 +73,12 @@ export default function TabsLayout() {
                     options={{
                         title: 'Profile',
                         tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
+                    }}
+                />
+                <Tabs.Screen
+                    name="workout"
+                    options={{
+                        href: null,
                     }}
                 />
             </Tabs>

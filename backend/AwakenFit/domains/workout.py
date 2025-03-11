@@ -35,7 +35,7 @@ def get_by_user_id(id: int) -> list[Workout] | None:
 
 
 def filter_queryset_by_user(queryset: QuerySet, user: User) -> QuerySet:
-    return queryset.filter(user=user)
+    return queryset.filter(user=user).order_by("name")
 
 
 def create_workout(

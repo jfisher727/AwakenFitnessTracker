@@ -1,7 +1,7 @@
 import { Text, View, useColorScheme } from 'react-native';
 
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
-import CustomButton from './button';
+import CustomButton from './general/button';
 
 export default function WeekReview() {
     const colorScheme = useColorScheme();

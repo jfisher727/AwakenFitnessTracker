@@ -16,10 +16,16 @@ class Workout(BaseModel):
     start_time = models.DateTimeField(default=current_datetime)
     stop_time = models.DateTimeField(default=current_datetime)
     template = models.BooleanField(default=False)
-    notes = models.CharField(max_length=500)
+    name = models.CharField(max_length=255, blank=True)
+    notes = models.CharField(max_length=500, blank=True)
 
     def __str__(self) -> str:
-        return ", ".join([self.user.username, str(self.start_time)])
+        repr = list()
+        repr.append(self.user.username)
+        if self.name:
+            repr.append(self.name)
+        repr.append(str(self.start_time))
+        return ", ".join(repr)
 
     def to_json(self) -> str:
         exercises = [entry.to_json() for entry in self.exercises.all()]

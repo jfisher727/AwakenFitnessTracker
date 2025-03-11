@@ -18,7 +18,7 @@ from AwakenFit.domains import set as SetDomain
 from AwakenFit.domains import mutation as MutationDomain
 
 
-from .exercise import ExerciseCreateTemplateInput, ExerciseCreateCompletedInput
+from .exercise import ExerciseNode, ExerciseCreateTemplateInput, ExerciseCreateCompletedInput
 from .message import MessageNode
 
 
@@ -27,20 +27,24 @@ class WorkoutNode(DjangoObjectType):
         model = Workout
         interfaces = (Node,)
         description = ""
-        filter_fields = {
-            "id": ["exact"],
-        }
+        filter_fields = {"id": ["exact"], "name": ["icontains"], "template": ["exact"]}
         fields = (
             "id",
             "start_time",
             "stop_time",
             "template",
+            "name",
             "notes",
         )
+
+    exercises = List(ExerciseNode)
 
     @classmethod
     def get_queryset(cls, queryset, info):
         return WorkoutDomain.filter_queryset_by_user(queryset, info.context.user)
+
+    def resolve_exercises(self, info):
+        return ExerciseDomain.get_by_workout_id(self.id)
 
 
 class WorkoutCreateTemplateInput(InputObjectType):

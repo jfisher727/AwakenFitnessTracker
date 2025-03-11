@@ -4,7 +4,7 @@ import { router } from 'expo-router';
 
 import { useSession } from '@/auth/AuthContext';
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
-import CustomButton from '@/components/button';
+import CustomButton from '@/components/general/button';
 
 
 export default function Profile() {

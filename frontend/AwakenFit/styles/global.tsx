@@ -30,11 +30,16 @@ export const baseStyles = StyleSheet.create({
         margin: 10,
         fontWeight: "bold",
     },
+    mediumHeader: {
+        fontSize: 40,
+        margin: 10,
+    },
     subHeader: {
         fontSize: 30,
         margin: 10
     },
     modal: {
+        flexDirection: 'column',
         borderRadius: 10,
         backgroundColor: "#FFFFFF",
         padding: 10,
@@ -60,6 +65,18 @@ export const baseStyles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between'
+    },
+    selectableRow: {
+        margin: 2,
+        padding: 7,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    centeredRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     selectHeader: {
         fontSize: 25,

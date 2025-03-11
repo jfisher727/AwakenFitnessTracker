@@ -7,8 +7,8 @@ import { useSession } from '@/auth/AuthContext';
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
 import { setup, login, Client } from '@/auth/allauth';
 
-import TextInputField from '@/components/text_input';
-import CustomButton from '@/components/button';
+import TextInputField from '@/components/general/text_input';
+import CustomButton from '@/components/general/button';
 
 
 export default function SignIn() {

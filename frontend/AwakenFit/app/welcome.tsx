@@ -1,11 +1,10 @@
 import { useEffect } from 'react';
-import { router } from 'expo-router';
+import { router, useNavigation } from 'expo-router';
 import { Text, View, useColorScheme } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-import { useNavigation } from 'expo-router';
 
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
-import CustomButton from '@/components/button';
+import CustomButton from '@/components/general/button';
 
 
 export default function Welcome() {
@@ -17,11 +16,11 @@ export default function Welcome() {
     }, [navigation]);
 
     function registerPressed() {
-        router.navigate(href = "/account/register");
+        router.navigate("/account/register");
     }
 
     function signInPressed() {
-        router.navigate(href = "/account/sign_in");
+        router.navigate("/account/sign_in");
     }
 
 
