@@ -1,52 +1,59 @@
 import { useState } from 'react';
-import { Text, Pressable, View, FlatList, useColorScheme } from 'react-native';
+import { Text, View, FlatList, useColorScheme } from 'react-native';
 import { router } from 'expo-router';
 
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
 
+import { ExerciseProps, WorkoutProps } from '@/workout/properties';
+
+import { useWorkout } from '@/workout/WorkoutContext';
+
 import HorzontalLine from '../general/horizonal_line';
 import CustomButton from '../general/button';
 
-import MovementList from './movement_list';
-
-type ExerciseProps = {
-    id: string,
-    notes: string,
-    movement: {
-        name: string,
-        description: string,
-        primaryMuscleGroup: string,
-        equipmentType: string,
-        movementType: string
-    },
-    sets: {
-        id: string,
-        sequenceNumber: number,
-        minReps: number,
-        maxReps: number,
-        duration: string,
-        setType: string,
-        parentSet: string
-    }[]
-};
-
-type WorkoutProps = {
-    cursor: string,
-    node: {
-        id: string,
-        name: string,
-        notes: string,
-        exercises: ExerciseProps[],
-    }
-};
-
 type params = {
     workouts: WorkoutProps[],
-    loading?: Boolean
+    loading: Boolean
 }
 
-export default function WorkoutList({ workouts, loading }: params) {
+type exerciseParams = {
+    exercises: ExerciseProps[],
+}
+
+const MovementEntry = (exercise: ExerciseProps) => {
     const colorScheme = useColorScheme();
+
+    return (
+        <View>
+            <Text
+                style={{
+                    ...baseStyles.subHeader,
+                    color: colorScheme === 'light' ? lightColors.primaryColor : darkColors.primaryColor
+                }}
+            >
+                {exercise.movement.name}
+            </Text>
+            <FlatList
+                data={exercise.sets}
+                renderItem={({ item }) => <Text>Set # - {item.sequenceNumber} Min Reps {item.minReps} Max Reps {item.maxReps}</Text>}
+                keyExtractor={item => item.id}
+            />
+        </View>);
+}
+
+function MovementList({ exercises }: exerciseParams) {
+    return (
+        <FlatList
+            data={exercises}
+            renderItem={({ item }) => <MovementEntry id={item.id} movement={item.movement} sets={item.sets} notes={item.notes} />}
+            keyExtractor={item => item.id}
+            ItemSeparatorComponent={HorzontalLine}
+        />
+    );
+}
+
+export default function WorkoutList({ workouts }: params) {
+    const { startWorkout } = useWorkout();
 
     const RowEntry = ({ node }: WorkoutProps) => {
         const [expanded, setExpanded] = useState(false);
@@ -58,6 +65,7 @@ export default function WorkoutList({ workouts, loading }: params) {
 
         function templateSelected() {
             if (expanded) {
+                startWorkout();
                 router.push({ pathname: '/(tabs)/workout', params: { id: node.id } });
             }
         }

@@ -3,10 +3,9 @@ import { Redirect, Tabs } from 'expo-router';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, ApolloLink, concat } from '@apollo/client';
 
-
 import { useSession } from '../../auth/AuthContext';
-import { darkColors, lightColors } from '@/styles/global';
 
+import { darkColors, lightColors } from '@/styles/global';
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 

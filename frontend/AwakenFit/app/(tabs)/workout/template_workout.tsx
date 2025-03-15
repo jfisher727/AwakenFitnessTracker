@@ -72,7 +72,7 @@ export default function TemplateWorkout() {
 
                     {
                         data &&
-                        <WorkoutList workouts={data.workouts.edges} />
+                        <WorkoutList workouts={data.workouts.edges} loading={loading} />
                     }
                 </View>
             </SafeAreaView>

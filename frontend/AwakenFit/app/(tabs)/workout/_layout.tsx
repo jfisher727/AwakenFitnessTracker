@@ -5,11 +5,16 @@ export default function WorkoutLayout() {
 
     return (
         <Stack>
-            <Stack.Screen name="index" />
-            <Stack.Screen name="blank_workout" />
-            <Stack.Screen name="template_workout" />
+            <Stack.Screen name="index" options={{
+                headerShown: false
+            }} />
+            <Stack.Screen name="template_workout" options={{
+                title: "",
+                headerBackTitle: "Back",
+            }} />
             <Stack.Screen name="modal" options={{
-                title: "Start a Workout"
+                title: "Start a Workout",
+                headerBackVisible: false
             }} />
         </Stack>
     );

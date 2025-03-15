@@ -1,7 +1,16 @@
+import { useEffect, useState, useReducer } from 'react';
 import { Text, TextInput, View, FlatList, useColorScheme } from 'react-native';
+import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { useLocalSearchParams } from 'expo-router';
 
-import { gql, useQuery } from '@apollo/client';
+import { gql, useLazyQuery } from '@apollo/client';
+
+import { workoutStateReducer, workoutStateProps } from '@/workout/WorkoutStateReducer';
+
+import { ExerciseProps } from '@/workout/properties';
+
+import { baseStyles, lightColors, darkColors } from '@/styles/global';
+import CustomButton from '@/components/general/button';
 
 const GET_WORKOUT = gql`
     query GetWorkout($id: ID!) {
@@ -32,32 +41,62 @@ const GET_WORKOUT = gql`
     }
 `;
 
+const INITIAL_STATE: workoutStateProps = {
+    screen: 'blank',
+    template_id: '',
+    exercises: []
+};
+
 export default function Workout() {
     const params = useLocalSearchParams();
-    const { loading, error, data } = useQuery(GET_WORKOUT, {
-        variables: { id: params.id }
-    });
+    const colorScheme = useColorScheme();
 
+    const [execute, { loading, error, data }] = useLazyQuery(GET_WORKOUT);
 
-    if (!params) {
-        console.log("Blank workout");
+    const [state, dispatch] = useReducer(workoutStateReducer, INITIAL_STATE);
+
+    function handleSetExercises(exercises: ExerciseProps[]) {
+        dispatch({
+            type: 'SET_EXERCISES',
+            payload: exercises
+        });
     }
 
-    if (loading) {
+    useEffect(() => {
+        if (params.id) {
+            execute({ variables: { id: params.id } });
+        }
+    }, []);
 
+    useEffect(() => {
+        if (data) {
+            console.log('retreived data');
+            console.log(data.workout.exercises);
+            handleSetExercises(data.workout.exercises);
+        }
+    }, [data, loading]);
+
+    function stopWorkoutPressed() {
+        console.log('Workout Ended');
     }
 
-    if (error) {
-        console.log(error);
-    }
-
-    if (data) {
-        console.log(data);
-    }
+    console.log(state);
 
     return (
-        <View>
-            <Text>Workout Index Page</Text>
-        </View>
+        <SafeAreaProvider>
+            <SafeAreaView style={{
+                ...baseStyles.container,
+                backgroundColor: colorScheme === 'light' ? lightColors.background : darkColors.background
+            }}>
+                <View>
+                    <Text>Workout Index Page</Text>
+                    <CustomButton
+                        text="Stop Workout"
+                        onPress={stopWorkoutPressed}
+                        disabled={false}
+                    />
+                </View>
+            </SafeAreaView>
+        </SafeAreaProvider>
     );
 }
