@@ -1,9 +1,8 @@
-import { useColorScheme } from 'react-native';
+import { Text, useColorScheme } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
 
-import ExerciseSearch from '@/components/workout/exercise_search';
 
 
 
@@ -17,7 +16,7 @@ export default function Calendar() {
                 ...baseStyles.container,
                 backgroundColor: colorScheme === 'light' ? lightColors.background : darkColors.background
             }}>
-                <ExerciseSearch />
+                <Text>this is an empty calendar</Text>
             </SafeAreaView>
         </SafeAreaProvider>
     );

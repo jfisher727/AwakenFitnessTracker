@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Text, TextInput, View, FlatList, useColorScheme } from 'react-native';
+import { Text, TextInput, View, Pressable, FlatList, useColorScheme } from 'react-native';
 
 import { gql, useLazyQuery } from '@apollo/client';
 
@@ -26,6 +26,7 @@ const GET_MOVEMENTS = gql`
                         node {
                             id
                             name
+                            description
                             primaryMuscleGroup
                             equipmentType
                             movementType
@@ -43,9 +44,18 @@ type QueryVariables = {
     muscle?: string
 };
 
+type MomvementNode = {
+    id: string,
+    name: string,
+    description: string,
+    primaryMuscleGroup: string,
+    equipmentType: String,
+    movementType: String
+};
+
 type MovementProps = {
     cursor: string,
-    node: { id: string, name: string, primaryMuscleGroup: string, equipmentType: String, movementType: String }
+    node: MomvementNode
 };
 
 type KeyValuePair = {
@@ -86,8 +96,11 @@ const muscleGroupOptions: KeyValuePair[] = [
 
 const DEBOUNCE_DELAY: number = 500; // milliseconds
 
+interface ExerciseSearchProps {
+    addExercise: (movement: MomvementNode) => void;
+}
 
-export default function ExerciseSearch() {
+export default function ExerciseSearch({ addExercise }: ExerciseSearchProps) {
     const colorScheme = useColorScheme();
 
     const [execute, { loading, error, data }] = useLazyQuery(GET_MOVEMENTS);
@@ -99,9 +112,9 @@ export default function ExerciseSearch() {
 
     const RowEntry = ({ node }: MovementProps) => {
         return (
-            <View style={baseStyles.selectableRow}>
+            <Pressable style={baseStyles.selectableRow} onPress={() => addExercise(node)}>
                 <Text style={{ color: lightColors.primaryColor, fontSize: 20 }}>{node.name}</Text>
-            </View>
+            </Pressable>
         );
     };
 

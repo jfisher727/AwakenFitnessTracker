@@ -4,9 +4,7 @@ import { router } from 'expo-router';
 
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
 
-import { ExerciseProps, WorkoutProps } from '@/workout/properties';
-
-import { useWorkout } from '@/workout/WorkoutContext';
+import { ExerciseProps, WorkoutProps } from '@/graphql/properties';
 
 import HorzontalLine from '../general/horizonal_line';
 import CustomButton from '../general/button';
@@ -53,7 +51,6 @@ function MovementList({ exercises }: exerciseParams) {
 }
 
 export default function WorkoutList({ workouts }: params) {
-    const { startWorkout } = useWorkout();
 
     const RowEntry = ({ node }: WorkoutProps) => {
         const [expanded, setExpanded] = useState(false);
@@ -65,7 +62,6 @@ export default function WorkoutList({ workouts }: params) {
 
         function templateSelected() {
             if (expanded) {
-                startWorkout();
                 router.push({ pathname: '/(tabs)/workout', params: { id: node.id } });
             }
         }

@@ -54,6 +54,18 @@ export const baseStyles = StyleSheet.create({
         marginBottom: 10,
         borderColor: darkColors.background,
     },
+    setTextInput: {
+        borderWidth: 1,
+        borderColor: darkColors.background,
+        borderRadius: 10,
+        margin: 10,
+        padding: 5,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: 100,
+        height: 100,
+    },
     button: {
         padding: 15,
         borderRadius: 10,
@@ -65,6 +77,12 @@ export const baseStyles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between'
+    },
+    leftJustifiedRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        padding: 10
     },
     selectableRow: {
         margin: 2,
