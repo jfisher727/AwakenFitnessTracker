@@ -79,7 +79,7 @@ class WorkoutCreateTemplate(Mutation):
 
         errors.extend(MutationDomain.validate_workout_template_input(input))
 
-        if len(errors) == 0:
+        if not errors:
             workout = WorkoutDomain.create_workout(user.id, timezone.now(), timezone.now(), True, input.notes)
             for entry in input.exercises:
                 created_exercise = ExerciseDomain.create_exercise(
@@ -136,7 +136,7 @@ class WorkoutCreateCompleted(Mutation):
 
         errors.extend(MutationDomain.validate_workout_completed_input(input))
 
-        if len(errors) == 0:
+        if not errors:
             workout = WorkoutDomain.create_workout(user.id, input.start_time, input.stop_time, False, input.notes)
             for entry in input.exercises:
                 created_exercise = ExerciseDomain.create_exercise(

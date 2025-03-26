@@ -75,5 +75,18 @@ class WorkoutDomainTest(TestCase):
         self.assertNotEqual(existing_workouts, updated_workouts, "New workout should have been created")
         self.assertEqual(existing_workouts + 1, updated_workouts)
 
+    def test_create_workout_no_notes(self):
+        existing_workouts = Workout.objects.count()
+
+        # Notes are an optional parameter from the graphql endpoint
+        # if the user doesn't provide any they'll come into this method as None
+        result = WorkoutDomain.create_workout(self.test_user.id, timezone.now(), timezone.now(), False, None)
+
+        updated_workouts = Workout.objects.count()
+
+        self.assertIsNotNone(result, "Should have resulted in a new Workout being returned")
+        self.assertNotEqual(existing_workouts, updated_workouts, "New workout should have been created")
+        self.assertEqual(existing_workouts + 1, updated_workouts)
+
     def test_create_workout_bad_input(self):
         pass

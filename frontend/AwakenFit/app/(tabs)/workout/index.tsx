@@ -1,7 +1,7 @@
 import { useEffect, useState, useReducer } from 'react';
-import { Text, TextInput, View, FlatList, useColorScheme } from 'react-native';
+import { View, useColorScheme } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, router } from 'expo-router';
 
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
 
@@ -16,6 +16,7 @@ import ExerciseSearch from '@/components/workout/exercise_search';
 import MovementList from '@/components/workout/movement_list';
 import CurrentExercise from '@/components/workout/current_exercise';
 import WorkoutReview from '@/components/workout/workout_review';
+import ExerciseHistorical from '@/components/workout/exercise_historical';
 
 const GET_WORKOUT = gql`
     query GetWorkout($id: ID!) {
@@ -27,6 +28,7 @@ const GET_WORKOUT = gql`
                 id
                 notes
                 movement {
+                    id
                     name
                     description
                     primaryMuscleGroup
@@ -70,7 +72,12 @@ const INITIAL_STATE: workoutStateProps = {
     start_time: CurrentISOFormattedDate(),
     stop_time: '',
     current_exercise: '',
-    exercises: []
+    exercises: [],
+    buttons: {
+        historical: true,
+        add_exercise: true,
+        end_workout: true
+    }
 };
 
 export default function Workout() {
@@ -79,7 +86,7 @@ export default function Workout() {
     const [currentScreen, setCurrentScreen] = useState(<ExerciseSearch addExercise={handleAddExercise} />);
 
     const [execute, { loading, error, data }] = useLazyQuery(GET_WORKOUT);
-    const [graphqlWorkout, graphqlWorkoutResult] = useMutation(RECORD_WORKOUT_MUTATION);
+    const [workoutMutation, workoutMutationResult] = useMutation(RECORD_WORKOUT_MUTATION);
 
     const [state, dispatch] = useReducer(workoutStateReducer, INITIAL_STATE);
 
@@ -172,10 +179,48 @@ export default function Workout() {
         }
     }
 
+    function handleButtonsToShow(historical: boolean, add_exercise: boolean, end_workout: boolean, add_set: boolean) {
+        dispatch({
+            type: ActionTypes.UPDATE_BUTTONS,
+            payload: {
+                historical: historical,
+                add_exercise: add_exercise,
+                end_workout: end_workout,
+                add_set: add_set
+            }
+        });
+    }
+
     function handleRecordWorkout() {
         console.log('recording working');
         // TODO: Need to format all the data we've collected into the proper JSON structure
         // to send to the GraphQL mutation
+        var mutation_input = {
+            'startTime': state.start_time,
+            'stopTime': state.start_time,
+            'exercises': []
+        };
+        state.exercises.forEach((element) => {
+            var exercise_data = {
+                'movementId': element.movement.id,
+                'standardSets': [],
+            };
+            element.sets.forEach((set) => {
+                var set_data = {
+                    'sequenceNumber': set.sequenceNumber,
+                    'completedReps': set.completedReps,
+                    'weight': set.completedReps
+                };
+                exercise_data.standardSets.push(set_data);
+            });
+            mutation_input.exercises.push(exercise_data);
+        });
+        console.log(JSON.stringify(mutation_input));
+        workoutMutation({
+            variables: {
+                input: mutation_input
+            }
+        });
     }
 
     function handleChangeScreen(name: string, template_id?: string) {
@@ -202,6 +247,24 @@ export default function Workout() {
     }, [data, loading]);
 
     useEffect(() => {
+        if (workoutMutationResult.data) {
+            console.log('workoutMutationResult data');
+            console.log(workoutMutationResult.data);
+            if (data.workoutCreateCompleted?.errors) {
+                console.log(data.workoutCreateCompleted.errors);
+            }
+            else {
+                router.navigate("/(tabs)");
+            }
+        }
+        if (workoutMutationResult.error) {
+            console.log('workoutMutationResult error');
+            console.log(workoutMutationResult.error);
+        }
+
+    }, [workoutMutationResult.data, workoutMutationResult.error]);
+
+    useEffect(() => {
         if (state.screen) {
             switch (state.screen) {
                 case ScreenOptions.MOVEMENT_LIST: {
@@ -211,10 +274,12 @@ export default function Workout() {
                             setCurrentExercise={handleSetCurrentExercise}
                             removeExercise={handleRemoveExercise}
                         />);
+                    handleButtonsToShow(false, true, true, false);
                     return;
                 }
                 case ScreenOptions.ADD_EXERCISE: {
                     setCurrentScreen(<ExerciseSearch addExercise={handleAddExercise} />);
+                    handleButtonsToShow(false, false, false, false);
                     return;
                 }
                 case ScreenOptions.CURRENT_EXERCISE: {
@@ -225,10 +290,17 @@ export default function Workout() {
                             recordSet={handleRecordSet}
                             navigateBack={handleChangeScreen}
                         />);
+                    handleButtonsToShow(true, false, false, true);
                     return;
                 }
                 case ScreenOptions.HISTORICAL: {
-                    setCurrentScreen(<Text>Historical</Text>);
+                    var current_exercise = state.exercises.filter((e) => e.id === state.current_exercise)[0];
+                    setCurrentScreen(
+                        <ExerciseHistorical
+                            movementId={current_exercise.movement.id}
+                            navigateBack={handleChangeScreen}
+                        />);
+                    handleButtonsToShow(false, false, false, false);
                     return;
                 }
                 case ScreenOptions.WORKOUT_REVIEW: {
@@ -240,6 +312,7 @@ export default function Workout() {
                             recordWorkout={handleRecordWorkout}
                         />
                     )
+                    handleButtonsToShow(false, false, false, false);
                     return;
                 }
                 default: {
@@ -248,6 +321,7 @@ export default function Workout() {
                         setCurrentExercise={handleSetCurrentExercise}
                         removeExercise={handleRemoveExercise}
                     />);
+                    handleButtonsToShow(false, true, false, false);
                     return;
                 }
             }
@@ -263,6 +337,10 @@ export default function Workout() {
         handleChangeScreen(ScreenOptions.ADD_EXERCISE);
     }
 
+    function historicalPresssed() {
+        handleChangeScreen(ScreenOptions.HISTORICAL);
+    }
+
     return (
         <SafeAreaProvider>
             <SafeAreaView style={{
@@ -271,18 +349,31 @@ export default function Workout() {
             }}>
                 <View>
                     {currentScreen}
-                    <View style={baseStyles.spacedRow}>
-                        <CustomButton
-                            text="Stop Workout"
-                            onPress={stopWorkoutPressed}
-                            disabled={false}
-                        />
-                        <CustomButton
-                            text="Add Exercise"
-                            onPress={addExercisePressed}
-                            disabled={false}
-                        />
-
+                    <View style={baseStyles.centeredRow}>
+                        {
+                            state.buttons.historical &&
+                            <CustomButton
+                                text="Historical"
+                                onPress={historicalPresssed}
+                                disabled={false}
+                            />
+                        }
+                        {
+                            state.buttons.add_exercise &&
+                            <CustomButton
+                                text="Add Exercise"
+                                onPress={addExercisePressed}
+                                disabled={false}
+                            />
+                        }
+                        {
+                            state.buttons.end_workout &&
+                            <CustomButton
+                                text="Stop Workout"
+                                onPress={stopWorkoutPressed}
+                                disabled={false}
+                            />
+                        }
                     </View>
                 </View>
             </SafeAreaView>

@@ -78,6 +78,7 @@ export default function TabsLayout() {
                     name="workout"
                     options={{
                         href: null,
+                        tabBarStyle: { display: 'none' }
                     }}
                 />
             </Tabs>

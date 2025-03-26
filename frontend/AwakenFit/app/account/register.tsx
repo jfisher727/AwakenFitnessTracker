@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { router, Redirect } from 'expo-router';
+import { router } from 'expo-router';
 import { Text, View, useColorScheme, Platform } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { useNavigation } from 'expo-router';

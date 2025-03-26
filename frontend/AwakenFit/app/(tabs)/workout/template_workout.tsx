@@ -55,7 +55,7 @@ export default function TemplateWorkout() {
     const colorScheme = useColorScheme();
 
     useEffect(() => {
-        execute({ variables: { count: 20, boolean: true } });
+        execute({ variables: { count: 20, template: true } });
     }, []);
 
     if (error) {

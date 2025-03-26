@@ -7,16 +7,24 @@ export type workoutStateProps = {
     stop_time: string,
     current_exercise: string,
     exercises: ExerciseProps[],
+    buttons: {
+        historical: boolean,
+        end_workout: boolean,
+        add_exercise: boolean,
+        add_set: boolean
+    }
 }
 
 export const ActionTypes = {
     ADD_EXERCISE: 'ADD_EXERCISE',
+    ADD_SETS: 'ADD_SETS',
     SET_EXERCISES: 'SET_EXERCISES',
     SET_STOP_TIME: 'SET_STOP_TIME',
     REMOVE_EXERCISE: 'REMOVE_EXERCISE',
     CHANGE_SCREEN: 'CHANGE_SCREEN',
     SET_CURRENT_EXERCISE: 'SET_CURRENT_EXERCISE',
-    RECORD_SET: 'RECORD_SET'
+    RECORD_SET: 'RECORD_SET',
+    UPDATE_BUTTONS: 'UPDATE_BUTTONS'
 }
 
 export const ScreenOptions = {
@@ -30,6 +38,14 @@ export const ScreenOptions = {
 interface AddExerciseAction {
     type: typeof ActionTypes.ADD_EXERCISE,
     payload: ExerciseProps
+}
+
+interface AddSetsAction {
+    type: typeof ActionTypes.ADD_SETS,
+    payload: {
+        exercise_id: string,
+        sets: number
+    }
 }
 
 interface SetStopTimeAction {
@@ -71,8 +87,21 @@ interface RecordSetAction {
     }
 }
 
+interface UpdateButtonsAction {
+    type: typeof ActionTypes.UPDATE_BUTTONS
+    payload: {
+        historical: boolean,
+        add_exercise: boolean,
+        end_workout: boolean,
+        add_set: boolean
+    }
+}
 
-type WorkoutActions = AddExerciseAction | SetStopTimeAction | SetExercisesAction | RemoveExerciseAction | ChangeScreenAction | SetCurrentExerciseAction | RecordSetAction;
+
+type WorkoutActions = (
+    AddExerciseAction | AddSetsAction | SetStopTimeAction | SetExercisesAction | RemoveExerciseAction |
+    ChangeScreenAction | SetCurrentExerciseAction | RecordSetAction | UpdateButtonsAction
+);
 
 export function workoutStateReducer(state: workoutStateProps, action: WorkoutActions): workoutStateProps {
     switch (action.type) {
@@ -86,6 +115,27 @@ export function workoutStateReducer(state: workoutStateProps, action: WorkoutAct
                 screen: ScreenOptions.CURRENT_EXERCISE
             }
         }
+        case ActionTypes.ADD_SETS: {
+            const { exercise_id, sets } = action.payload;
+
+            const updatedExercises = state.exercises.map((exercise) => {
+                if (exercise.id === exercise_id) {
+                    const updatedSets = [...exercise.sets];
+                    const existingSets = updatedExercises.length();
+                    for (var index = 1; index <= sets; index++) {
+                        const sequence_number = existingSets + index;
+                        updatedSets.concat({
+                            id: 'addedSet' + sequence_number,
+                            sequenceNumber: sequence_number,
+                            minReps: 0,
+                            maxReps: 0,
+                            setType: 'standard',
+                            parentSet: '',
+                        });
+                    }
+                }
+            })
+        }
         case ActionTypes.SET_STOP_TIME: {
             return {
                 ...state,
@@ -93,7 +143,6 @@ export function workoutStateReducer(state: workoutStateProps, action: WorkoutAct
             }
         }
         case ActionTypes.SET_EXERCISES: {
-            console.log('set exercises');
             return {
                 ...state,
                 exercises: action.payload
@@ -108,8 +157,6 @@ export function workoutStateReducer(state: workoutStateProps, action: WorkoutAct
             };
         }
         case ActionTypes.CHANGE_SCREEN: {
-            console.log('change screen payload:');
-            console.log(action.payload);
             return {
                 ...state,
                 screen: action.payload.name
@@ -149,6 +196,17 @@ export function workoutStateReducer(state: workoutStateProps, action: WorkoutAct
                 ...state,
                 exercises: updatedExercises,
             };
+        }
+        case ActionTypes.UPDATE_BUTTONS: {
+            return {
+                ...state,
+                buttons: {
+                    historical: action.payload.historical,
+                    add_exercise: action.payload.add_exercise,
+                    end_workout: action.payload.end_workout,
+                    add_set: action.payload.add_set
+                }
+            }
         }
         default: {
             throw Error('Unknown action: ' + action.type);
