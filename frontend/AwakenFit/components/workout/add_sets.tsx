@@ -4,12 +4,11 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 import { baseStyles } from "@/styles/global";
 
-type historicalParams = {
-    movementId: string,
+type addSetParams = {
     navigateBack: () => void,
 }
 
-export default function ExerciseHistorical({ movementId, navigateBack }: historicalParams) {
+export default function AddSets({ navigateBack }: addSetParams) {
 
     function handleNavigateBack() {
         navigateBack();
@@ -21,7 +20,7 @@ export default function ExerciseHistorical({ movementId, navigateBack }: histori
                 <FontAwesome size={28} name="chevron-left" />
                 <Button title="Current Exercise" onPress={handleNavigateBack} />
             </View>
-            <Text>Exercise Historical View</Text>
+            <Text>How many sets would you like to add?</Text>
         </View>
     );
 }

@@ -111,6 +111,7 @@ export default function ExerciseSearch({ addExercise }: ExerciseSearchProps) {
     const [selectedMuscleGroup, setSelectedMuscleGroup] = useState({ key: '', value: '' });
 
     const RowEntry = ({ node }: MovementProps) => {
+        console.log(node.name);
         return (
             <Pressable style={baseStyles.selectableRow} onPress={() => addExercise(node)}>
                 <Text style={{ color: lightColors.primaryColor, fontSize: 20 }}>{node.name}</Text>
@@ -194,15 +195,28 @@ export default function ExerciseSearch({ addExercise }: ExerciseSearchProps) {
                 />
                 {
                     data &&
-                    <FlatList
-                        data={data.movements.edges}
-                        renderItem={({ item }) => <RowEntry cursor={item.cursor} node={item.node} />}
-                        keyExtractor={item => item.cursor}
-                        refreshing={loading}
-                        ItemSeparatorComponent={HorzontalLine}
-                    />
+                    <View style={baseStyles.flatListContainer}>
+                        <FlatList
+                            data={data.movements.edges}
+                            renderItem={({ item }) => <RowEntry cursor={item.cursor} node={item.node} />}
+                            keyExtractor={item => item.cursor}
+                            refreshing={loading}
+                            ItemSeparatorComponent={HorzontalLine}
+                        />
+                    </View>
                 }
             </View>
         </>
     );
+    /*
+
+
+                    <ScrollView style={baseStyles.flatListContainer}>
+                        {
+                            data.movements?.edges.map((item: MovementProps) => (
+                                <RowEntry cursor={item.cursor} node={item.node} key={item.cursor} />
+                            ))
+                        }
+                    </ScrollView>
+    */
 }

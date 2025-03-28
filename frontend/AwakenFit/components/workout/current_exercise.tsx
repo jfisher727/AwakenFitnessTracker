@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { View, Text, TextInput, FlatList, Pressable, Button } from 'react-native';
+import { View, Text, TextInput, FlatList, Pressable, Button, useColorScheme } from 'react-native';
 
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 import { ExerciseProps, SetNode } from "@/graphql/properties";
 import { ScreenOptions } from '@/graphql/WorkoutStateReducer';
 
-import { baseStyles } from '@/styles/global';
+import { baseStyles, lightColors, darkColors } from '@/styles/global';
 
 import HorzontalLine from '../general/horizonal_line';
 import CustomButton from '../general/button';
@@ -25,6 +25,8 @@ type exerciseParams = {
 
 export default function CurrentExercise({ exercise, navigateBack, recordSet }: exerciseParams) {
     const [currentSet, setCurrentSet] = useState(1);
+    const colorScheme = useColorScheme();
+    const color = colorScheme === 'light' ? lightColors.primaryColor : darkColors.primaryColor;
 
     function saveSet(sequenceNumber: number, reps?: number, weight?: number, duration?: string) {
         setCurrentSet(currentSet + 1);
@@ -54,10 +56,10 @@ export default function CurrentExercise({ exercise, navigateBack, recordSet }: e
         return (
             <Pressable onPress={handleOnSelect}>
                 <View style={baseStyles.spacedRow}>
-                    <Text style={baseStyles.subHeader}>Set {item.sequenceNumber} </Text>
+                    <Text style={{ ...baseStyles.subHeader, color: color }}>Set {item.sequenceNumber} </Text>
                     <View style={baseStyles.spacedRow}>
                         <View style={baseStyles.setTextInput}>
-                            <Text>Reps</Text>
+                            <Text style={{ color: color }}>Reps</Text>
                             <TextInput
                                 onChangeText={newText => setReps(newText)}
                                 value={reps}
@@ -67,7 +69,7 @@ export default function CurrentExercise({ exercise, navigateBack, recordSet }: e
                             />
                         </View>
                         <View style={baseStyles.setTextInput}>
-                            <Text>Weight</Text>
+                            <Text style={{ color: color }}>Weight</Text>
                             <TextInput
                                 onChangeText={newText => setWeight(newText)}
                                 value={weight}
@@ -95,10 +97,10 @@ export default function CurrentExercise({ exercise, navigateBack, recordSet }: e
     return (
         <View>
             <View style={baseStyles.leftJustifiedRow}>
-                <FontAwesome size={28} name="chevron-left" /> :
+                <FontAwesome size={28} name="chevron-left" />
                 <Button title="Execise List" onPress={handleNavigateBack} />
             </View>
-            <Text style={baseStyles.mediumHeader}>{exercise.movement.name}</Text>
+            <Text style={{ ...baseStyles.mediumHeader, color: color }}>{exercise.movement.name}</Text>
             <FlatList
                 data={exercise.sets}
                 renderItem={({ item }) => <SetEntry item={item} saveSet={saveSet} />}

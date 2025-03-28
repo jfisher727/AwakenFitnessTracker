@@ -1,5 +1,5 @@
 import { useEffect, useState, useReducer } from 'react';
-import { View, useColorScheme } from 'react-native';
+import { View, ScrollView, useColorScheme } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { useLocalSearchParams, router } from 'expo-router';
 
@@ -10,13 +10,14 @@ import { workoutStateReducer, workoutStateProps, ActionTypes, ScreenOptions } fr
 import { ExerciseProps, MomvementNode } from '@/graphql/properties';
 
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
-import CustomButton from '@/components/general/button';
 
 import ExerciseSearch from '@/components/workout/exercise_search';
 import MovementList from '@/components/workout/movement_list';
 import CurrentExercise from '@/components/workout/current_exercise';
 import WorkoutReview from '@/components/workout/workout_review';
 import ExerciseHistorical from '@/components/workout/exercise_historical';
+import AddSets from '@/components/workout/add_sets';
+import WorkoutButtons from '@/components/workout/workout_buttons';
 
 const GET_WORKOUT = gql`
     query GetWorkout($id: ID!) {
@@ -233,6 +234,10 @@ export default function Workout() {
         });
     }
 
+    function navigateToCurrentExercise() {
+        handleChangeScreen(ScreenOptions.CURRENT_EXERCISE);
+    }
+
     useEffect(() => {
         if (params.id) {
             execute({ variables: { id: params.id } });
@@ -282,6 +287,15 @@ export default function Workout() {
                     handleButtonsToShow(false, false, false, false);
                     return;
                 }
+                case ScreenOptions.ADD_SETS: {
+                    setCurrentScreen(
+                        <AddSets
+                            navigateBack={navigateToCurrentExercise}
+                        />
+                    );
+                    handleButtonsToShow(false, false, false, false);
+                    return;
+                }
                 case ScreenOptions.CURRENT_EXERCISE: {
                     var current_exercise = state.exercises.filter((e) => e.id === state.current_exercise)[0];
                     setCurrentScreen(
@@ -298,7 +312,7 @@ export default function Workout() {
                     setCurrentScreen(
                         <ExerciseHistorical
                             movementId={current_exercise.movement.id}
-                            navigateBack={handleChangeScreen}
+                            navigateBack={navigateToCurrentExercise}
                         />);
                     handleButtonsToShow(false, false, false, false);
                     return;
@@ -337,6 +351,10 @@ export default function Workout() {
         handleChangeScreen(ScreenOptions.ADD_EXERCISE);
     }
 
+    function addSetPressed() {
+        handleChangeScreen(ScreenOptions.ADD_SETS);
+    }
+
     function historicalPresssed() {
         handleChangeScreen(ScreenOptions.HISTORICAL);
     }
@@ -347,33 +365,18 @@ export default function Workout() {
                 ...baseStyles.container,
                 backgroundColor: colorScheme === 'light' ? lightColors.background : darkColors.background
             }}>
-                <View>
-                    {currentScreen}
-                    <View style={baseStyles.centeredRow}>
-                        {
-                            state.buttons.historical &&
-                            <CustomButton
-                                text="Historical"
-                                onPress={historicalPresssed}
-                                disabled={false}
-                            />
-                        }
-                        {
-                            state.buttons.add_exercise &&
-                            <CustomButton
-                                text="Add Exercise"
-                                onPress={addExercisePressed}
-                                disabled={false}
-                            />
-                        }
-                        {
-                            state.buttons.end_workout &&
-                            <CustomButton
-                                text="Stop Workout"
-                                onPress={stopWorkoutPressed}
-                                disabled={false}
-                            />
-                        }
+                <View style={baseStyles.container}>
+                    <View style={baseStyles.screenContainer}>
+                        {currentScreen}
+                    </View>
+                    <View style={baseStyles.buttonContainer}>
+                        <WorkoutButtons
+                            state={state.buttons}
+                            stopWorkoutPressed={stopWorkoutPressed}
+                            addExercisePressed={addExercisePressed}
+                            addSetPressed={addSetPressed}
+                            historicalPressed={historicalPresssed}
+                        />
                     </View>
                 </View>
             </SafeAreaView>

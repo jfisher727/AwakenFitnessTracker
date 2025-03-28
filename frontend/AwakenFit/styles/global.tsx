@@ -25,6 +25,16 @@ export const baseStyles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
     },
+    screenContainer: {
+        flex: 1,
+        height: '80%',
+    },
+    flatListContainer: {
+        height: '60%',
+    },
+    buttonContainer: {
+        justifyContent: 'space-around'
+    },
     header: {
         fontSize: 50,
         margin: 10,

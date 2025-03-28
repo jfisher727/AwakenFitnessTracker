@@ -1,4 +1,4 @@
-import { ExerciseProps, SetNode } from "./properties"
+import { ExerciseProps } from "./properties"
 
 export type workoutStateProps = {
     screen: string,
@@ -30,6 +30,7 @@ export const ActionTypes = {
 export const ScreenOptions = {
     MOVEMENT_LIST: 'MOVEMENT_LIST',
     ADD_EXERCISE: 'ADD_EXERCISE',
+    ADD_SETS: 'ADD_SETS',
     CURRENT_EXERCISE: 'CURRENT_EXERCISE',
     HISTORICAL: 'HISTORICAL',
     WORKOUT_REVIEW: 'WORKOUT_REVIEW'
@@ -121,7 +122,7 @@ export function workoutStateReducer(state: workoutStateProps, action: WorkoutAct
             const updatedExercises = state.exercises.map((exercise) => {
                 if (exercise.id === exercise_id) {
                     const updatedSets = [...exercise.sets];
-                    const existingSets = updatedExercises.length();
+                    const existingSets = exercise.sets.length;
                     for (var index = 1; index <= sets; index++) {
                         const sequence_number = existingSets + index;
                         updatedSets.concat({
@@ -133,8 +134,17 @@ export function workoutStateReducer(state: workoutStateProps, action: WorkoutAct
                             parentSet: '',
                         });
                     }
+                    return {
+                        ...exercise,
+                        sets: updatedSets
+                    };
                 }
-            })
+                return exercise;
+            });
+            return {
+                ...state,
+                exercises: updatedExercises
+            }
         }
         case ActionTypes.SET_STOP_TIME: {
             return {
