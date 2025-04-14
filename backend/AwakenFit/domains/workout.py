@@ -43,7 +43,6 @@ def create_workout(
 ) -> Workout | None:
     created_record = None
     if UserDomain.is_valid_id(user_id):
-        print("valid user id")
         user = UserDomain.get_by_id(user_id)
         if notes is None:
             notes = ""
@@ -52,5 +51,4 @@ def create_workout(
         created_record = Workout.objects.create(
             user=user, start_time=start_time, stop_time=stop_time, template=template, notes=notes
         )
-        print(created_record)
     return created_record

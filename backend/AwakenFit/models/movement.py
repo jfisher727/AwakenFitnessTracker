@@ -49,7 +49,7 @@ class Movement(BaseModel):
     MACHINE = "Machine"
     MEDICINE_BALL = "Medicine Ball"
     NONE = "None"
-    RESISTENCE_BANDS = "Resistence Bands"
+    RESISTANCE_BANDS = "Resistance Bands"
     EQUIPMENT_CHOICES = [
         (BARBELL, BARBELL),
         (BODY_ONLY, BODY_ONLY),
@@ -61,7 +61,7 @@ class Movement(BaseModel):
         (MACHINE, MACHINE),
         (MEDICINE_BALL, MEDICINE_BALL),
         (NONE, NONE),
-        (RESISTENCE_BANDS, RESISTENCE_BANDS),
+        (RESISTANCE_BANDS, RESISTANCE_BANDS),
     ]
     CARDIO = "Cardio"
     PLYOMETRICS = "Plyometrics"
