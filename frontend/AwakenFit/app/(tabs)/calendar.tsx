@@ -1,7 +1,10 @@
-import { Text, View, useColorScheme } from 'react-native';
+import { Text, useColorScheme } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
+
+
+
 
 
 export default function Calendar() {
@@ -13,18 +16,7 @@ export default function Calendar() {
                 ...baseStyles.container,
                 backgroundColor: colorScheme === 'light' ? lightColors.background : darkColors.background
             }}>
-                <Text
-                    style={{
-                        ...baseStyles.header,
-                        color: colorScheme === 'light' ? lightColors.primaryColor : darkColors.primaryColor
-                    }}>
-                    Welcome, to your calendar
-                </Text>
-                <View style={{
-                    ...baseStyles.modal
-                }}>
-                    <Text>Temporary</Text>
-                </View>
+                <Text>this is an empty calendar</Text>
             </SafeAreaView>
         </SafeAreaProvider>
     );

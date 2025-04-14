@@ -6,8 +6,10 @@ from graphene_django.filter import DjangoFilterConnectionField
 from AwakenFit.models import Exercise
 
 from AwakenFit.domains import exercise as ExerciseDomain
+from AwakenFit.domains import set as SetDomain
 
 from .set import (
+    SetNode,
     SetCreateTemplateInput,
     SetCreateCompletedInput,
     SetCreateCompletedParentInput,
@@ -31,9 +33,14 @@ class ExerciseNode(DjangoObjectType):
             "workout",
         )
 
+    sets = List(SetNode)
+
     @classmethod
     def get_queryset(cls, queryset, info):
         return ExerciseDomain.filter_queryset_by_user(queryset, info.context.user.id)
+
+    def resolve_sets(self, info, **kwargs):
+        return SetDomain.get_by_exercise_id(self.id)
 
 
 class ExerciseCreateTemplateInput(InputObjectType):

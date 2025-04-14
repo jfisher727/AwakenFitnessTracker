@@ -35,7 +35,7 @@ def get_by_user_id(id: int) -> list[Workout] | None:
 
 
 def filter_queryset_by_user(queryset: QuerySet, user: User) -> QuerySet:
-    return queryset.filter(user=user)
+    return queryset.filter(user=user).order_by("name")
 
 
 def create_workout(
@@ -44,6 +44,8 @@ def create_workout(
     created_record = None
     if UserDomain.is_valid_id(user_id):
         user = UserDomain.get_by_id(user_id)
+        if notes is None:
+            notes = ""
         if len(notes) > MAX_NOTES_LENGTH:
             notes = notes[:MAX_NOTES_LENGTH]
         created_record = Workout.objects.create(

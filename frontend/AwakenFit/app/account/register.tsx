@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { router, Redirect } from 'expo-router';
+import { router } from 'expo-router';
 import { Text, View, useColorScheme, Platform } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { useNavigation } from 'expo-router';
@@ -8,8 +8,8 @@ import { useSession } from '@/auth/AuthContext';
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
 import { setup, register, Client } from '@/auth/allauth';
 
-import TextInputField from '@/components/text_input';
-import CustomButton from '@/components/button';
+import TextInputField from '@/components/general/text_input';
+import CustomButton from '@/components/general/button';
 
 
 export default function Register() {
@@ -84,6 +84,7 @@ export default function Register() {
                             secureTextEntry={false}
                             inputMode="email"
                             header="Email"
+                            showHeader={true}
                         />
                         <TextInputField
                             onChangeText={setUsername}
@@ -91,6 +92,7 @@ export default function Register() {
                             secureTextEntry={false}
                             inputMode="text"
                             header="Username"
+                            showHeader={true}
                         />
                         <TextInputField
                             onChangeText={setPassword}
@@ -98,6 +100,7 @@ export default function Register() {
                             secureTextEntry={true}
                             inputMode="text"
                             header="Password"
+                            showHeader={true}
                         />
                         <TextInputField
                             onChangeText={setConfirmPassword}
@@ -105,6 +108,7 @@ export default function Register() {
                             secureTextEntry={true}
                             inputMode="text"
                             header="Confirm Password"
+                            showHeader={true}
                         />
                         {
                             !passwordsMatch ? (

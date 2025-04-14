@@ -32,9 +32,6 @@ export function SessionProvider({ children }: PropsWithChildren) {
     <AuthContext.Provider
       value={{
         signIn: (token: string, loggedInUser: string) => {
-          // Perform sign-in logic here
-          console.log('signIn called in auth provider');
-
           setSession(JSON.stringify({ token: token, username: loggedInUser }));
         },
         signOut: () => {

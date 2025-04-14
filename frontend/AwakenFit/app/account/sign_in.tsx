@@ -7,8 +7,8 @@ import { useSession } from '@/auth/AuthContext';
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
 import { setup, login, Client } from '@/auth/allauth';
 
-import TextInputField from '@/components/text_input';
-import CustomButton from '@/components/button';
+import TextInputField from '@/components/general/text_input';
+import CustomButton from '@/components/general/button';
 
 
 export default function SignIn() {
@@ -81,6 +81,7 @@ export default function SignIn() {
                             secureTextEntry={false}
                             inputMode="email"
                             header="Email"
+                            showHeader={true}
                         />
                         <TextInputField
                             onChangeText={setPassword}
@@ -88,6 +89,7 @@ export default function SignIn() {
                             secureTextEntry={true}
                             inputMode="text"
                             header="Password"
+                            showHeader={true}
                         />
                         {
                             error.show ? (

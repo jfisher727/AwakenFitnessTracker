@@ -9,7 +9,7 @@ from AwakenFit.models import Movement, Workout
 
 class Exercise(BaseModel):
     intensity = models.IntegerField(default=0)
-    notes = models.CharField(max_length=500)
+    notes = models.CharField(max_length=500, blank=True)
     movement = models.ForeignKey(Movement, on_delete=models.CASCADE)
     workout = models.ForeignKey(Workout, on_delete=models.CASCADE, related_name="exercises")
 

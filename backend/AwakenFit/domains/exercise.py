@@ -30,6 +30,12 @@ def get_by_user_id(id: int) -> list[Exercise]:
     return None
 
 
+def get_by_workout_id(id: int) -> list[Exercise]:
+    if WorkoutDomain.is_valid_id(id):
+        return Exercise.objects.filter(workout__id=id).all()
+    return None
+
+
 def is_valid_id(id: int) -> bool:
     return Exercise.objects.select_related("movement", "workout").filter(id=id).exists()
 

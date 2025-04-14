@@ -5,8 +5,8 @@ import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { useSession } from '@/auth/AuthContext';
 import { verifyEmail, Client, setup } from '@/auth/allauth';
 
-import TextInputField from '@/components/text_input';
-import CustomButton from '@/components/button';
+import TextInputField from '@/components/general/text_input';
+import CustomButton from '@/components/general/button';
 
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
 
@@ -62,6 +62,7 @@ export default function VerifyEmail() {
                         secureTextEntry={false}
                         inputMode="text"
                         header="Code from Email"
+                        showHeader={true}
                     />
                     <CustomButton text="Verify Email" onPress={verifyEmailPressed} disabled={response.fetching} />
                 </View>

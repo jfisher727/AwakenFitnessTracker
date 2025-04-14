@@ -3,10 +3,9 @@ import { Redirect, Tabs } from 'expo-router';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, ApolloLink, concat } from '@apollo/client';
 
-
 import { useSession } from '../../auth/AuthContext';
-import { darkColors, lightColors } from '@/styles/global';
 
+import { darkColors, lightColors } from '@/styles/global';
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
@@ -50,7 +49,10 @@ export default function TabsLayout() {
     // This layout can be deferred because it's not the root layout.
     return (
         <ApolloProvider client={client}>
-            <Tabs screenOptions={{ headerShown: false, tabBarActiveTintColor: colorScheme === 'light' ? lightColors.primaryColor : darkColors.primaryColor }}>
+            <Tabs screenOptions={{
+                headerShown: false,
+                tabBarActiveTintColor: colorScheme === 'light' ? lightColors.primaryColor : darkColors.primaryColor
+            }}>
                 <Tabs.Screen
                     name="index"
                     options={{
@@ -70,6 +72,13 @@ export default function TabsLayout() {
                     options={{
                         title: 'Profile',
                         tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
+                    }}
+                />
+                <Tabs.Screen
+                    name="workout"
+                    options={{
+                        href: null,
+                        tabBarStyle: { display: 'none' }
                     }}
                 />
             </Tabs>

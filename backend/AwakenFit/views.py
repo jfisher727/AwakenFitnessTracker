@@ -1,4 +1,3 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
 from graphene_django.views import GraphQLView
 
 from rest_framework import authentication, permissions
@@ -9,9 +8,9 @@ from allauth.headless.contrib.rest_framework.authentication import (
 )
 
 
-class PrivateGraphQLView(GraphQLView, APIView):
+class PrivateGraphQLView(APIView, GraphQLView):
     authentication_classes = [
-        authentication.SessionAuthentication,
         XSessionTokenAuthentication,
+        authentication.SessionAuthentication,
     ]
     permission_classes = [permissions.IsAuthenticated]
