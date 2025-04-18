@@ -5,6 +5,8 @@ from graphene_django.filter import DjangoFilterConnectionField
 
 from AwakenFit.models import Exercise
 
+from AwakenFit.filters import ExerciseFilter
+
 from AwakenFit.domains import exercise as ExerciseDomain
 from AwakenFit.domains import set as SetDomain
 
@@ -22,9 +24,7 @@ class ExerciseNode(DjangoObjectType):
         model = Exercise
         interfaces = (Node,)
         description = ""
-        filter_fields = {
-            "id": ["exact"],
-        }
+        filterset_class = ExerciseFilter
         fields = (
             "id",
             "intensity",
