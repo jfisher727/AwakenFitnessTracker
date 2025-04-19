@@ -3,7 +3,7 @@ import { View, Pressable, Text, useColorScheme } from "react-native";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 import { baseStyles, lightColors, darkColors } from "@/styles/global";
-import { Float } from "react-native/Libraries/Types/CodegenTypes";
+import { hexToRGBA } from "@/util/color";
 
 
 type workoutButtonsParams = {
@@ -13,14 +13,6 @@ type workoutButtonsParams = {
     addSetPressed: () => void,
     historicalPressed: () => void,
 }
-
-const hexToRGBA = (hex: string, opacity: Float) => {
-    let r = parseInt(hex.slice(1, 3), 16);
-    let g = parseInt(hex.slice(3, 5), 16);
-    let b = parseInt(hex.slice(5, 7), 16);
-
-    return `rgba(${r}, ${g}, ${b}, ${opacity})`;
-};
 
 export default function WorkoutButtons({ state, stopWorkoutPressed, addExercisePressed, addSetPressed, historicalPressed }: workoutButtonsParams) {
     const colorScheme = useColorScheme();
