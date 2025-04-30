@@ -7,24 +7,32 @@ import { hexToRGBA } from "@/util/color";
 
 
 type workoutButtonsParams = {
-    state: { historical: boolean, end_workout: boolean, add_exercise: boolean, add_set: boolean }
+    state: { historical: boolean, end_workout: boolean, add_exercise: boolean, add_set: boolean, edit_movements: boolean }
     stopWorkoutPressed: () => void,
     addExercisePressed: () => void,
+    editMovementsPressed: () => void,
     addSetPressed: () => void,
     historicalPressed: () => void,
 }
 
-export default function WorkoutButtons({ state, stopWorkoutPressed, addExercisePressed, addSetPressed, historicalPressed }: workoutButtonsParams) {
+export default function WorkoutButtons({ state, stopWorkoutPressed, addExercisePressed, editMovementsPressed, addSetPressed, historicalPressed }: workoutButtonsParams) {
     const colorScheme = useColorScheme();
     const enabledColor = colorScheme === 'light' ? lightColors.primaryColor : darkColors.primaryColor;
     const disabledColor = hexToRGBA(enabledColor, 0.6);
 
     return (
         <View style={baseStyles.spacedRow}>
-            <Pressable style={baseStyles.button} onPress={historicalPressed} disabled={!state.historical}>
-                <FontAwesome size={28} name="line-chart" color={state.historical ? enabledColor : disabledColor} />
-                <Text style={{ color: state.end_workout ? enabledColor : disabledColor }}>Historical</Text>
-            </Pressable>
+            {
+                state.edit_movements ?
+                    <Pressable style={baseStyles.button} onPress={editMovementsPressed} disabled={!state.add_exercise}>
+                        <FontAwesome size={28} name="pencil" color={enabledColor} />
+                        <Text style={{ color: enabledColor }}>Edit Workout</Text>
+                    </Pressable> :
+                    <Pressable style={baseStyles.button} onPress={historicalPressed} disabled={!state.historical}>
+                        <FontAwesome size={28} name="line-chart" color={state.historical ? enabledColor : disabledColor} />
+                        <Text style={{ color: state.end_workout ? enabledColor : disabledColor }}>Historical</Text>
+                    </Pressable>
+            }
             {
                 state.add_exercise ?
                     <Pressable style={baseStyles.button} onPress={addExercisePressed} disabled={!state.add_exercise}>
