@@ -86,7 +86,7 @@ export const baseStyles = StyleSheet.create({
     spacedRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     leftJustifiedRow: {
         flexDirection: 'row',
@@ -99,12 +99,18 @@ export const baseStyles = StyleSheet.create({
         padding: 7,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'center'
     },
     centeredRow: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    centeredColumn: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 10
     },
     selectHeader: {
         fontSize: 25,

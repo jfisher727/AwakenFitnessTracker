@@ -1,3 +1,4 @@
+import { act } from "react"
 import { ExerciseProps } from "./properties"
 
 export type workoutStateProps = {
@@ -7,9 +8,11 @@ export type workoutStateProps = {
     stop_time: string,
     current_exercise: string,
     exercises: ExerciseProps[],
+    editing: boolean,
     buttons: {
         historical: boolean,
         end_workout: boolean,
+        edit_movements: boolean,
         add_exercise: boolean,
         add_set: boolean
     }
@@ -24,6 +27,9 @@ export const ActionTypes = {
     CHANGE_SCREEN: 'CHANGE_SCREEN',
     SET_CURRENT_EXERCISE: 'SET_CURRENT_EXERCISE',
     RECORD_SET: 'RECORD_SET',
+    EDIT_MOVEMENTS: 'EDIT_MOVEMENTS',
+    MOVE_EXERCISE_UP: 'MOVE_EXERCISE_UP',
+    MOVE_EXERCISE_DOWN: 'MOVE_EXERCISE_DOWN',
     UPDATE_BUTTONS: 'UPDATE_BUTTONS'
 }
 
@@ -88,12 +94,28 @@ interface RecordSetAction {
     }
 }
 
+interface EditMovementsAction {
+    type: typeof ActionTypes.EDIT_MOVEMENTS
+    payload: boolean
+}
+
+interface MoveExerciseUpAction {
+    type: typeof ActionTypes.MOVE_EXERCISE_UP
+    payload: number
+}
+
+interface MoveExerciseDownAction {
+    type: typeof ActionTypes.MOVE_EXERCISE_DOWN
+    payload: number
+}
+
 interface UpdateButtonsAction {
     type: typeof ActionTypes.UPDATE_BUTTONS
     payload: {
         historical: boolean,
         add_exercise: boolean,
         end_workout: boolean,
+        edit_movements: boolean,
         add_set: boolean
     }
 }
@@ -101,7 +123,8 @@ interface UpdateButtonsAction {
 
 type WorkoutActions = (
     AddExerciseAction | AddSetsAction | SetStopTimeAction | SetExercisesAction | RemoveExerciseAction |
-    ChangeScreenAction | SetCurrentExerciseAction | RecordSetAction | UpdateButtonsAction
+    ChangeScreenAction | SetCurrentExerciseAction | RecordSetAction | UpdateButtonsAction | EditMovementsAction |
+    MoveExerciseUpAction | MoveExerciseDownAction
 );
 
 export function workoutStateReducer(state: workoutStateProps, action: WorkoutActions): workoutStateProps {
@@ -207,6 +230,38 @@ export function workoutStateReducer(state: workoutStateProps, action: WorkoutAct
                 exercises: updatedExercises,
             };
         }
+        case ActionTypes.EDIT_MOVEMENTS: {
+            return {
+                ...state,
+                editing: action.payload
+            };
+        }
+        case ActionTypes.MOVE_EXERCISE_UP: {
+            const index = parseInt(action.payload, 10);
+            if (index == 0) {
+                return state;
+            }
+
+            const newExercises = [...state.exercises];
+            [newExercises[index - 1], newExercises[index]] = [newExercises[index], newExercises[index - 1]];
+            return {
+                ...state,
+                exercises: newExercises
+            };
+        }
+        case ActionTypes.MOVE_EXERCISE_DOWN: {
+            const index = parseInt(action.payload, 10);
+            if (index == state.exercises.length - 1) {
+                return state;
+            }
+
+            const newExercises = [...state.exercises];
+            [newExercises[index], newExercises[index + 1]] = [newExercises[index + 1], newExercises[index]];
+            return {
+                ...state,
+                exercises: newExercises
+            };
+        }
         case ActionTypes.UPDATE_BUTTONS: {
             return {
                 ...state,
@@ -214,6 +269,7 @@ export function workoutStateReducer(state: workoutStateProps, action: WorkoutAct
                     historical: action.payload.historical,
                     add_exercise: action.payload.add_exercise,
                     end_workout: action.payload.end_workout,
+                    edit_movements: action.payload.edit_movements,
                     add_set: action.payload.add_set
                 }
             }

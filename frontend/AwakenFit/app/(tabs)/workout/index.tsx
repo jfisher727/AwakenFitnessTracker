@@ -74,10 +74,13 @@ const INITIAL_STATE: workoutStateProps = {
     stop_time: '',
     current_exercise: '',
     exercises: [],
+    editing: false,
     buttons: {
         historical: true,
         add_exercise: true,
-        end_workout: true
+        end_workout: true,
+        add_set: false,
+        edit_movements: false,
     }
 };
 
@@ -180,15 +183,37 @@ export default function Workout() {
         }
     }
 
-    function handleButtonsToShow(historical: boolean, add_exercise: boolean, end_workout: boolean, add_set: boolean) {
+    function handleButtonsToShow(historical: boolean, add_exercise: boolean, end_workout: boolean, add_set: boolean, edit_movements: boolean) {
         dispatch({
             type: ActionTypes.UPDATE_BUTTONS,
             payload: {
                 historical: historical,
                 add_exercise: add_exercise,
+                edit_movements: edit_movements,
                 end_workout: end_workout,
                 add_set: add_set
             }
+        });
+    }
+
+    function handleEditMovements() {
+        dispatch({
+            type: ActionTypes.EDIT_MOVEMENTS,
+            payload: !state.editing
+        });
+    }
+
+    function handleMoveExerciseUp(index: number) {
+        dispatch({
+            type: ActionTypes.MOVE_EXERCISE_UP,
+            payload: index
+        });
+    }
+
+    function handleMoveExerciseDown(index: number) {
+        dispatch({
+            type: ActionTypes.MOVE_EXERCISE_DOWN,
+            payload: index
         });
     }
 
@@ -276,15 +301,18 @@ export default function Workout() {
                     setCurrentScreen(
                         <MovementList
                             exercises={state.exercises}
+                            editable={state.editing}
+                            moveExerciseUp={handleMoveExerciseUp}
+                            moveExerciseDown={handleMoveExerciseDown}
                             setCurrentExercise={handleSetCurrentExercise}
                             removeExercise={handleRemoveExercise}
                         />);
-                    handleButtonsToShow(false, true, true, false);
+                    handleButtonsToShow(false, true, true, false, true);
                     return;
                 }
                 case ScreenOptions.ADD_EXERCISE: {
                     setCurrentScreen(<ExerciseSearch addExercise={handleAddExercise} />);
-                    handleButtonsToShow(false, false, false, false);
+                    handleButtonsToShow(false, false, false, false, false);
                     return;
                 }
                 case ScreenOptions.ADD_SETS: {
@@ -293,7 +321,7 @@ export default function Workout() {
                             navigateBack={navigateToCurrentExercise}
                         />
                     );
-                    handleButtonsToShow(false, false, false, false);
+                    handleButtonsToShow(false, false, false, false, false);
                     return;
                 }
                 case ScreenOptions.CURRENT_EXERCISE: {
@@ -304,7 +332,7 @@ export default function Workout() {
                             recordSet={handleRecordSet}
                             navigateBack={handleChangeScreen}
                         />);
-                    handleButtonsToShow(true, false, false, true);
+                    handleButtonsToShow(true, false, false, true, false);
                     return;
                 }
                 case ScreenOptions.HISTORICAL: {
@@ -314,7 +342,7 @@ export default function Workout() {
                             movementId={current_exercise.movement.id}
                             navigateBack={navigateToCurrentExercise}
                         />);
-                    handleButtonsToShow(false, false, false, false);
+                    handleButtonsToShow(false, false, false, false, false);
                     return;
                 }
                 case ScreenOptions.WORKOUT_REVIEW: {
@@ -326,22 +354,25 @@ export default function Workout() {
                             recordWorkout={handleRecordWorkout}
                         />
                     )
-                    handleButtonsToShow(false, false, false, false);
+                    handleButtonsToShow(false, false, false, false, false);
                     return;
                 }
                 default: {
                     setCurrentScreen(<MovementList
                         exercises={state.exercises}
+                        editable={state.editing}
+                        moveExerciseUp={handleMoveExerciseUp}
+                        moveExerciseDown={handleMoveExerciseDown}
                         setCurrentExercise={handleSetCurrentExercise}
                         removeExercise={handleRemoveExercise}
                     />);
-                    handleButtonsToShow(false, true, false, false);
+                    handleButtonsToShow(false, true, false, false, true);
                     return;
                 }
             }
         }
 
-    }, [state.screen, state.exercises, state.current_exercise]);
+    }, [state.screen, state.exercises, state.current_exercise, state.editing]);
 
     function stopWorkoutPressed() {
         handleChangeScreen(ScreenOptions.WORKOUT_REVIEW);
@@ -374,6 +405,7 @@ export default function Workout() {
                             state={state.buttons}
                             stopWorkoutPressed={stopWorkoutPressed}
                             addExercisePressed={addExercisePressed}
+                            editMovementsPressed={handleEditMovements}
                             addSetPressed={addSetPressed}
                             historicalPressed={historicalPresssed}
                         />
