@@ -90,7 +90,8 @@ interface RecordSetAction {
         sequence_number: number,
         reps?: number,
         weight?: number,
-        duration?: number
+        duration?: string,
+        equipment_identifier?: string,
     }
 }
 
@@ -202,7 +203,7 @@ export function workoutStateReducer(state: workoutStateProps, action: WorkoutAct
             };
         }
         case ActionTypes.RECORD_SET: {
-            const { exercise_id, sequence_number, reps, weight, duration } = action.payload;
+            const { exercise_id, sequence_number, reps, weight, duration, equipment_identifier } = action.payload;
 
             const updatedExercises = state.exercises.map((exercise) => {
                 if (exercise.id === exercise_id) {
@@ -213,6 +214,7 @@ export function workoutStateReducer(state: workoutStateProps, action: WorkoutAct
                             updatedSet.completedReps = reps;
                             updatedSet.weight = weight;
                             updatedSet.duration = duration;
+                            updatedSet.equipment_identifier = equipment_identifier;
 
                             return updatedSet;
                         }

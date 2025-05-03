@@ -6,6 +6,7 @@ export type SetNode = {
     completedReps?: number,
     duration: string,
     weight?: number,
+    equipment_identifier?: string,
     setType: string,
     parentSet: string
 };

@@ -122,6 +122,7 @@ export default function Workout() {
                 completedReps: 0,
                 weight: 0,
                 duration: '',
+                equipment_identifier: '',
                 setType: 'Standard',
                 parentSet: ''
             }]
@@ -147,7 +148,7 @@ export default function Workout() {
         handleChangeScreen(ScreenOptions.CURRENT_EXERCISE);
     }
 
-    function handleRecordSet(exercise_id: string, sequence_number: number, reps?: number, weight?: number, duration?: string) {
+    function handleRecordSet(exercise_id: string, sequence_number: number, reps?: number, weight?: number, duration?: string, equipment_identifier?: string) {
         dispatch({
             type: ActionTypes.RECORD_SET,
             payload: {
@@ -155,7 +156,8 @@ export default function Workout() {
                 sequence_number: sequence_number,
                 reps: reps,
                 weight: weight,
-                duration: duration
+                duration: duration,
+                equipment_identifier: equipment_identifier,
             }
         });
         // need to see if we've completed all the sets for the current exercise

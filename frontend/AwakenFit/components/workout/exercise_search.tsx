@@ -73,7 +73,7 @@ const equipmentOptions: KeyValuePair[] = [
     { key: 'Machine', value: 'Machine' },
     { key: 'Medicine Ball', value: 'Medicine Ball' },
     { key: 'None', value: 'None' },
-    { key: 'Resistence Bands', value: 'Resistence Bands' },
+    { key: 'Resistance Bands', value: 'Resistance Bands' },
 ];
 
 
