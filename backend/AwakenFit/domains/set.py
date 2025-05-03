@@ -37,6 +37,9 @@ def is_valid_id(id: int) -> bool:
 
 
 def calculate_one_rep_max(input: Set) -> int:
+    if input.completed_reps == 0 or input.weight == 0:
+        return 0
+
     return int(((input.weight * input.completed_reps) / 30.48) + input.weight)
 
 
@@ -52,11 +55,11 @@ def validate_template_standard_set(standard_set) -> list[str]:
     errors = list()
 
     if (standard_set.min_reps or standard_set.max_reps) and standard_set.duration:
-        errors.append(SetDomain.ERROR_MESSAGES["TEMPLATE_SETS"])
+        errors.append(ERROR_MESSAGES["TEMPLATE_SETS"])
 
     if standard_set.min_reps and standard_set.max_reps:
         if standard_set.min_reps > standard_set.max_reps:
-            errors.append(SetDomain.ERROR_MESSAGES["BAD_TEMPLATE_REPS"])
+            errors.append(ERROR_MESSAGES["BAD_TEMPLATE_REPS"])
 
     return errors
 

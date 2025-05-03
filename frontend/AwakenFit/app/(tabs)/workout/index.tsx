@@ -220,7 +220,6 @@ export default function Workout() {
     }
 
     function handleRecordWorkout() {
-        console.log('recording working');
         // TODO: Need to format all the data we've collected into the proper JSON structure
         // to send to the GraphQL mutation
         var mutation_input = {
@@ -243,7 +242,6 @@ export default function Workout() {
             });
             mutation_input.exercises.push(exercise_data);
         });
-        console.log(JSON.stringify(mutation_input));
         workoutMutation({
             variables: {
                 input: mutation_input
