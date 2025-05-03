@@ -183,7 +183,6 @@ export function workoutStateReducer(state: workoutStateProps, action: WorkoutAct
             }
         }
         case ActionTypes.REMOVE_EXERCISE: {
-            console.log('removed exercise');
             var updated_exercises = state.exercises.filter((e) => e.id !== action.payload);
             return {
                 ...state,

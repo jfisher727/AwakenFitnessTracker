@@ -94,7 +94,7 @@ function IdentifierInput({ equipmentIdentifier, reps, setEquipmentIdentifier, se
             <View style={baseStyles.setTextInput}>
                 <Text style={{ color: color }}>Identifier</Text>
                 <TextInput
-                    onChangeText={newText => { console.log(newText); setEquipmentIdentifier(newText) }}
+                    onChangeText={newText => setEquipmentIdentifier(newText)}
                     value={equipmentIdentifier}
                     inputMode='text'
                     style={baseStyles.selectHeader}
@@ -231,8 +231,6 @@ export default function CurrentExercise({ exercise, navigateBack, recordSet }: e
     const [currentSet, setCurrentSet] = useState(1);
     const colorScheme = useColorScheme();
     const color = colorScheme === 'light' ? lightColors.primaryColor : darkColors.primaryColor;
-
-    console.log(exercise);
 
     function saveSet(sequenceNumber: number, reps?: number, weight?: number, duration?: string, equipment_identifier?: string) {
         setCurrentSet(currentSet + 1);
