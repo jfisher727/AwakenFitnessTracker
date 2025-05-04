@@ -8,7 +8,7 @@ from AwakenFit.domains import exercise as ExerciseDomain
 
 ERROR_MESSAGES = {
     "INVALID_SET_TYPE": "The provided set type couldn't be validated.",
-    "COMPLETED_SETS": "Completed sets should contain at least one of the following: completed_reps, weight, duration. completed_reps and duration should not be included together.",
+    "COMPLETED_SETS": "Completed sets should contain at least one of the following: completedReps, weight, duration. completed_reps and duration should not be included together.",
     "TEMPLATE_SETS": "Template sets should contain min_reps/max_reps or duration, not both.",
     "INVALID_VALUE": "Provided a value that should be greater than 0.",
     "BAD_TEMPLATE_REPS": "Please make sure min_reps is less than max_reps for templates.",
@@ -37,6 +37,9 @@ def is_valid_id(id: int) -> bool:
 
 
 def calculate_one_rep_max(input: Set) -> int:
+    if input.completed_reps == 0 or input.weight == 0:
+        return 0
+
     return int(((input.weight * input.completed_reps) / 30.48) + input.weight)
 
 
@@ -52,11 +55,11 @@ def validate_template_standard_set(standard_set) -> list[str]:
     errors = list()
 
     if (standard_set.min_reps or standard_set.max_reps) and standard_set.duration:
-        errors.append(SetDomain.ERROR_MESSAGES["TEMPLATE_SETS"])
+        errors.append(ERROR_MESSAGES["TEMPLATE_SETS"])
 
     if standard_set.min_reps and standard_set.max_reps:
         if standard_set.min_reps > standard_set.max_reps:
-            errors.append(SetDomain.ERROR_MESSAGES["BAD_TEMPLATE_REPS"])
+            errors.append(ERROR_MESSAGES["BAD_TEMPLATE_REPS"])
 
     return errors
 
@@ -152,6 +155,7 @@ def create_completed_set(
     completed_reps: int = 0,
     weight: int = 0,
     duration: str = "",
+    equipment_identifier: str = "",
     set_type: str = Set.STANDARD,
     parent_set: Set = None,
 ) -> Set | None:
@@ -165,6 +169,7 @@ def create_completed_set(
             completed_reps=completed_reps,
             weight=weight,
             duration=duration,
+            equipment_identifier=equipment_identifier,
             set_type=set_type,
             parent_set=parent_set,
         )
@@ -179,6 +184,7 @@ def _create_set(
     max_reps: int = 0,
     weight: int = 0,
     duration: str = "",
+    equipment_identifier: str = "",
     set_type: str = Set.STANDARD,
     parent_set: Set = None,
 ) -> Set | None:
@@ -190,6 +196,7 @@ def _create_set(
         max_reps=max_reps,
         weight=weight,
         duration=duration,
+        equipment_identifier=equipment_identifier,
         set_type=set_type,
         parent_set=parent_set,
     )

@@ -64,6 +64,7 @@ class SetCreateCompletedInput(InputObjectType):
     completed_reps = Int(required=False)
     weight = Int(required=False)
     duration = String(required=False)
+    equipment_identifier = String(required=False)
 
 
 class SetCreateTemplateParentInput(InputObjectType):

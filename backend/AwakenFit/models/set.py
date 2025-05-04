@@ -25,6 +25,7 @@ class Set(BaseModel):
     max_reps = models.IntegerField(default=0)
     weight = models.IntegerField(default=0)
     duration = models.CharField(max_length=20, blank=True)
+    equipment_identifier = models.CharField(max_length=20, blank=True)
     set_type = models.CharField(max_length=30, choices=SET_TYPE_CHOICES, default=STANDARD)
     parent_set = models.ForeignKey("Set", on_delete=models.CASCADE, null=True, blank=True, related_name="child_sets")
 
@@ -38,8 +39,10 @@ class Set(BaseModel):
                 set_details["reps"] = self.completed_reps
             if self.weight > 0:
                 set_details["weight"] = self.weight
-            if len(self.duration) > 0:
+            if self.duration:
                 set_details["duration"] = self.duration
+            if self.equipment_identifier:
+                set_details["equipment_identifier"] = self.equipment_identifier
 
             # if we're returning to a parent set,
             # we don't want to encode our data

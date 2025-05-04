@@ -9,8 +9,8 @@
       "description": "The partner plank band row is an abdominal exercise where two partners perform single-arm planks while pulling on the opposite ends of an exercise band. This technique can be done for time or reps in any ab-focused workout.",
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
-      "movement_type": "Strength"
+      "equipment_type": "Resistance Bands",
+      "movement_type": "Cardio"
     }
   },
   {
@@ -23,8 +23,8 @@
       "description": "The banded crunch isometric hold is an exercise targeting the abdominal muscles, particularly the rectus abdominis or \"six-pack\" muscles. The band adds resistance and continuous tension to this popular exercise.",
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
-      "movement_type": "Strength"
+      "equipment_type": "Resistance Bands",
+      "movement_type": "Cardio"
     }
   },
   {
@@ -37,8 +37,8 @@
       "description": "The banded crunch is an exercise targeting the abdominal muscles, particularly the rectus abdominis or \"six-pack\" muscles. The band adds resistance and continuous tension to this popular exercise.",
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
-      "movement_type": "Strength"
+      "equipment_type": "Resistance Bands",
+      "movement_type": "Cardio"
     }
   },
   {
@@ -51,8 +51,8 @@
       "description": "The crunch is a popular core exercise targeting the rectus abdominis, or \"six-pack\" muscles, as well as the obliques. It has been the centerpiece of many ab-focused workouts, due to both its simplicity and the intense burn and mind-muscle connection it produces. It can be performed for time or reps as part of the ab-focused portion of any workout.",
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
-      "movement_type": "Strength"
+      "equipment_type": "Resistance Bands",
+      "movement_type": "Cardio"
     }
   },
   {
@@ -65,7 +65,7 @@
       "description": "The band low-to-high twist is a core exercise targeting the upper abdominals and the obliques. Take care to perform it with control, as rapid, uncontrolled twisting can injure the spine. It is usually performed for moderate to high reps, at least 8-15 per side, as part of the core-focused portion of a workout.",
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -248,7 +248,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Kettlebell",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -374,7 +374,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Dumbbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -402,7 +402,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Dumbbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -528,7 +528,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Dumbbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -570,7 +570,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Dumbbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -626,7 +626,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Cable",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -640,7 +640,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Cable",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -654,7 +654,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Cable",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -668,7 +668,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Cable",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -682,7 +682,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Cable",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -710,7 +710,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Cable",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -752,7 +752,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Cable",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -808,7 +808,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "Chest",
       "equipment_type": "Cable",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -892,7 +892,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "Chest",
       "equipment_type": "Machine",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -920,7 +920,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Machine",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -976,7 +976,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -990,7 +990,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -1004,7 +1004,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -1046,7 +1046,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -1102,7 +1102,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -1130,7 +1130,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -1186,7 +1186,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -1200,7 +1200,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -1214,7 +1214,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -1242,7 +1242,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -1256,7 +1256,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "Back",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -1284,7 +1284,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -1382,7 +1382,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -1396,7 +1396,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -1438,7 +1438,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -1508,7 +1508,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "Back",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -1522,7 +1522,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "Back",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -1550,7 +1550,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "Back",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -1592,7 +1592,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "Glutes",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -1634,7 +1634,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "Lats",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -1648,7 +1648,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "Glutes",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -1718,7 +1718,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "Back",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -1760,7 +1760,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "Back",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -1886,7 +1886,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -1998,7 +1998,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -2040,7 +2040,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -2096,7 +2096,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "Glutes",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -2208,7 +2208,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -2376,7 +2376,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "Shoulders",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -2446,7 +2446,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -2474,7 +2474,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -2488,7 +2488,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -2502,7 +2502,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -2530,7 +2530,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -2628,7 +2628,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -2656,7 +2656,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "Chest",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -2670,7 +2670,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -2866,7 +2866,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -3020,7 +3020,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Medicine Ball",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -3034,7 +3034,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "Back",
       "equipment_type": "Medicine Ball",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -3188,7 +3188,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Exercise Ball",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -3202,7 +3202,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Exercise Ball",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -3286,7 +3286,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Exercise Ball",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -3355,7 +3355,7 @@
       "description": "This is a core strength exercise designed to improve stability and abdominal control.",
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -3369,7 +3369,7 @@
       "description": "This is a core strength exercise designed to improve stability and abdominal control.",
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -3510,7 +3510,7 @@
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -3524,7 +3524,7 @@
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -3538,7 +3538,7 @@
       "primary_muscle_group": "Back",
       "secondary_muscle_group": "Glutes",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -3580,7 +3580,7 @@
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -3635,7 +3635,7 @@
       "description": "The incline dumbbell biceps curl is an exercise targeting the biceps and performed face up on an incline bench. This creates a vertical arm angle, which helps to isolate the biceps and limit involvement of the shoulder muscles. This curl variation is usually performed for moderate to high reps, such as 8-12 reps per set or more, as part of upper-body or arm-focused training.",
       "primary_muscle_group": "Biceps",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -3649,7 +3649,7 @@
       "description": "The banded biceps curl in squat position is an exercise targeting the biceps, although it also works the core and lower body.",
       "primary_muscle_group": "Biceps",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -3663,7 +3663,7 @@
       "description": "The band standing concentration curl is a variation of a popular biceps-focused exercise utilizing a band instead of a dumbbell. It allows you to focus on one biceps at a time and really squeeze out intense peak contractions. Band concentration curls are usually performed for moderate to high reps, such as 8-12 reps per set or more, as part of an upper-body or arm-focused workout.",
       "primary_muscle_group": "Biceps",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -4615,7 +4615,7 @@
       "description": "This is a core strength exercise designed to improve stability and abdominal control.",
       "primary_muscle_group": "Calf",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -4629,8 +4629,8 @@
       "description": "This is a core strength exercise designed to improve stability and abdominal control.",
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
-      "movement_type": "Strength"
+      "equipment_type": "Resistance Bands",
+      "movement_type": "Stretching"
     }
   },
   {
@@ -4643,8 +4643,8 @@
       "description": "This is a core strength exercise designed to improve stability and abdominal control.",
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
-      "movement_type": "Strength"
+      "equipment_type": "Resistance Bands",
+      "movement_type": "Stretching"
     }
   },
   {
@@ -4924,7 +4924,7 @@
       "primary_muscle_group": "Calf",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -4938,7 +4938,7 @@
       "primary_muscle_group": "Calf",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -4952,7 +4952,7 @@
       "primary_muscle_group": "Calf",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -4965,7 +4965,7 @@
       "description": "This is a core strength exercise designed to improve stability and abdominal control.",
       "primary_muscle_group": "Chest",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -4979,7 +4979,7 @@
       "description": "Press exercises typically involve pushing a weight away from the body and emphasize the chest, shoulders, and triceps.",
       "primary_muscle_group": "Chest",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -4993,7 +4993,7 @@
       "description": "Press exercises typically involve pushing a weight away from the body and emphasize the chest, shoulders, and triceps.",
       "primary_muscle_group": "Chest",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -5007,7 +5007,7 @@
       "description": "The band-suspended kettlebell bench press is a bench press variation where kettlebells or weight plates are hung from the ends of a barbell by looped bands. The suspended weights can be in addition to normally loaded weight plates, or in the place of them. Because the instability of the weights makes the lift difficult, this bench press variety is a popular accessory movement for building the traditional bench press in powerlifting training.",
       "primary_muscle_group": "Chest",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -5021,7 +5021,7 @@
       "description": "Pulling exercises focus on the back, biceps, and forearms, improving posture and upper body strength.",
       "primary_muscle_group": "Chest",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -5035,7 +5035,7 @@
       "description": "The incline band bench press is variation of the incline press, a popular upper-body exercise targeting the upper pectoral muscles. While it can be a strength-focused movement, it is usually performed for moderate to high reps, such as 8-12 reps per set or more, as part of upper-body or chest-focused training.",
       "primary_muscle_group": "Chest",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -5049,7 +5049,7 @@
       "description": "Similar to the cable chest fly, the band chest fly is a single-joint movement that works the pectoral muscles. The fly is common in upper-body and chest-focused muscle-building workouts, and the band variation works well as a pre-exhaust at the beginning of a workout or a finishing movement at the end. It is often used in combination with other presses or flyes to target the chest from different angles.",
       "primary_muscle_group": "Chest",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -5834,7 +5834,7 @@
       "primary_muscle_group": "Chest",
       "secondary_muscle_group": "None",
       "equipment_type": "Medicine Ball",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -5974,7 +5974,7 @@
       "primary_muscle_group": "Chest",
       "secondary_muscle_group": "Back",
       "equipment_type": "Dumbbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -6254,7 +6254,7 @@
       "primary_muscle_group": "Chest",
       "secondary_muscle_group": "Back",
       "equipment_type": "Exercise Ball",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -6267,8 +6267,8 @@
       "description": "The standing alternating band speed row is an explosive back exercise using exercise bands. It targets the muscles of the middle and upper back, including the lats (latissimus dorsi), rhomboids, and trapezius, as well as the biceps. It can be performed for time or reps either as part of a power or speed-focused portion of a workout or as a burnout at the end of a workout.",
       "primary_muscle_group": "Back",
       "secondary_muscle_group": "Biceps",
-      "equipment_type": "Resistence Bands",
-      "movement_type": "Strength"
+      "equipment_type": "Resistance Bands",
+      "movement_type": "Cardio"
     }
   },
   {
@@ -6281,7 +6281,7 @@
       "description": "The band roundhouse elbow is an explosive rotational power exercise using exercise bands. It targets the muscles of the obliques and deep core, but also engrains full-body coordination and striking ability. It can work in an ab workout, in martial arts training, or in general strength and muscle training.",
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -6477,7 +6477,7 @@
       "description": "This is a core strength exercise designed to improve stability and abdominal control.",
       "primary_muscle_group": "Glutes",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -6491,7 +6491,7 @@
       "description": "This is a core strength exercise designed to improve stability and abdominal control.",
       "primary_muscle_group": "Glutes",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -6505,7 +6505,7 @@
       "description": "This is a core strength exercise designed to improve stability and abdominal control.",
       "primary_muscle_group": "Glutes",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -6562,7 +6562,7 @@
       "primary_muscle_group": "Glutes",
       "secondary_muscle_group": "None",
       "equipment_type": "Barbell",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -6758,7 +6758,7 @@
       "primary_muscle_group": "Glutes",
       "secondary_muscle_group": "Back",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -6828,7 +6828,7 @@
       "primary_muscle_group": "Glutes",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -6870,7 +6870,7 @@
       "primary_muscle_group": "Glutes",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -6912,7 +6912,7 @@
       "primary_muscle_group": "Glutes",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -6940,7 +6940,7 @@
       "primary_muscle_group": "Glutes",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -6968,7 +6968,7 @@
       "primary_muscle_group": "Glutes",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -7010,7 +7010,7 @@
       "primary_muscle_group": "Glutes",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -7093,7 +7093,7 @@
       "description": "Pulling exercises focus on the back, biceps, and forearms, improving posture and upper body strength.",
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -7864,7 +7864,7 @@
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -7906,7 +7906,7 @@
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -7920,7 +7920,7 @@
       "primary_muscle_group": "Shoulders",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -7976,7 +7976,7 @@
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -8101,8 +8101,8 @@
       "description": "The single-arm band low row is a single-arm row variation utilizing a band for resistance that is anchored low. It targets the muscles of the middle back, like the lats (latissimus dorsi) and rhomboids, but also the core. It is usually performed for moderate to high reps, at least 8-15 reps per set, in the later stages of a back or upper-body workout.",
       "primary_muscle_group": "Lats",
       "secondary_muscle_group": "Back",
-      "equipment_type": "Resistence Bands",
-      "movement_type": "Strength"
+      "equipment_type": "Resistance Bands",
+      "movement_type": "Cardio"
     }
   },
   {
@@ -8144,7 +8144,7 @@
       "primary_muscle_group": "Lats",
       "secondary_muscle_group": "Back",
       "equipment_type": "Barbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -8158,7 +8158,7 @@
       "primary_muscle_group": "Lats",
       "secondary_muscle_group": "None",
       "equipment_type": "Barbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -8200,7 +8200,7 @@
       "primary_muscle_group": "Lats",
       "secondary_muscle_group": "Back",
       "equipment_type": "Dumbbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -8228,7 +8228,7 @@
       "primary_muscle_group": "Lats",
       "secondary_muscle_group": "None",
       "equipment_type": "Dumbbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -8242,7 +8242,7 @@
       "primary_muscle_group": "Lats",
       "secondary_muscle_group": "Back",
       "equipment_type": "Dumbbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -8256,7 +8256,7 @@
       "primary_muscle_group": "Lats",
       "secondary_muscle_group": "None",
       "equipment_type": "Dumbbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -8284,7 +8284,7 @@
       "primary_muscle_group": "Lats",
       "secondary_muscle_group": "Back",
       "equipment_type": "Cable",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -8368,7 +8368,7 @@
       "primary_muscle_group": "Lats",
       "secondary_muscle_group": "Back",
       "equipment_type": "Cable",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -8438,7 +8438,7 @@
       "primary_muscle_group": "Lats",
       "secondary_muscle_group": "Back",
       "equipment_type": "Cable",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -8452,7 +8452,7 @@
       "primary_muscle_group": "Lats",
       "secondary_muscle_group": "None",
       "equipment_type": "Cable",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -8466,7 +8466,7 @@
       "primary_muscle_group": "Lats",
       "secondary_muscle_group": "None",
       "equipment_type": "Cable",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -8494,7 +8494,7 @@
       "primary_muscle_group": "Lats",
       "secondary_muscle_group": "Back",
       "equipment_type": "Machine",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -8522,7 +8522,7 @@
       "primary_muscle_group": "Lats",
       "secondary_muscle_group": "Back",
       "equipment_type": "Machine",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -8536,7 +8536,7 @@
       "primary_muscle_group": "Lats",
       "secondary_muscle_group": "None",
       "equipment_type": "Machine",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -8634,7 +8634,7 @@
       "primary_muscle_group": "Lats",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -8662,7 +8662,7 @@
       "primary_muscle_group": "Lats",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -8676,7 +8676,7 @@
       "primary_muscle_group": "Lats",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -8690,7 +8690,7 @@
       "primary_muscle_group": "Lats",
       "secondary_muscle_group": "None",
       "equipment_type": "Medicine Ball",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -8703,7 +8703,7 @@
       "description": "The band good morning is an exercise targeting the hamstrings and glutes. It is often performed in powerlifting-style training for high reps, or in the place of barbell good mornings.",
       "primary_muscle_group": "Glutes",
       "secondary_muscle_group": "Hamstring",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -8717,7 +8717,7 @@
       "description": "The band deadlift is a lower-body exercise that mainly targets the hamstrings while also benefiting the glutes and lats using a proper hip-hinging motion.",
       "primary_muscle_group": "Glutes",
       "secondary_muscle_group": "Hamstring",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -8942,7 +8942,7 @@
       "primary_muscle_group": "Back",
       "secondary_muscle_group": "Biceps",
       "equipment_type": "Dumbbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9124,7 +9124,7 @@
       "primary_muscle_group": "Back",
       "secondary_muscle_group": "Shoulders",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -9138,7 +9138,7 @@
       "primary_muscle_group": "Back",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -9207,8 +9207,8 @@
       "description": "The plank is a static core exercise that builds strength and endurance in the abdominals and lower back.",
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
-      "movement_type": "Strength"
+      "equipment_type": "Resistance Bands",
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9221,8 +9221,8 @@
       "description": "The partner side plank band row is an abdominal exercise where two partners perform side planks while pulling on the opposite ends of an exercise band. This technique can be done for time or reps in any ab-focused workout.",
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
-      "movement_type": "Strength"
+      "equipment_type": "Resistance Bands",
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9235,8 +9235,8 @@
       "description": "The band bent-over row is an exercise to develop and strengthen the muscles of the upper and middle back, like the latissimus (lat), lower trapezius, and rear deltoids. Bands provide dynamic resistance and can work equally well in strength, muscle-building, or circuit-style fat-loss workouts.",
       "primary_muscle_group": "Back",
       "secondary_muscle_group": "Lats",
-      "equipment_type": "Resistence Bands",
-      "movement_type": "Strength"
+      "equipment_type": "Resistance Bands",
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9249,8 +9249,8 @@
       "description": "The heavy band bent-over row is a variation of the popular barbell exercise to develop and strengthen the muscles of the upper and middle back, like the latissimus (lats), lower trapezius, and rear deltoids. It can work equally well in strength, muscle-building, or circuit-style fat-loss workouts.",
       "primary_muscle_group": "Back",
       "secondary_muscle_group": "Lats",
-      "equipment_type": "Resistence Bands",
-      "movement_type": "Strength"
+      "equipment_type": "Resistance Bands",
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9264,7 +9264,7 @@
       "primary_muscle_group": "Back",
       "secondary_muscle_group": "Biceps",
       "equipment_type": "Barbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9278,7 +9278,7 @@
       "primary_muscle_group": "Back",
       "secondary_muscle_group": "Biceps",
       "equipment_type": "Barbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9292,7 +9292,7 @@
       "primary_muscle_group": "Back",
       "secondary_muscle_group": "Lats",
       "equipment_type": "Barbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9306,7 +9306,7 @@
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
       "equipment_type": "Barbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9320,7 +9320,7 @@
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
       "equipment_type": "Barbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9334,7 +9334,7 @@
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
       "equipment_type": "Barbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9348,7 +9348,7 @@
       "primary_muscle_group": "Back",
       "secondary_muscle_group": "Lats",
       "equipment_type": "Barbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9362,7 +9362,7 @@
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
       "equipment_type": "Barbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9376,7 +9376,7 @@
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
       "equipment_type": "Barbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9390,7 +9390,7 @@
       "primary_muscle_group": "Back",
       "secondary_muscle_group": "Glutes",
       "equipment_type": "Barbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9404,7 +9404,7 @@
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
       "equipment_type": "Barbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9418,7 +9418,7 @@
       "primary_muscle_group": "Back",
       "secondary_muscle_group": "Lats",
       "equipment_type": "Barbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9460,7 +9460,7 @@
       "primary_muscle_group": "Back",
       "secondary_muscle_group": "Glutes",
       "equipment_type": "Barbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9474,7 +9474,7 @@
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
       "equipment_type": "Kettlebell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9488,7 +9488,7 @@
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
       "equipment_type": "Kettlebell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9502,7 +9502,7 @@
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
       "equipment_type": "Kettlebell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9516,7 +9516,7 @@
       "primary_muscle_group": "Biceps",
       "secondary_muscle_group": "Lats",
       "equipment_type": "Kettlebell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9530,7 +9530,7 @@
       "primary_muscle_group": "Back",
       "secondary_muscle_group": "Lats",
       "equipment_type": "Dumbbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9544,7 +9544,7 @@
       "primary_muscle_group": "Back",
       "secondary_muscle_group": "Biceps",
       "equipment_type": "Dumbbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9558,7 +9558,7 @@
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
       "equipment_type": "Dumbbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9586,7 +9586,7 @@
       "primary_muscle_group": "Back",
       "secondary_muscle_group": "Lats",
       "equipment_type": "Dumbbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9628,7 +9628,7 @@
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
       "equipment_type": "Dumbbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9642,7 +9642,7 @@
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
       "equipment_type": "Dumbbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9684,7 +9684,7 @@
       "primary_muscle_group": "Back",
       "secondary_muscle_group": "Lats",
       "equipment_type": "Dumbbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9698,7 +9698,7 @@
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
       "equipment_type": "Dumbbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9726,7 +9726,7 @@
       "primary_muscle_group": "Back",
       "secondary_muscle_group": "Biceps",
       "equipment_type": "Cable",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9740,7 +9740,7 @@
       "primary_muscle_group": "Back",
       "secondary_muscle_group": "Biceps",
       "equipment_type": "Cable",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9768,7 +9768,7 @@
       "primary_muscle_group": "Back",
       "secondary_muscle_group": "None",
       "equipment_type": "Machine",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9782,7 +9782,7 @@
       "primary_muscle_group": "Back",
       "secondary_muscle_group": "Lats",
       "equipment_type": "Machine",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9796,7 +9796,7 @@
       "primary_muscle_group": "Back",
       "secondary_muscle_group": "Lats",
       "equipment_type": "Machine",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9810,7 +9810,7 @@
       "primary_muscle_group": "Back",
       "secondary_muscle_group": "None",
       "equipment_type": "Machine",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9866,7 +9866,7 @@
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -9880,7 +9880,7 @@
       "primary_muscle_group": "Back",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -9894,7 +9894,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "None",
       "equipment_type": "Medicine Ball",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9907,8 +9907,8 @@
       "description": "The band seated row is a band alternative to the popular cable exercise and trains the muscles of the upper back, including the lats (latissimus dorsi), traps, rhomboids, and rear deltoids. It also targets the biceps to a lesser degree. The band row can work well in a variety of rep ranges, requiring a heavier band for muscle-building and strength workouts and a lighter band for weight-loss work and as an accessory movement.",
       "primary_muscle_group": "Back",
       "secondary_muscle_group": "Biceps",
-      "equipment_type": "Resistence Bands",
-      "movement_type": "Strength"
+      "equipment_type": "Resistance Bands",
+      "movement_type": "Cardio"
     }
   },
   {
@@ -9978,7 +9978,7 @@
       "primary_muscle_group": "Back",
       "secondary_muscle_group": "Lats",
       "equipment_type": "Barbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -10160,7 +10160,7 @@
       "primary_muscle_group": "None",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -10187,7 +10187,7 @@
       "description": "The single-leg depth squat is an exercise targeting the muscles of the lower body, including the quads, glutes, and hamstrings. It is sometimes used as a substitute for the pistol squat, since it doesn't demand the same level of flexibility to perform. It is usually performed for low to moderate reps with a focus on proper form and control.",
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "Glutes",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -10201,7 +10201,7 @@
       "description": "This is a core strength exercise designed to improve stability and abdominal control.",
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -10215,7 +10215,7 @@
       "description": "This is a core strength exercise designed to improve stability and abdominal control.",
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -10229,7 +10229,7 @@
       "description": "This is a core strength exercise designed to improve stability and abdominal control.",
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -10243,7 +10243,7 @@
       "description": "Pulling exercises focus on the back, biceps, and forearms, improving posture and upper body strength.",
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -10257,8 +10257,8 @@
       "description": "The banded jump squat is an explosive bodyweight squat variation performed with a band around the thighs just above the knees. This increases muscle activation in the hips and glutes, while the squat targets the quads, hamstrings, and glutes. The banded jump squat can be performed for low reps as a power-focused exercise, or for higher reps to build muscle in the lower body, challenge conditioning, and burn fat.",
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "Glutes",
-      "equipment_type": "Resistence Bands",
-      "movement_type": "Strength"
+      "equipment_type": "Resistance Bands",
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -10271,7 +10271,7 @@
       "description": "The banded barbell box squat is a strength and power exercise targeting the lower body. It is popular in powerlifting training, either performed with light weights as a power and speed exercise, or heavier for strength. It is usually performed to a box of a height that demands the squatter to decent to around parallel.",
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -10285,7 +10285,7 @@
       "description": "The band split squat is a band movement targeting the quads, glutes, and hamstrings. It can be performed either for time or reps, and is often included as part of a fat-loss or athleticism-focused circuit workout. Leaning back places more emphasis on the glutes and hamstrings, while standing straight up targets the quads.",
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "Back",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -10299,7 +10299,7 @@
       "description": "The band front squat is a popular exercise for targeting the muscles of the lower body, including the quadriceps, glutes, and hamstrings. Holding band in the racked position also works the core and upper-back muscles to maintain posture while the lower body moves. Because the tension of the band changes as it stretches, the resistance more closely matches the natural strength curve of the squat. This movement is usually performed for moderate to high reps, at least 8-12 reps per set or more. If this movement hurts your knees, try performing it with a wider stance.",
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "Back",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -10313,7 +10313,7 @@
       "description": "The squat hold with band pull-apart is a combination of the squat hold and band pull-apart. It involves holding the squat position with the thighs at or below parallel to the ground while performing a band pull-apart. The band pull-apart is an exercise targeting the upper back muscles, including the trapezius, rear delts, and rhomboids. The squat hold band pull-apart can be performed for mobility purposes or to increase time under tension on lower-body muscles including the quads, glutes, and hamstrings.",
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "Back",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -10327,7 +10327,7 @@
       "description": "The banded squat toe tap is a banded variation on the classic bodyweight squat, but with a lateral toe tap to add extra focus to the stabilizer muscles around the hips. It can be performed for time or for reps as part of a dynamic warm-up for the lower body, or in any lower-body portion of a workout.",
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -10341,7 +10341,7 @@
       "description": "The band overhead squat is a full-body, functional movement that works to build full-body strength and stability. It is a variation of the classic barbell exercise and can be used to train core strength and stability for Olympic weightlifting or CrossFit.",
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -10454,7 +10454,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Barbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -10482,7 +10482,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Barbell",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -11084,7 +11084,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Barbell",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -11476,7 +11476,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Kettlebell",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -11560,7 +11560,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Dumbbell",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -11714,7 +11714,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Dumbbell",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -11742,7 +11742,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Dumbbell",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -11938,7 +11938,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Dumbbell",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -11966,7 +11966,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Dumbbell",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -12078,7 +12078,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Machine",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -12092,7 +12092,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Machine",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -12106,7 +12106,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Machine",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -12176,7 +12176,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Machine",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -12190,7 +12190,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Machine",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -12204,7 +12204,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Machine",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -12218,7 +12218,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Machine",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -12330,7 +12330,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Machine",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -12414,7 +12414,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "Back",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -12470,7 +12470,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -12484,7 +12484,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -12498,7 +12498,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -12512,7 +12512,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "Glutes",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -12526,7 +12526,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "Shoulders",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -12540,7 +12540,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -12582,7 +12582,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -12596,7 +12596,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -12610,7 +12610,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "Back",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -12652,7 +12652,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "Glutes",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -12666,7 +12666,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -12680,7 +12680,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "Glutes",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -12694,7 +12694,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "Glutes",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -12722,7 +12722,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -12736,7 +12736,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -12750,7 +12750,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -12820,7 +12820,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -12834,7 +12834,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "Back",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -12848,7 +12848,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -12890,7 +12890,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -12904,7 +12904,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -12932,7 +12932,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -13002,7 +13002,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -13114,7 +13114,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -13128,7 +13128,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "Glutes",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -13142,7 +13142,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -13156,7 +13156,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -13170,7 +13170,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -13212,7 +13212,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "Glutes",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -13226,7 +13226,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "Glutes",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -13254,7 +13254,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -13268,7 +13268,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "Glutes",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -13282,7 +13282,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -13310,7 +13310,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "Back",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -13338,7 +13338,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -13366,7 +13366,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -13478,7 +13478,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -13492,7 +13492,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "Shoulders",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -13506,7 +13506,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "Glutes",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -13618,7 +13618,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -13632,7 +13632,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -13674,7 +13674,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -13744,7 +13744,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -13772,7 +13772,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -13786,7 +13786,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -13800,7 +13800,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -13814,7 +13814,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -13842,7 +13842,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -13940,7 +13940,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -13954,7 +13954,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -13996,7 +13996,7 @@
       "primary_muscle_group": "Quadriceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Medicine Ball",
-      "movement_type": "Strength"
+      "movement_type": "Plyometrics"
     }
   },
   {
@@ -14051,7 +14051,7 @@
       "description": "This is a core strength exercise designed to improve stability and abdominal control.",
       "primary_muscle_group": "Shoulders",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -14065,7 +14065,7 @@
       "description": "The band pull-apart is an exercise targeting the upper back muscles, including the trapezius, rear delts, and rhomboids. The band creates dynamic tension, allowing you to really focus on contracting these muscles, making it a great activation drill prior to upper-body lifting.",
       "primary_muscle_group": "Shoulders",
       "secondary_muscle_group": "Back",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -14079,7 +14079,7 @@
       "description": "This is a core strength exercise designed to improve stability and abdominal control.",
       "primary_muscle_group": "Shoulders",
       "secondary_muscle_group": "Back",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -14093,7 +14093,7 @@
       "description": "This is a core strength exercise designed to improve stability and abdominal control.",
       "primary_muscle_group": "Shoulders",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -14107,7 +14107,7 @@
       "description": "Press exercises typically involve pushing a weight away from the body and emphasize the chest, shoulders, and triceps.",
       "primary_muscle_group": "Shoulders",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -14121,7 +14121,7 @@
       "description": "This is a core strength exercise designed to improve stability and abdominal control.",
       "primary_muscle_group": "Shoulders",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -14135,7 +14135,7 @@
       "description": "This is a core strength exercise designed to improve stability and abdominal control.",
       "primary_muscle_group": "Shoulders",
       "secondary_muscle_group": "Back",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -14149,7 +14149,7 @@
       "description": "Pulling exercises focus on the back, biceps, and forearms, improving posture and upper body strength.",
       "primary_muscle_group": "Shoulders",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -14163,7 +14163,7 @@
       "description": "This is a core strength exercise designed to improve stability and abdominal control.",
       "primary_muscle_group": "Shoulders",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -14177,7 +14177,7 @@
       "description": "The band shoulder press is a deltoid exercise and an alternative to the classic dumbbell shoulder press. The dynamic tension of the band forces the core to stabilize the body and more closely matches the strength curve of the shoulder press. It can be performed in low reps, such as 5-8 reps per set, to build shoulder strength, or for higher reps to build muscle and for conditioning. It can work as the main focus of a shoulder day but is also popular as an accessory movement to the bench press or barbell military press.",
       "primary_muscle_group": "Shoulders",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -14191,7 +14191,7 @@
       "description": "The band lateral raise is a shoulder exercise that targets the medial or middle head of the deltoid muscle. It's a variation of the dumbbell lateral raise, a staple strength-training move. The band lateral raise is a great option for warm-up or accessory work on upper-body training days. The dynamic tension of the band provides constant tension and matches the strength curve of the movement. It is usually performed for moderate to high reps, at least 8-12 reps, as part of the upper-body or shoulder-focused portion of a workout.",
       "primary_muscle_group": "Shoulders",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -14205,7 +14205,7 @@
       "description": "The staggered-stance band shoulder press is a deltoid exercise and a variation of the band shoulder press. The dynamic tension of the band forces the core to stabilize the body, and the staggered-stance provides more stability and relieves tension on the back. It can be performed in low reps, such as 5-8 reps per set, to build shoulder strength, or for higher reps to build muscle and for conditioning. It can work as the main focus of a shoulder day but is also popular as an accessory movement to the bench press or barbell military press.",
       "primary_muscle_group": "Shoulders",
       "secondary_muscle_group": "Back",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -14219,7 +14219,7 @@
       "description": "The single-arm banded landmine press is an upper-body exercise that uses an angled barbell anchored at floor level in a landmine device. It can also be performed by sticking a barbell in the corner of a room, preferably in a towel to protect the walls. The band adds constant tension and dynamic resistance to the exercise. The movement focuses primarily on the muscles of the shoulders or deltoids and can be trained in traditional muscle and strength-focused rep ranges or for higher reps.",
       "primary_muscle_group": "Shoulders",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -14233,8 +14233,8 @@
       "description": "The band front raise rear fly row combo is a combination of three different shoulder exercises to build and strengthen the anterior, middle deltoids, and posterior portions of the shoulders. It requires a continuous loop band to provide constant, dynamic tension throughout the movement. In addition to the front and rear delts, this exercise works the arms, chest, back, and core, making it a great time-efficient shoulder burnout or accessory movement on an upper-body day.",
       "primary_muscle_group": "Shoulders",
       "secondary_muscle_group": "Back",
-      "equipment_type": "Resistence Bands",
-      "movement_type": "Strength"
+      "equipment_type": "Resistance Bands",
+      "movement_type": "Cardio"
     }
   },
   {
@@ -14346,7 +14346,7 @@
       "primary_muscle_group": "Shoulders",
       "secondary_muscle_group": "Back",
       "equipment_type": "Barbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -15200,7 +15200,7 @@
       "primary_muscle_group": "Shoulders",
       "secondary_muscle_group": "Back",
       "equipment_type": "Dumbbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -15592,7 +15592,7 @@
       "primary_muscle_group": "Shoulders",
       "secondary_muscle_group": "Back",
       "equipment_type": "Dumbbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -15914,7 +15914,7 @@
       "primary_muscle_group": "Shoulders",
       "secondary_muscle_group": "Biceps",
       "equipment_type": "Cable",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -16040,7 +16040,7 @@
       "primary_muscle_group": "Shoulders",
       "secondary_muscle_group": "Back",
       "equipment_type": "Cable",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -16194,7 +16194,7 @@
       "primary_muscle_group": "Shoulders",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -16376,7 +16376,7 @@
       "primary_muscle_group": "Shoulders",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -16390,7 +16390,7 @@
       "primary_muscle_group": "Shoulders",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -16418,7 +16418,7 @@
       "primary_muscle_group": "Shoulders",
       "secondary_muscle_group": "Back",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -16432,7 +16432,7 @@
       "primary_muscle_group": "Shoulders",
       "secondary_muscle_group": "Back",
       "equipment_type": "Medicine Ball",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -16446,7 +16446,7 @@
       "primary_muscle_group": "Shoulders",
       "secondary_muscle_group": "Abdominals",
       "equipment_type": "Medicine Ball",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -16460,7 +16460,7 @@
       "primary_muscle_group": "Shoulders",
       "secondary_muscle_group": "None",
       "equipment_type": "Medicine Ball",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -16515,7 +16515,7 @@
       "description": "The band overhead triceps press is a dynamic arm exercise utilizing a looped exercise band. It could also be performed with an exercise band with handles. It targets the triceps muscles and can be performed for time or reps, either in traditional muscle-building rep ranges such as 12-15 reps per set, or higher rep ranges such as 30, 50, or more.",
       "primary_muscle_group": "Triceps",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -16529,7 +16529,7 @@
       "description": "The band overhead triceps extension is a single-joint exercise focused on the triceps that uses the dynamic resistance of the band. The overhead position of the arms targets the long head of the triceps. Many lifters save this move for last in their triceps workout, performing it for moderate to high reps, such as 8-12 reps or more per set.",
       "primary_muscle_group": "Triceps",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -16543,7 +16543,7 @@
       "description": "The band straight-arm pull-down is a non-gym or at home variation of the straight-arm lat pull-down performed using a cable stack machine. It can either be performed in an athletic upright stance, or slightly bent over. It both stretches and contracts the muscles of the lats (latissimus dorsi) as well as providing additional activation to the other upper back muscles and the core. Because the triceps are also isometrically involved in the movement, it is usually performed for higher reps, such as 8-15 reps or more.",
       "primary_muscle_group": "Triceps",
       "secondary_muscle_group": "Back",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -16557,7 +16557,7 @@
       "description": "The band skullcrusher is a variation of the popular bench exercise targeting the triceps muscles. It is usually performed for moderate to high reps as part of an upper-body or arm-focused workout.",
       "primary_muscle_group": "Triceps",
       "secondary_muscle_group": "None",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -16571,7 +16571,7 @@
       "description": "The single-arm band kick-back is an isolation exercise that targets the triceps. This is a common burnout move performed for moderate to high reps, such as 8-12 reps per set or more, as part of an upper-body or arm-focused workout.",
       "primary_muscle_group": "Triceps",
       "secondary_muscle_group": "Back",
-      "equipment_type": "Resistence Bands",
+      "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
     }
   },
@@ -17090,7 +17090,7 @@
       "primary_muscle_group": "Triceps",
       "secondary_muscle_group": "Back",
       "equipment_type": "Dumbbell",
-      "movement_type": "Strength"
+      "movement_type": "Cardio"
     }
   },
   {
@@ -17538,7 +17538,7 @@
       "primary_muscle_group": "Triceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {
@@ -17552,7 +17552,7 @@
       "primary_muscle_group": "Triceps",
       "secondary_muscle_group": "None",
       "equipment_type": "Body Only",
-      "movement_type": "Strength"
+      "movement_type": "Stretching"
     }
   },
   {

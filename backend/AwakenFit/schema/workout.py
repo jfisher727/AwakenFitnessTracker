@@ -137,6 +137,7 @@ class WorkoutCreateCompleted(Mutation):
         errors.extend(MutationDomain.validate_workout_completed_input(input))
 
         if not errors:
+            print("no errors with mutation data")
             workout = WorkoutDomain.create_workout(user.id, input.start_time, input.stop_time, False, input.notes)
             for entry in input.exercises:
                 created_exercise = ExerciseDomain.create_exercise(
@@ -154,6 +155,7 @@ class WorkoutCreateCompleted(Mutation):
                             standard_set.completed_reps if standard_set.completed_reps is not None else 0,
                             standard_set.weight if standard_set.weight is not None else 0,
                             standard_set.duration if standard_set.duration is not None else "",
+                            standard_set.equipment_identifier if standard_set.equipment_identifier is not None else "",
                         )
                 if entry.non_standard_sets:
                     for non_standard_set in entry.non_standard_sets:
@@ -167,8 +169,16 @@ class WorkoutCreateCompleted(Mutation):
                                 associated_set.completed_reps if associated_set.completed_reps is not None else 0,
                                 associated_set.weight if associated_set.weight is not None else 0,
                                 associated_set.duration if associated_set.duration is not None else "",
+                                (
+                                    associated_set.equipment_identifier
+                                    if associated_set.equipment_identifier is not None
+                                    else ""
+                                ),
                                 parent_set=parent_set,
                             )
+
+        else:
+            print(errors)
 
         return WorkoutCreateCompleted(workout=workout, errors=errors)
 

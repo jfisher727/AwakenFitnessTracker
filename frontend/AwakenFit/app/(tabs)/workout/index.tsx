@@ -122,6 +122,7 @@ export default function Workout() {
                 completedReps: 0,
                 weight: 0,
                 duration: '',
+                equipment_identifier: '',
                 setType: 'Standard',
                 parentSet: ''
             }]
@@ -147,7 +148,7 @@ export default function Workout() {
         handleChangeScreen(ScreenOptions.CURRENT_EXERCISE);
     }
 
-    function handleRecordSet(exercise_id: string, sequence_number: number, reps?: number, weight?: number, duration?: string) {
+    function handleRecordSet(exercise_id: string, sequence_number: number, reps?: number, weight?: number, duration?: string, equipment_identifier?: string) {
         dispatch({
             type: ActionTypes.RECORD_SET,
             payload: {
@@ -155,17 +156,22 @@ export default function Workout() {
                 sequence_number: sequence_number,
                 reps: reps,
                 weight: weight,
-                duration: duration
+                duration: duration,
+                equipment_identifier: equipment_identifier,
             }
         });
         // need to see if we've completed all the sets for the current exercise
         var exercise_id_to_display = '';
         state.exercises.every(exercise => {
-            var all_sets_complete = true;
-            exercise.sets.every(set => {
-                if (!(set.completedReps || set.weight || set.duration)) {
-                    all_sets_complete = false;
+            var all_sets_complete = exercise.sets.every(set => {
+                // this is the set that we just recorded, the state hasn't updated to reflect this set
+                if (exercise.id === exercise_id && set.sequenceNumber === sequence_number) {
+                    return true;
                 }
+                if (!(set.completedReps || set.weight || set.duration)) {
+                    return false;
+                }
+                return true;
             });
             if (!all_sets_complete) {
                 exercise_id_to_display = exercise.id;
@@ -174,6 +180,7 @@ export default function Workout() {
             return true;
         });
         if (state.current_exercise !== exercise_id_to_display && exercise_id_to_display) {
+            // if the exercise_id_to_display is different from what we're currently displaying, update it
             handleSetCurrentExercise(exercise_id_to_display);
         }
         else if (!exercise_id_to_display) {
@@ -218,7 +225,6 @@ export default function Workout() {
     }
 
     function handleRecordWorkout() {
-        console.log('recording working');
         // TODO: Need to format all the data we've collected into the proper JSON structure
         // to send to the GraphQL mutation
         var mutation_input = {
@@ -234,14 +240,20 @@ export default function Workout() {
             element.sets.forEach((set) => {
                 var set_data = {
                     'sequenceNumber': set.sequenceNumber,
-                    'completedReps': set.completedReps,
-                    'weight': set.completedReps
                 };
+                if (set.completedReps && set.completedReps > 0) {
+                    set_data.completedReps = set.completedReps;
+                }
+                if (set.weight && set.weight > 0) {
+                    set_data.weight = set.weight;
+                }
+                if (set.equipment_identifier && set.equipment_identifier.length > 0) {
+                    set_data.equipmentIdentifier = set.equipment_identifier;
+                }
                 exercise_data.standardSets.push(set_data);
             });
             mutation_input.exercises.push(exercise_data);
         });
-        console.log(JSON.stringify(mutation_input));
         workoutMutation({
             variables: {
                 input: mutation_input
@@ -280,8 +292,8 @@ export default function Workout() {
         if (workoutMutationResult.data) {
             console.log('workoutMutationResult data');
             console.log(workoutMutationResult.data);
-            if (data.workoutCreateCompleted?.errors) {
-                console.log(data.workoutCreateCompleted.errors);
+            if (workoutMutationResult.data.workoutCreateCompleted?.errors) {
+                console.log(workoutMutationResult.data.workoutCreateCompleted.errors);
             }
             else {
                 router.navigate("/(tabs)");

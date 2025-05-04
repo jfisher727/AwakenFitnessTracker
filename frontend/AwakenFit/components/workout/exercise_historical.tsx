@@ -9,6 +9,8 @@ import { baseStyles, lightColors, darkColors } from "@/styles/global";
 
 import HorzontalLine from '../general/horizonal_line';
 
+import { MomvementNode } from '@/graphql/properties';
+
 import { date_formatter } from '@/util/date';
 import { hexToRGBA } from '@/util/color';
 
@@ -27,6 +29,9 @@ const GET_EXERCISE_HISTORICAL = gql`
                     id
                     movement {
                         name
+                        primaryMuscleGroup
+                        equipmentType
+                        movementType
                     }
                     workout {
                         startTime
@@ -67,6 +72,7 @@ type SetNode = {
 
 type ExerciseNode = {
     id: string,
+    movement: MomvementNode,
     workout: {
         startTime: string
     },
@@ -133,6 +139,31 @@ export default function ExerciseHistorical({ movementId, navigateBack }: histori
             else {
                 setIndex(index + 1);
             }
+        }
+
+        const movement_type = node.movement.movementType.toLowerCase();
+        const equipment_type = node.movement.equipmentType.toLowerCase();
+
+        if (movement_type === "cardio") {
+            return (
+                <View style={baseStyles.modal}>
+                    <Text>No historical data for cardio</Text>
+                </View>
+            );
+        }
+        if (equipment_type == "none" || equipment_type === "body only" || equipment_type === "exercise ball") {
+            return (
+                <View>
+                    <Text>Reps Only</Text>
+                </View>
+            );
+        }
+        if (equipment_type == "resistance bands") {
+            return (
+                <View>
+                    <Text>Reps and identifier</Text>
+                </View>
+            );
         }
 
         return (
