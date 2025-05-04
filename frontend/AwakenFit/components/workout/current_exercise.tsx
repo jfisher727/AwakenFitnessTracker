@@ -154,7 +154,6 @@ function SetInput({ equipment_type, movement_type, reps, weight, duration, equip
         }
     }
     else if (equipment_type == "resistence bands" || equipment_type == "resistance bands") {
-        console.log(`current identifier: ${equipmentIdentifier}`);
         // identifier and reps
         return (
             <IdentifierInput
@@ -186,10 +185,37 @@ const SetEntry = ({ item, movement, currentSet, saveSet, setSelectedSet }: entry
     const [weight, setWeight] = useState(item.weight?.toString() || "");
     const [duration, setDuration] = useState(item.duration?.toString() || "");
     const [equipmentIdentifier, setEquipmentIdentifier] = useState(item.equipment_identifier?.toString() || "");
-    const [inputForSet, setInputForSet] = useState(<View></View>);
+    const [validSet, setValidSet] = useState(false);
+    const [saveCalled, setSaveCalled] = useState(false);
+
+    function validateSetInput() {
+        var equipment_type = movement.equipmentType.toLowerCase();
+        var movement_type = movement.movementType.toLowerCase();
+        if (equipment_type == "none" || equipment_type == "body only" || equipment_type == "exercise ball") {
+            if (movement_type == "cardio") {
+                return duration.length > 0;
+            } else {
+                return Number(reps) > 0;
+            }
+        }
+        else if (equipment_type == "resistence bands" || equipment_type == "resistance bands") {
+            // identifier and reps
+            return equipmentIdentifier.length > 0 && Number(reps) > 0;
+        }
+        else {
+            // weight and reps
+            return Number(weight) > 0 && Number(reps) > 0;
+        }
+    }
 
     function handleOnSaveSet() {
-        saveSet(item.sequenceNumber, Number(reps), Number(weight), duration, equipmentIdentifier);
+        setSaveCalled(true);
+        var setIsValid = validateSetInput();
+        console.log(`set is valid: ${setIsValid}`);
+        setValidSet(setIsValid);
+        if (setIsValid) {
+            saveSet(item.sequenceNumber, Number(reps), Number(weight), duration, equipmentIdentifier);
+        }
     }
 
     function handleOnSelect() {
@@ -213,6 +239,12 @@ const SetEntry = ({ item, movement, currentSet, saveSet, setSelectedSet }: entry
                     setEquipmentIdentifier={setEquipmentIdentifier}
                 />
             </View>
+            {
+                (!validSet && currentSet && saveCalled) &&
+                <View>
+                    <Text>Populate all fields</Text>
+                </View>
+            }
             {
                 currentSet &&
                 <View style={baseStyles.container}>
@@ -254,7 +286,13 @@ export default function CurrentExercise({ exercise, navigateBack, recordSet }: e
             <Text style={{ ...baseStyles.mediumHeader, color: color }}>{exercise.movement.name}</Text>
             <FlatList
                 data={exercise.sets}
-                renderItem={({ item }) => <SetEntry item={item} movement={exercise.movement} currentSet={currentSet === item.sequenceNumber} saveSet={saveSet} setSelectedSet={setSelectedSet} />}
+                renderItem={({ item }) =>
+                    <SetEntry
+                        item={item}
+                        movement={exercise.movement}
+                        currentSet={currentSet === item.sequenceNumber}
+                        saveSet={saveSet}
+                        setSelectedSet={setSelectedSet} />}
                 keyExtractor={item => item.id}
                 ItemSeparatorComponent={HorzontalLine}
             />

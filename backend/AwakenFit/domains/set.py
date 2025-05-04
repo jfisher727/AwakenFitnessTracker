@@ -8,7 +8,7 @@ from AwakenFit.domains import exercise as ExerciseDomain
 
 ERROR_MESSAGES = {
     "INVALID_SET_TYPE": "The provided set type couldn't be validated.",
-    "COMPLETED_SETS": "Completed sets should contain at least one of the following: completed_reps, weight, duration. completed_reps and duration should not be included together.",
+    "COMPLETED_SETS": "Completed sets should contain at least one of the following: completedReps, weight, duration. completed_reps and duration should not be included together.",
     "TEMPLATE_SETS": "Template sets should contain min_reps/max_reps or duration, not both.",
     "INVALID_VALUE": "Provided a value that should be greater than 0.",
     "BAD_TEMPLATE_REPS": "Please make sure min_reps is less than max_reps for templates.",
@@ -155,6 +155,7 @@ def create_completed_set(
     completed_reps: int = 0,
     weight: int = 0,
     duration: str = "",
+    equipment_identifier: str = "",
     set_type: str = Set.STANDARD,
     parent_set: Set = None,
 ) -> Set | None:
@@ -168,6 +169,7 @@ def create_completed_set(
             completed_reps=completed_reps,
             weight=weight,
             duration=duration,
+            equipment_identifier=equipment_identifier,
             set_type=set_type,
             parent_set=parent_set,
         )
@@ -182,6 +184,7 @@ def _create_set(
     max_reps: int = 0,
     weight: int = 0,
     duration: str = "",
+    equipment_identifier: str = "",
     set_type: str = Set.STANDARD,
     parent_set: Set = None,
 ) -> Set | None:
@@ -193,6 +196,7 @@ def _create_set(
         max_reps=max_reps,
         weight=weight,
         duration=duration,
+        equipment_identifier=equipment_identifier,
         set_type=set_type,
         parent_set=parent_set,
     )
