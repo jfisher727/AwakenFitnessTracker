@@ -150,4 +150,8 @@ class AnalyticsDomainTest(TestCase):
 
     def test_week_in_review_no_workouts(self):
         result = AnalyticsDomain.calculate_week_summary(self.test_user2.id)
-        self.assertEqual("N/A", result, "The user should not have any analytics calculatted")
+        self.assertEqual(
+            "No workouts recorded for this week",
+            result["message"],
+            "The user should not have any analytics calculatted",
+        )
