@@ -17,6 +17,7 @@ django-environ==0.12.0
 django-filter==24.3
 djangorestframework==3.15.2
 filelock==3.16.1
+freezegun==1.5.1
 graphene==3.4.3
 graphene-django==3.2.2
 graphql-core==3.2.5
@@ -40,6 +41,8 @@ pathspec==0.12.1
 platformdirs==4.3.6
 pre_commit==4.0.1
 promise==2.3
+psycopg==3.2.7
+psycopg-binary==3.2.7
 pycparser==2.22
 pydantic==2.10.6
 pydantic_core==2.27.2

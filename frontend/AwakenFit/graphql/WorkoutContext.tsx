@@ -28,12 +28,9 @@ export const WorkoutProvider = ({ children }: PropsWithChildren) => {
         <WorkoutContext.Provider
             value={{
                 startWorkout: () => {
-                    console.log("starting workout");
                     setIsWorkoutActive(true);
-                    console.log(isWorkoutActive);
                 },
                 stopWorkout: () => {
-                    console.log("stopping workout");
                     setIsWorkoutActive(false);
                 },
                 isWorkoutActive

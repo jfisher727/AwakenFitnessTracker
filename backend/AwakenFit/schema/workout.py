@@ -137,7 +137,6 @@ class WorkoutCreateCompleted(Mutation):
         errors.extend(MutationDomain.validate_workout_completed_input(input))
 
         if not errors:
-            print("no errors with mutation data")
             workout = WorkoutDomain.create_workout(user.id, input.start_time, input.stop_time, False, input.notes)
             for entry in input.exercises:
                 created_exercise = ExerciseDomain.create_exercise(
@@ -176,9 +175,6 @@ class WorkoutCreateCompleted(Mutation):
                                 ),
                                 parent_set=parent_set,
                             )
-
-        else:
-            print(errors)
 
         return WorkoutCreateCompleted(workout=workout, errors=errors)
 
