@@ -111,7 +111,6 @@ export default function ExerciseSearch({ addExercise }: ExerciseSearchProps) {
     const [selectedMuscleGroup, setSelectedMuscleGroup] = useState({ key: '', value: '' });
 
     const RowEntry = ({ node }: MovementProps) => {
-        console.log(node.name);
         return (
             <Pressable style={baseStyles.selectableRow} onPress={() => addExercise(node)}>
                 <Text style={{ color: lightColors.primaryColor, fontSize: 20 }}>{node.name}</Text>

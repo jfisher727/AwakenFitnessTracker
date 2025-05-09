@@ -1,5 +1,6 @@
 import json
-from datetime import timedelta
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 
 from django.utils import timezone
 
@@ -84,3 +85,13 @@ class WorkoutModelTest(TestCase):
         self.assertEqual(result["workoutDuration"], "00H30M00S")
         self.assertEqual(result["notes"], "Test Workout")
         self.assertEqual(len(result["exercises"]), 4)
+
+    def test_setting_start_stop_time(self):
+        start_time = datetime(2025, 2, 1, 4, 30, 0, 0, tzinfo=ZoneInfo("America/New_York"))
+        stop_time = start_time + timedelta(minutes=45)
+        test_workout = Workout.objects.create(
+            user=self.test_user, start_time=start_time, stop_time=stop_time, template=False, notes="Test Workout"
+        )
+
+        self.assertEqual(test_workout.start_time, start_time, "Workout start time was not properly set")
+        self.assertEqual(test_workout.stop_time, stop_time, "Workout start time was not properly set")

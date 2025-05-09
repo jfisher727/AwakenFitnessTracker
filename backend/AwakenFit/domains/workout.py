@@ -34,6 +34,17 @@ def get_by_user_id(id: int) -> list[Workout] | None:
     return selected_records
 
 
+def get_by_user_date_range(id: int, start_date: datetime, end_date: datetime) -> list[Workout] | None:
+    selected_records = None
+    if UserDomain.is_valid_id(id):
+        selected_records = (
+            Workout.objects.filter(user__id=id, template=False, start_time__gte=start_date, start_time__lte=end_date)
+            .prefetch_related("exercises", "exercises__movement", "exercises__sets")
+            .all()
+        )
+    return selected_records
+
+
 def filter_queryset_by_user(queryset: QuerySet, user: User) -> QuerySet:
     return queryset.filter(user=user).order_by("name")
 
