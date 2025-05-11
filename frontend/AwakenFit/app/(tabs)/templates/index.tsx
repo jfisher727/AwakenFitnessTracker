@@ -1,12 +1,12 @@
 import { useEffect, useState, useReducer } from 'react';
-import { View, Text, useColorScheme } from 'react-native';
+import { View, Text, TextInput, useColorScheme } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { gql, useMutation } from '@apollo/client';
 
 import { workoutStateReducer, workoutStateProps, ActionTypes, ScreenOptions } from '@/graphql/WorkoutStateReducer';
 
-import { ExerciseProps, MovementNode, SetNode } from '@/graphql/properties';
+import { ExerciseProps, MovementNode, SetNode, WorkoutNode } from '@/graphql/properties';
 
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
 
@@ -14,7 +14,8 @@ import AddTemplateSets from '@/components/workout/add_template_sets';
 import ExerciseSearch from '@/components/workout/exercise_search';
 import MovementList from '@/components/workout/movement_list';
 import TemplateButtons from '@/components/workout/template_buttons';
-import { TextInput } from 'react-native-gesture-handler';
+import HorzontalLine from '@/components/general/horizonal_line';
+import TextInputField from '@/components/general/text_input';
 
 const RECORD_WORKOUT_MUTATION = gql`
     mutation WorkoutCreateTemplate($input:WorkoutCreateTemplateInput!){
@@ -142,9 +143,9 @@ export default function Templates() {
     }
 
     function handleSaveTemplate() {
-        var mutation_input = {
-            'name': templateName,
-            'exercises': []
+        var mutation_input: WorkoutNode = {
+            name: templateName,
+            exercises: []
         }
         state.exercises.forEach((element) => {
             var exercise_data = {
@@ -152,11 +153,11 @@ export default function Templates() {
                 'standardSets': [],
             };
             element.sets.forEach((set) => {
-                var set_data = {
-                    'sequenceNumber': set.sequenceNumber,
-                    'minReps': set.minReps,
-                    'maxReps': set.maxReps,
-                    'duration': set.duration
+                var set_data: SetNode = {
+                    sequenceNumber: set.sequenceNumber,
+                    minReps: set.minReps,
+                    maxReps: set.maxReps,
+                    duration: set.duration,
                 };
                 exercise_data.standardSets.push(set_data);
             });
@@ -175,29 +176,55 @@ export default function Templates() {
             switch (state.screen) {
                 case ScreenOptions.MOVEMENT_LIST: {
                     setCurrentScreen(
-                        <MovementList
-                            exercises={state.exercises}
-                            editable={state.editing}
-                            showSets={true}
-                            moveExerciseUp={handleMoveExerciseUp}
-                            moveExerciseDown={handleMoveExerciseDown}
-                            setCurrentExercise={handleSetCurrentExercise}
-                            removeExercise={handleRemoveExercise}
-                        />);
+                        <View>
+                            <View>
+                                <TextInputField
+                                    inputMode="text"
+                                    onChangeText={setTemplateName}
+                                    defaultValue={templateName}
+                                    secureTextEntry={false}
+                                    header="Template Name?"
+                                    showHeader={true}
+                                />
+                            </View>
+                            <HorzontalLine />
+                            <MovementList
+                                exercises={state.exercises}
+                                editable={state.editing}
+                                showSets={true}
+                                moveExerciseUp={handleMoveExerciseUp}
+                                moveExerciseDown={handleMoveExerciseDown}
+                                setCurrentExercise={handleSetCurrentExercise}
+                                removeExercise={handleRemoveExercise}
+                            />
+                        </View>);
                     handleButtonsToShow(true, true);
                     return;
                 }
                 case ScreenOptions.CURRENT_EXERCISE: {
                     setCurrentScreen(
-                        <MovementList
-                            exercises={state.exercises}
-                            editable={state.editing}
-                            showSets={true}
-                            moveExerciseUp={handleMoveExerciseUp}
-                            moveExerciseDown={handleMoveExerciseDown}
-                            setCurrentExercise={handleSetCurrentExercise}
-                            removeExercise={handleRemoveExercise}
-                        />);
+                        <View>
+                            <View style={{ padding: 10 }}>
+                                <TextInputField
+                                    inputMode="text"
+                                    onChangeText={setTemplateName}
+                                    defaultValue={templateName}
+                                    secureTextEntry={false}
+                                    header="Template Name?"
+                                    showHeader={true}
+                                />
+                            </View>
+                            <HorzontalLine />
+                            <MovementList
+                                exercises={state.exercises}
+                                editable={state.editing}
+                                showSets={true}
+                                moveExerciseUp={handleMoveExerciseUp}
+                                moveExerciseDown={handleMoveExerciseDown}
+                                setCurrentExercise={handleSetCurrentExercise}
+                                removeExercise={handleRemoveExercise}
+                            />
+                        </View>);
                     handleButtonsToShow(true, true);
                     return;
 
@@ -220,7 +247,7 @@ export default function Templates() {
             }
         }
 
-    }, [state.screen, state.exercises, state.current_exercise, state.editing]);
+    }, [state.screen, state.exercises, state.current_exercise, state.editing, templateName]);
 
     useEffect(() => {
         if (workoutMutationResult.error) {
