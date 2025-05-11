@@ -84,7 +84,12 @@ class WorkoutCreateTemplate(Mutation):
 
         if not errors:
             workout = WorkoutDomain.create_workout(
-                user.id, timezone.now(), timezone.now(), True, input.name, input.notes
+                user.id,
+                timezone.now(),
+                timezone.now(),
+                True,
+                input.notes,
+                name=input.name,
             )
             for entry in input.exercises:
                 created_exercise = ExerciseDomain.create_exercise(

@@ -54,7 +54,12 @@ def filter_queryset_by_user(queryset: QuerySet, user: User) -> QuerySet:
 
 
 def create_workout(
-    user_id: int, start_time: datetime, stop_time: datetime, template: bool, name: str, notes: str
+    user_id: int,
+    start_time: datetime,
+    stop_time: datetime,
+    template: bool,
+    notes: str,
+    name: str = "",
 ) -> Workout | None:
     created_record = None
     if UserDomain.is_valid_id(user_id):

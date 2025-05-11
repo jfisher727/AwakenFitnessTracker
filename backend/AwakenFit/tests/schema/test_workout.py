@@ -64,10 +64,12 @@ class WorkoutSchemaTest(GraphQLTestCase):
         )
         self.workout_create_template_mutation = """
             mutation workoutCreateTemplate(
+                $name: String!,
                 $notes: String,
                 $exercises: [ExerciseCreateTemplateInput]!
             ) {
-                workoutCreateTemplate(input: {notes: $notes,
+                workoutCreateTemplate(input: {name: $name,
+                                              notes: $notes,
                                               exercises: $exercises}) {
                     workout {
                         id
@@ -157,6 +159,7 @@ class WorkoutSchemaTest(GraphQLTestCase):
             operation_name="workoutCreateTemplate",
             variables={
                 "notes": "Mutation Test Note",
+                "name": "Test Template name",
                 "exercises": [
                     {
                         "movementId": to_global_id("Movement", self.test_movement.id),
