@@ -1,8 +1,10 @@
+from AwakenFit.domains import workout as WorkoutDomain
 from AwakenFit.domains import set as SetDomain
 from AwakenFit.domains import exercise as ExerciseDomain
 
 
 ERROR_MESSAGES = {
+    "INVALID_TEMPLATE_NAME": "User already has a template with that name",
     "INVALID_SET_TYPE": "Could not validate the set data provided",
     "INVALID_DATE_VALUES": "Please ensure the startTime is before the stopTime.",
 }
@@ -23,8 +25,11 @@ def validate_exercise_template_input(exercise) -> list[str]:
     return errors
 
 
-def validate_workout_template_input(workout) -> list[str]:
+def validate_workout_template_input(user_id, workout) -> list[str]:
     errors = list()
+
+    if not WorkoutDomain.is_template_name_available(workout.name, user_id):
+        errors.append(ERROR_MESSAGES["INVALID_TEMPLATE_NAME"])
 
     for exercise in workout.exercises:
         errors.extend(validate_exercise_template_input(exercise))

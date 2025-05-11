@@ -48,6 +48,7 @@ class WorkoutNode(DjangoObjectType):
 
 
 class WorkoutCreateTemplateInput(InputObjectType):
+    name = String(required=True)
     notes = String(required=False)
     exercises = List(ExerciseCreateTemplateInput, required=True)
 
@@ -70,17 +71,21 @@ class WorkoutCreateTemplate(Mutation):
     def mutate(cls, root, info, input: WorkoutCreateTemplateInput):
         workout = None
         user = None
+        user_id = None
         errors = list()
 
         if not info.context.user.is_authenticated:
             errors.append(MessageNode(message=UserDomain.ERROR_MESSAGES["UNAUTHENTICATED"]))
         else:
             user = info.context.user
+            user_id = user.id
 
-        errors.extend(MutationDomain.validate_workout_template_input(input))
+        errors.extend(MutationDomain.validate_workout_template_input(user_id, input))
 
         if not errors:
-            workout = WorkoutDomain.create_workout(user.id, timezone.now(), timezone.now(), True, input.notes)
+            workout = WorkoutDomain.create_workout(
+                user.id, timezone.now(), timezone.now(), True, input.name, input.notes
+            )
             for entry in input.exercises:
                 created_exercise = ExerciseDomain.create_exercise(
                     from_global_id(entry.movement_id).id,

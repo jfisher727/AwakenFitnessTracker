@@ -81,6 +81,13 @@ export default function TabsLayout() {
                         tabBarStyle: { display: 'none' }
                     }}
                 />
+                <Tabs.Screen
+                    name="templates"
+                    options={{
+                        href: null,
+                        tabBarStyle: { display: 'none' }
+                    }}
+                />
             </Tabs>
         </ApolloProvider>
     );

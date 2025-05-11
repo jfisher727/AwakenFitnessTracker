@@ -27,6 +27,10 @@ def is_valid_template(id: int) -> bool:
     return Workout.objects.filter(id=id, template=True).exists()
 
 
+def is_template_name_available(name: str, user_id: int) -> bool:
+    return not Workout.objects.filter(user__id=user_id, template=True, name=name).exists()
+
+
 def get_by_user_id(id: int) -> list[Workout] | None:
     selected_records = None
     if UserDomain.is_valid_id(id):
@@ -50,7 +54,7 @@ def filter_queryset_by_user(queryset: QuerySet, user: User) -> QuerySet:
 
 
 def create_workout(
-    user_id: int, start_time: datetime, stop_time: datetime, template: bool, notes: str
+    user_id: int, start_time: datetime, stop_time: datetime, template: bool, name: str, notes: str
 ) -> Workout | None:
     created_record = None
     if UserDomain.is_valid_id(user_id):
@@ -60,6 +64,6 @@ def create_workout(
         if len(notes) > MAX_NOTES_LENGTH:
             notes = notes[:MAX_NOTES_LENGTH]
         created_record = Workout.objects.create(
-            user=user, start_time=start_time, stop_time=stop_time, template=template, notes=notes
+            user=user, start_time=start_time, stop_time=stop_time, template=template, name=name, notes=notes
         )
     return created_record

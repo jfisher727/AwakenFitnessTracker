@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react';
 import { Text, View, FlatList, Pressable, useColorScheme } from 'react-native';
 
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
 
-import { ExerciseProps } from '@/graphql/properties';
+import { ExerciseProps, SetNode } from '@/graphql/properties';
 import HorzontalLine from '../general/horizonal_line';
 
 
@@ -17,20 +16,47 @@ type entryParams = {
     setCurrentExercise: (id: string) => void,
 }
 
+type setEntryParams = {
+    entry: SetNode
+}
+
 type params = {
     exercises: ExerciseProps[],
     editable: boolean,
+    showSets: boolean,
     moveExerciseUp: (index: number) => void,
     moveExerciseDown: (index: number) => void,
     setCurrentExercise: (id: string) => void,
     removeExercise: (id: string) => void,
 };
 
-export default function MovementList({ exercises, editable, moveExerciseUp, moveExerciseDown, setCurrentExercise, removeExercise }: params) {
+export default function MovementList({ exercises, editable, showSets, moveExerciseUp, moveExerciseDown, setCurrentExercise, removeExercise }: params) {
 
     const ExerciseEntry = ({ item, index, editable, removeExercise, setCurrentExercise }: entryParams) => {
         const colorScheme = useColorScheme();
         const textColor = colorScheme === 'light' ? lightColors.primaryColor : darkColors.primaryColor;
+
+        const SetEntry = ({ entry }: setEntryParams) => {
+            const equipment_type = item.movement.equipmentType;
+            const movement_type = item.movement.movementType;
+            if (equipment_type === "none" || equipment_type === "body only" || equipment_type === "exercise ball") {
+                if (movement_type === "cardio") {
+                    return (
+                        <View style={baseStyles.spacedRow}>
+                            <Text style={{ color: textColor }}>Set {entry.sequenceNumber}:</Text>
+                            <Text style={{ color: textColor }}>Duration: {entry.duration}</Text>
+                        </View>
+                    );
+                }
+            }
+            return (
+                <View style={baseStyles.spacedRow}>
+                    <Text style={{ color: textColor }}>Set {entry.sequenceNumber}:</Text>
+                    <Text style={{ color: textColor }}>Min Reps: {entry.minReps}</Text>
+                    <Text style={{ color: textColor }}>Max Reps: {entry.maxReps}</Text>
+                </View>
+            );
+        }
 
         return (
             <Pressable style={baseStyles.selectableRow} onPress={() => setCurrentExercise(item.id)}>
@@ -63,6 +89,16 @@ export default function MovementList({ exercises, editable, moveExerciseUp, move
                             <Text style={{ color: textColor }}>Exercise Type:</Text>
                             <Text style={{ color: textColor }}>{item.movement.movementType}</Text>
                         </View>
+                        {
+                            showSets &&
+                            <>
+                                <FlatList
+                                    data={item.sets}
+                                    renderItem={({ item }) => <SetEntry entry={item} />}
+                                    keyExtractor={item => item.id}
+                                />
+                            </>
+                        }
                     </View>
                 </View>
                 {

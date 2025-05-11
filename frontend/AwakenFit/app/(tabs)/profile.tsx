@@ -16,7 +16,11 @@ export default function Profile() {
     }
 
     function verifyEmailPressed() {
-        router.navigate(href = '/account/verify_email')
+        router.navigate('/account/verify_email');
+    }
+
+    function workoutTemplatesPressed() {
+        router.navigate('/(tabs)/templates');
     }
 
     return (
@@ -35,7 +39,7 @@ export default function Profile() {
                 <View style={{
                     ...baseStyles.modal
                 }}>
-
+                    <CustomButton text="Workout Templates" onPress={workoutTemplatesPressed} disabled={false} />
                     <CustomButton text="Verify Email" onPress={verifyEmailPressed} disabled={false} />
                     <CustomButton text="Logout" onPress={logoutPressed} disabled={false} />
                 </View>

@@ -44,7 +44,7 @@ type QueryVariables = {
     muscle?: string
 };
 
-type MomvementNode = {
+type Movement = {
     id: string,
     name: string,
     description: string,
@@ -55,7 +55,7 @@ type MomvementNode = {
 
 type MovementProps = {
     cursor: string,
-    node: MomvementNode
+    node: Movement
 };
 
 type KeyValuePair = {
@@ -97,7 +97,7 @@ const muscleGroupOptions: KeyValuePair[] = [
 const DEBOUNCE_DELAY: number = 500; // milliseconds
 
 interface ExerciseSearchProps {
-    addExercise: (movement: MomvementNode) => void;
+    addExercise: (movement: Movement) => void;
 }
 
 export default function ExerciseSearch({ addExercise }: ExerciseSearchProps) {

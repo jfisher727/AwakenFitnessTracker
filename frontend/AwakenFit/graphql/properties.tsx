@@ -11,7 +11,7 @@ export type SetNode = {
     parentSet: string
 };
 
-export type MomvementNode = {
+export type MovementNode = {
     id: string,
     name: string,
     description: string,
@@ -23,7 +23,7 @@ export type MomvementNode = {
 export type ExerciseProps = {
     id: string,
     notes: string,
-    movement: MomvementNode,
+    movement: MovementNode,
     sets: SetNode[]
 };
 

@@ -60,7 +60,6 @@ def validate_template_standard_set(standard_set) -> list[str]:
     if standard_set.min_reps and standard_set.max_reps:
         if standard_set.min_reps > standard_set.max_reps:
             errors.append(ERROR_MESSAGES["BAD_TEMPLATE_REPS"])
-
     return errors
 
 

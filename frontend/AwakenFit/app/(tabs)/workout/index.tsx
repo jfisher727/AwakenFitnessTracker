@@ -1,5 +1,5 @@
 import { useEffect, useState, useReducer } from 'react';
-import { View, ScrollView, useColorScheme } from 'react-native';
+import { View, useColorScheme } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { useLocalSearchParams, router } from 'expo-router';
 
@@ -7,7 +7,7 @@ import { gql, useLazyQuery, useMutation } from '@apollo/client';
 
 import { workoutStateReducer, workoutStateProps, ActionTypes, ScreenOptions } from '@/graphql/WorkoutStateReducer';
 
-import { ExerciseProps, MomvementNode } from '@/graphql/properties';
+import { ExerciseProps, MovementNode } from '@/graphql/properties';
 
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
 
@@ -108,7 +108,7 @@ export default function Workout() {
         });
     }
 
-    function handleAddExercise(movement: MomvementNode) {
+    function handleAddExercise(movement: MovementNode) {
         const currentExerciseCount = state.exercises.length + 1;
         var exercise: ExerciseProps = {
             id: 'addedExercise' + currentExerciseCount.toString(),
@@ -188,6 +188,17 @@ export default function Workout() {
             handleSetStopTime();
             handleChangeScreen(ScreenOptions.WORKOUT_REVIEW);
         }
+    }
+
+    function handleAddSets(count: number) {
+        dispatch({
+            type: ActionTypes.ADD_SETS,
+            payload: {
+                exercise_id: state.current_exercise,
+                sets: count,
+            }
+        });
+        handleChangeScreen(ScreenOptions.CURRENT_EXERCISE);
     }
 
     function handleButtonsToShow(historical: boolean, add_exercise: boolean, end_workout: boolean, add_set: boolean, edit_movements: boolean) {
@@ -314,6 +325,7 @@ export default function Workout() {
                         <MovementList
                             exercises={state.exercises}
                             editable={state.editing}
+                            showSets={false}
                             moveExerciseUp={handleMoveExerciseUp}
                             moveExerciseDown={handleMoveExerciseDown}
                             setCurrentExercise={handleSetCurrentExercise}
@@ -331,6 +343,7 @@ export default function Workout() {
                     setCurrentScreen(
                         <AddSets
                             navigateBack={navigateToCurrentExercise}
+                            addSets={handleAddSets}
                         />
                     );
                     handleButtonsToShow(false, false, false, false, false);
@@ -373,6 +386,7 @@ export default function Workout() {
                     setCurrentScreen(<MovementList
                         exercises={state.exercises}
                         editable={state.editing}
+                        showSets={false}
                         moveExerciseUp={handleMoveExerciseUp}
                         moveExerciseDown={handleMoveExerciseDown}
                         setCurrentExercise={handleSetCurrentExercise}
