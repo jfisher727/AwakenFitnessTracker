@@ -4,6 +4,7 @@ import { View, Text, Button, TextInput } from "react-native";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 import CustomButton from "../general/button";
+import TextInputField from "../general/text_input";
 
 import { baseStyles } from "@/styles/global";
 
@@ -29,18 +30,21 @@ export default function AddSets({ navigateBack, addSets }: addSetParams) {
                 <FontAwesome size={28} name="chevron-left" />
                 <Button title="Current Exercise" onPress={handleNavigateBack} />
             </View>
-            <Text>How many sets would you like to add?</Text>
-            <TextInput
-                onChangeText={newText => setCount(newText)}
-                value={count}
-                inputMode="numeric"
-                onFocus={() => setCount('')}
-            />
-            <CustomButton
-                text="Add Sets"
-                onPress={handleAddSets}
-                disabled={false}
-            />
+            <View style={{ padding: 10 }}>
+                <TextInputField
+                    inputMode="numeric"
+                    onChangeText={setCount}
+                    defaultValue={count}
+                    secureTextEntry={false}
+                    header="How many sets would you like to add?"
+                    showHeader={true}
+                />
+                <CustomButton
+                    text="Add Sets"
+                    onPress={handleAddSets}
+                    disabled={false}
+                />
+            </View>
         </View>
     );
 }
