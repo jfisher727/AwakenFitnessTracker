@@ -10,7 +10,10 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.jfisher727.AwakenFit"
+      "bundleIdentifier": "com.jfisher727.AwakenFit",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -46,6 +49,7 @@
       "eas": {
         "projectId": "dfc1268a-5052-4ec1-9ce2-18dbd4b76d0e"
       }
-    }
+    },
+    "owner": "jfisher727"
   }
 }
