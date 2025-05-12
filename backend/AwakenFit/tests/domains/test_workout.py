@@ -11,7 +11,9 @@ class WorkoutDomainTest(TestCase):
     def setUp(self):
         self.test_user = User.objects.create_user("testusername", "testemail@email.com", "testpassword1")
         self.test_user2 = User.objects.create_user("testusername2", "testemail2@email.com", "testpassword2")
-        self.test_workout = Workout.objects.create(user=self.test_user, template=True, notes="Test Template")
+        self.test_workout = Workout.objects.create(
+            user=self.test_user, template=True, name="Test Template", notes="Test Template"
+        )
         self.test_workout2 = Workout.objects.create(user=self.test_user, template=False, notes="Test Workout")
         self.test_workout3 = Workout.objects.create(user=self.test_user2, template=False, notes="Test Workout")
 
@@ -43,6 +45,20 @@ class WorkoutDomainTest(TestCase):
         self.assertTrue(WorkoutDomain.is_valid_template(self.test_workout.id), "Workout ID should have been valid")
         self.assertFalse(
             WorkoutDomain.is_valid_template(self.test_workout2.id), "Workout ID should not have been valid"
+        )
+
+    def test_is_template_name_available(self):
+        self.assertFalse(
+            WorkoutDomain.is_template_name_available("Test Template", self.test_user.id),
+            "The template name should not be available for this user",
+        )
+        self.assertTrue(
+            WorkoutDomain.is_template_name_available("A New Test Template", self.test_user.id),
+            "The template name should be available for this user",
+        )
+        self.assertTrue(
+            WorkoutDomain.is_template_name_available("Test Template", self.test_user2.id),
+            "The template name should be available for this user",
         )
 
     def test_get_by_user_id(self):
