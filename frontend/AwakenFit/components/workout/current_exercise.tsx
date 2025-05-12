@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { View, Text, TextInput, FlatList, Pressable, Button, useColorScheme } from 'react-native';
 
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
-import { ExerciseProps, MomvementNode, SetNode } from "@/graphql/properties";
+import { ExerciseProps, MovementNode, SetNode } from "@/graphql/properties";
 import { ScreenOptions } from '@/graphql/WorkoutStateReducer';
 
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
@@ -13,7 +13,7 @@ import CustomButton from '../general/button';
 
 type entryParams = {
     item: SetNode,
-    movement: MomvementNode,
+    movement: MovementNode,
     currentSet: boolean,
     saveSet: (sequenceNumber: number, reps?: number, weight?: number, duration?: string, equipment_identifier?: string) => void
     setSelectedSet: (id: number) => void,

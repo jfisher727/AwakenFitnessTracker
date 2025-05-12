@@ -1,5 +1,5 @@
 import { act } from "react"
-import { ExerciseProps } from "./properties"
+import { ExerciseProps, SetNode } from "./properties"
 
 export type workoutStateProps = {
     screen: string,
@@ -145,18 +145,20 @@ export function workoutStateReducer(state: workoutStateProps, action: WorkoutAct
 
             const updatedExercises = state.exercises.map((exercise) => {
                 if (exercise.id === exercise_id) {
-                    const updatedSets = [...exercise.sets];
+                    var updatedSets: SetNode[] = [...exercise.sets];
                     const existingSets = exercise.sets.length;
                     for (var index = 1; index <= sets; index++) {
                         const sequence_number = existingSets + index;
-                        updatedSets.concat({
+                        var newSet = {
                             id: 'addedSet' + sequence_number,
                             sequenceNumber: sequence_number,
                             minReps: 0,
                             maxReps: 0,
                             setType: 'standard',
                             parentSet: '',
-                        });
+                            duration: '',
+                        };
+                        updatedSets = [...updatedSets, newSet];
                     }
                     return {
                         ...exercise,

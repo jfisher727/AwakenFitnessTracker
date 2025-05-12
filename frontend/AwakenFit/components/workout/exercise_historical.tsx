@@ -9,7 +9,7 @@ import { baseStyles, lightColors, darkColors } from "@/styles/global";
 
 import HorzontalLine from '../general/horizonal_line';
 
-import { MomvementNode } from '@/graphql/properties';
+import { MovementNode } from '@/graphql/properties';
 
 import { date_formatter } from '@/util/date';
 import { hexToRGBA } from '@/util/color';
@@ -72,7 +72,7 @@ type SetNode = {
 
 type ExerciseNode = {
     id: string,
-    movement: MomvementNode,
+    movement: MovementNode,
     workout: {
         startTime: string
     },

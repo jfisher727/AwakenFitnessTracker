@@ -1,6 +1,6 @@
 import { View, Text, FlatList } from "react-native";
 
-import { ExerciseProps, MomvementNode, SetNode } from "@/graphql/properties";
+import { ExerciseProps, MovementNode, SetNode } from "@/graphql/properties";
 
 import { baseStyles } from "@/styles/global";
 
@@ -16,7 +16,7 @@ type reviewParams = {
 
 type setParams = {
     item: SetNode,
-    movement: MomvementNode
+    movement: MovementNode
 }
 
 type exerciseParams = {

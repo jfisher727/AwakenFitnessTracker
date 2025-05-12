@@ -41,7 +41,6 @@ export default function WeekReview() {
     }
 
     if (data) {
-        console.log(data);
         if (data.message === "N/A") {
             return (
                 <View>
