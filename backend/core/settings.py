@@ -35,6 +35,10 @@ DEBUG = env("DEBUG", default="False") == "True"
 
 ALLOWED_HOSTS = env("ALLOWD_HOSTS", default=["localhost"])
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://awaken.fit",
+]
+
 
 # Application definition
 
