@@ -11,6 +11,8 @@ import { ExerciseProps, MovementNode } from '@/graphql/properties';
 
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
 
+import Spinner from '@/components/general/spinner';
+
 import ExerciseSearch from '@/components/workout/exercise_search';
 import MovementList from '@/components/workout/movement_list';
 import CurrentExercise from '@/components/workout/current_exercise';
@@ -424,6 +426,7 @@ export default function Workout() {
             }}>
                 <View style={baseStyles.container}>
                     <View style={baseStyles.screenContainer}>
+                        {loading || workoutMutationResult.loading && <Spinner />}
                         {currentScreen}
                     </View>
                     <View style={baseStyles.buttonContainer}>

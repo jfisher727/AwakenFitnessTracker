@@ -8,6 +8,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { baseStyles, lightColors, darkColors } from "@/styles/global";
 
 import HorzontalLine from '../general/horizonal_line';
+import Spinner from '../general/spinner';
 
 import { MovementNode } from '@/graphql/properties';
 
@@ -223,6 +224,10 @@ export default function ExerciseHistorical({ movementId, navigateBack }: histori
             <View style={baseStyles.centeredRow}>
                 <Text style={{ ...baseStyles.subHeader, color: enabledColor }}>{name} - Historical</Text>
             </View>
+            {
+                loading &&
+                <Spinner />
+            }
             {body}
         </View>
     );

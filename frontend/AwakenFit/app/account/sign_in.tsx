@@ -9,6 +9,7 @@ import { setup, login, Client } from '@/auth/allauth';
 
 import TextInputField from '@/components/general/text_input';
 import CustomButton from '@/components/general/button';
+import Spinner from '@/components/general/spinner';
 
 
 export default function SignIn() {
@@ -47,7 +48,7 @@ export default function SignIn() {
     }
 
     function forgottenPasswordPressed() {
-        router.navigate(href = "/account/forgotten_password");
+        router.navigate("/account/forgotten_password");
     }
 
     return (
@@ -74,33 +75,37 @@ export default function SignIn() {
                     </Text>
                 </View>
                 <View style={{ paddingTop: "15%" }}>
-                    <View style={baseStyles.modal}>
-                        <TextInputField
-                            onChangeText={setEmail}
-                            defaultValue={email}
-                            secureTextEntry={false}
-                            inputMode="email"
-                            header="Email"
-                            showHeader={true}
-                        />
-                        <TextInputField
-                            onChangeText={setPassword}
-                            defaultValue={password}
-                            secureTextEntry={true}
-                            inputMode="text"
-                            header="Password"
-                            showHeader={true}
-                        />
-                        {
-                            error.show ? (
-                                <Text>{error.message}</Text>)
-                                : (
-                                    <></>
-                                )
-                        }
-                        <CustomButton text="Login" onPress={loginPressed} disabled={response.fetching} />
-                        <CustomButton text="ForgottenPassword" onPress={forgottenPasswordPressed} disabled={false} />
-                    </View>
+                    {
+                        response.fetching ?
+                            <Spinner /> :
+                            <View style={baseStyles.modal}>
+                                <TextInputField
+                                    onChangeText={setEmail}
+                                    defaultValue={email}
+                                    secureTextEntry={false}
+                                    inputMode="email"
+                                    header="Email"
+                                    showHeader={true}
+                                />
+                                <TextInputField
+                                    onChangeText={setPassword}
+                                    defaultValue={password}
+                                    secureTextEntry={true}
+                                    inputMode="text"
+                                    header="Password"
+                                    showHeader={true}
+                                />
+                                {
+                                    error.show ? (
+                                        <Text>{error.message}</Text>)
+                                        : (
+                                            <></>
+                                        )
+                                }
+                                <CustomButton text="Login" onPress={loginPressed} disabled={response.fetching} />
+                                <CustomButton text="ForgottenPassword" onPress={forgottenPasswordPressed} disabled={false} />
+                            </View>
+                    }
                 </View>
             </SafeAreaView>
         </SafeAreaProvider >

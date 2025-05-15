@@ -10,6 +10,7 @@ import { setup, register, Client } from '@/auth/allauth';
 
 import TextInputField from '@/components/general/text_input';
 import CustomButton from '@/components/general/button';
+import Spinner from '@/components/general/spinner';
 
 
 export default function Register() {
@@ -77,48 +78,52 @@ export default function Register() {
                     </Text>
                 </View>
                 <View style={{ paddingTop: '7%' }}>
-                    <View style={baseStyles.modal}>
-                        <TextInputField
-                            onChangeText={setEmail}
-                            defaultValue={email}
-                            secureTextEntry={false}
-                            inputMode="email"
-                            header="Email"
-                            showHeader={true}
-                        />
-                        <TextInputField
-                            onChangeText={setUsername}
-                            defaultValue={username}
-                            secureTextEntry={false}
-                            inputMode="text"
-                            header="Username"
-                            showHeader={true}
-                        />
-                        <TextInputField
-                            onChangeText={setPassword}
-                            defaultValue={password}
-                            secureTextEntry={true}
-                            inputMode="text"
-                            header="Password"
-                            showHeader={true}
-                        />
-                        <TextInputField
-                            onChangeText={setConfirmPassword}
-                            defaultValue={confirmPassword}
-                            secureTextEntry={true}
-                            inputMode="text"
-                            header="Confirm Password"
-                            showHeader={true}
-                        />
-                        {
-                            !passwordsMatch ? (
-                                <Text>Please make sure the passwords match</Text>
-                            ) : (
-                                <></>
-                            )
-                        }
-                        <CustomButton text="Register" onPress={registerPressed} disabled={response.fetching || !passwordsMatch} />
-                    </View>
+                    {
+                        response.fetching ?
+                            <Spinner /> :
+                            <View style={baseStyles.modal}>
+                                <TextInputField
+                                    onChangeText={setEmail}
+                                    defaultValue={email}
+                                    secureTextEntry={false}
+                                    inputMode="email"
+                                    header="Email"
+                                    showHeader={true}
+                                />
+                                <TextInputField
+                                    onChangeText={setUsername}
+                                    defaultValue={username}
+                                    secureTextEntry={false}
+                                    inputMode="text"
+                                    header="Username"
+                                    showHeader={true}
+                                />
+                                <TextInputField
+                                    onChangeText={setPassword}
+                                    defaultValue={password}
+                                    secureTextEntry={true}
+                                    inputMode="text"
+                                    header="Password"
+                                    showHeader={true}
+                                />
+                                <TextInputField
+                                    onChangeText={setConfirmPassword}
+                                    defaultValue={confirmPassword}
+                                    secureTextEntry={true}
+                                    inputMode="text"
+                                    header="Confirm Password"
+                                    showHeader={true}
+                                />
+                                {
+                                    !passwordsMatch ? (
+                                        <Text>Please make sure the passwords match</Text>
+                                    ) : (
+                                        <></>
+                                    )
+                                }
+                                <CustomButton text="Register" onPress={registerPressed} disabled={response.fetching || !passwordsMatch} />
+                            </View>
+                    }
                 </View>
             </SafeAreaView>
         </SafeAreaProvider >

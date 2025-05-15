@@ -6,6 +6,8 @@ import { gql, useLazyQuery } from '@apollo/client';
 
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
 
+import Spinner from '@/components/general/spinner';
+
 import WorkoutList from '@/components/workout/workout_list';
 
 const GET_WORKOUT_TEMPLATES = gql`
@@ -69,7 +71,10 @@ export default function TemplateWorkout() {
                 backgroundColor: colorScheme === 'light' ? lightColors.background : darkColors.background
             }}>
                 <View style={baseStyles.modal}>
-
+                    {
+                        loading &&
+                        <Spinner />
+                    }
                     {
                         data &&
                         <WorkoutList workouts={data.workouts.edges} loading={loading} />
