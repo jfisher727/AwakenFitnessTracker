@@ -10,12 +10,14 @@ import { ExerciseProps, MovementNode, SetNode, WorkoutNode } from '@/graphql/pro
 
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
 
+import Spinner from '@/components/general/spinner';
+import HorzontalLine from '@/components/general/horizonal_line';
+import TextInputField from '@/components/general/text_input';
+
 import AddTemplateSets from '@/components/workout/add_template_sets';
 import ExerciseSearch from '@/components/workout/exercise_search';
 import MovementList from '@/components/workout/movement_list';
 import TemplateButtons from '@/components/workout/template_buttons';
-import HorzontalLine from '@/components/general/horizonal_line';
-import TextInputField from '@/components/general/text_input';
 
 const RECORD_WORKOUT_MUTATION = gql`
     mutation WorkoutCreateTemplate($input:WorkoutCreateTemplateInput!){
@@ -255,6 +257,7 @@ export default function Templates() {
         }
     }, [workoutMutationResult]);
 
+
     return (
         <SafeAreaProvider>
             <SafeAreaView style={{
@@ -263,6 +266,9 @@ export default function Templates() {
             }}>
                 <View style={baseStyles.container}>
                     <View style={baseStyles.screenContainer}>
+                        {workoutMutationResult.loading &&
+                            <Spinner />
+                        }
                         {currentScreen}
                     </View>
                     <View style={baseStyles.buttonContainer}>

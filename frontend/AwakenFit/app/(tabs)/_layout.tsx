@@ -7,6 +7,8 @@ import { useSession } from '../../auth/AuthContext';
 
 import { darkColors, lightColors } from '@/styles/global';
 
+import Spinner from '@/components/general/spinner';
+
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
 
@@ -17,7 +19,7 @@ export default function TabsLayout() {
 
     // You can keep the splash screen open, or render a loading screen like we do here.
     if (isLoading) {
-        return <Text>Loading...</Text>;
+        return <Spinner />;
     }
 
     // Only require authentication within the (tabs) group's layout as users

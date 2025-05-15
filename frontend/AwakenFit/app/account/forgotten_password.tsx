@@ -8,6 +8,7 @@ import { setup, forgottenPassword, Client } from '@/auth/allauth';
 
 import TextInputField from '@/components/general/text_input';
 import CustomButton from '@/components/general/button';
+import Spinner from '@/components/general/spinner';
 
 
 export default function ForgottenPassword() {
@@ -60,16 +61,21 @@ export default function ForgottenPassword() {
                     </Text>
                 </View>
                 <View style={{ paddingTop: '15%' }}>
-                    <View style={{ borderRadius: 10, backgroundColor: "#FFFFFF", padding: 10, margin: 10 }}>
-                        <TextInputField
-                            onChangeText={setEmail}
-                            defaultValue={email}
-                            secureTextEntry={false}
-                            inputMode="email"
-                            header="Email"
-                        />
-                        <CustomButton text='Submit' onPress={submitPressed} disabled={false} />
-                    </View>
+                    {
+                        response.fetching ?
+                            <Spinner /> :
+                            <View style={{ borderRadius: 10, backgroundColor: "#FFFFFF", padding: 10, margin: 10 }}>
+                                <TextInputField
+                                    onChangeText={setEmail}
+                                    defaultValue={email}
+                                    secureTextEntry={false}
+                                    inputMode="email"
+                                    header="Email"
+                                    showHeader={true}
+                                />
+                                <CustomButton text='Submit' onPress={submitPressed} disabled={false} />
+                            </View>
+                    }
                 </View>
             </SafeAreaView>
         </SafeAreaProvider>

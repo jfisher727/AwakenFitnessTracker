@@ -6,6 +6,7 @@ import { gql, useLazyQuery } from '@apollo/client';
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
 
 import DropdownSelect from '@/components/general/dropdown_select';
+import Spinner from '../general/spinner';
 import HorzontalLine from '../general/horizonal_line';
 
 const GET_MOVEMENTS = gql`
@@ -204,18 +205,11 @@ export default function ExerciseSearch({ addExercise }: ExerciseSearchProps) {
                         />
                     </View>
                 }
+                {
+                    loading &&
+                    <Spinner />
+                }
             </View>
         </>
     );
-    /*
-
-
-                    <ScrollView style={baseStyles.flatListContainer}>
-                        {
-                            data.movements?.edges.map((item: MovementProps) => (
-                                <RowEntry cursor={item.cursor} node={item.node} key={item.cursor} />
-                            ))
-                        }
-                    </ScrollView>
-    */
 }

@@ -4,9 +4,6 @@ import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
 
 
-
-
-
 export default function Calendar() {
     const colorScheme = useColorScheme();
 

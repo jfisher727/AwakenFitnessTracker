@@ -107,6 +107,7 @@ export const baseStyles = StyleSheet.create({
         justifyContent: 'center',
     },
     centeredColumn: {
+        flex: 1,
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',

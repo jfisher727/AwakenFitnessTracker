@@ -7,6 +7,7 @@ import { verifyEmail, Client, setup } from '@/auth/allauth';
 
 import TextInputField from '@/components/general/text_input';
 import CustomButton from '@/components/general/button';
+import Spinner from '@/components/general/spinner';
 
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
 
@@ -53,19 +54,23 @@ export default function VerifyEmail() {
                     }}>
                     Verify Your Email
                 </Text>
-                <View style={{
-                    ...baseStyles.modal
-                }}>
-                    <TextInputField
-                        onChangeText={setKey}
-                        defaultValue={key}
-                        secureTextEntry={false}
-                        inputMode="text"
-                        header="Code from Email"
-                        showHeader={true}
-                    />
-                    <CustomButton text="Verify Email" onPress={verifyEmailPressed} disabled={response.fetching} />
-                </View>
+                {
+                    response.fetching ?
+                        <Spinner /> :
+                        <View style={{
+                            ...baseStyles.modal
+                        }}>
+                            <TextInputField
+                                onChangeText={setKey}
+                                defaultValue={key}
+                                secureTextEntry={false}
+                                inputMode="text"
+                                header="Code from Email"
+                                showHeader={true}
+                            />
+                            <CustomButton text="Verify Email" onPress={verifyEmailPressed} disabled={response.fetching} />
+                        </View>
+                }
             </SafeAreaView>
         </SafeAreaProvider>
     );
