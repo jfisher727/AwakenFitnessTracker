@@ -1,5 +1,6 @@
 import { useEffect, useState, useReducer } from 'react';
-import { View, Text, TextInput, useColorScheme } from 'react-native';
+import { View, useColorScheme } from 'react-native';
+import { router } from 'expo-router';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { gql, useMutation } from '@apollo/client';
@@ -254,6 +255,16 @@ export default function Templates() {
     useEffect(() => {
         if (workoutMutationResult.error) {
             console.log(workoutMutationResult.error);
+        }
+        if (workoutMutationResult.data) {
+            if (workoutMutationResult.data.workoutCreateTemplate?.errors.length > 0) {
+                for (let i = 0; i < workoutMutationResult.data.workoutCreateTemplate.errors?.length; i++) {
+                    console.log(workoutMutationResult.data.workoutCreateTemplate.errors[i].message);
+                }
+            }
+            else {
+                router.replace("/");
+            }
         }
     }, [workoutMutationResult]);
 
