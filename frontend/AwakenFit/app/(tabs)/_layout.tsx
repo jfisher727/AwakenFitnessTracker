@@ -1,4 +1,4 @@
-import { Text, useColorScheme } from 'react-native';
+import { useColorScheme } from 'react-native';
 import { Redirect, Tabs } from 'expo-router';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, ApolloLink, concat } from '@apollo/client';
