@@ -11,6 +11,8 @@ import { baseStyles, lightColors, darkColors } from '@/styles/global';
 import HorzontalLine from '../general/horizonal_line';
 import CustomButton from '../general/button';
 
+import DurationInput from './duration_input';
+
 type entryParams = {
     item: SetNode,
     movement: MovementNode,
@@ -56,14 +58,6 @@ type setInputParams = {
     setWeight: (number: string) => void,
     setReps: (number: string) => void,
     setEquipmentIdentifier: (id: string) => void,
-}
-
-function DurationInput() {
-    return (
-        <View>
-            <Text>Need to implement</Text>
-        </View>
-    );
 }
 
 function RepsOnlyInput({ reps, setReps }: repInputParams) {
@@ -145,13 +139,19 @@ function WeightInput({ weight, reps, setWeight, setReps }: weightInputParams) {
 }
 
 function SetInput({ equipment_type, movement_type, reps, weight, duration, equipmentIdentifier, setReps, setWeight, setDuration, setEquipmentIdentifier }: setInputParams) {
-    if (equipment_type == "none" || equipment_type == "body only" || equipment_type == "exercise ball") {
-        if (movement_type == "cardio") {
-            // duration input
-            return <DurationInput />;
-        } else {
-            return <RepsOnlyInput reps={reps} setReps={setReps} />;
-        }
+
+    if (movement_type == "cardio") {
+        // duration input
+        return (
+            <DurationInput
+                duration={duration}
+                setDuration={setDuration}
+            />
+        );
+    }
+    else if (equipment_type == "none" || equipment_type == "body only" || equipment_type == "exercise ball") {
+
+        return <RepsOnlyInput reps={reps} setReps={setReps} />;
     }
     else if (equipment_type == "resistence bands" || equipment_type == "resistance bands") {
         // identifier and reps
@@ -191,12 +191,11 @@ const SetEntry = ({ item, movement, currentSet, saveSet, setSelectedSet }: entry
     function validateSetInput() {
         var equipment_type = movement.equipmentType.toLowerCase();
         var movement_type = movement.movementType.toLowerCase();
-        if (equipment_type == "none" || equipment_type == "body only" || equipment_type == "exercise ball") {
-            if (movement_type == "cardio") {
-                return duration.length > 0;
-            } else {
-                return Number(reps) > 0;
-            }
+        if (movement_type == "cardio") {
+            return duration.length > 0;
+        }
+        else if (equipment_type == "none" || equipment_type == "body only" || equipment_type == "exercise ball") {
+            return Number(reps) > 0;
         }
         else if (equipment_type == "resistence bands" || equipment_type == "resistance bands") {
             // identifier and reps

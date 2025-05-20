@@ -32,23 +32,22 @@ function SetEntry({ item, movement }: setParams) {
     const equipment_type = movement.equipmentType.toLowerCase();
     const movement_type = movement.movementType.toLowerCase();
 
-    if (equipment_type == "none" || equipment_type == "body only" || equipment_type == "exercise ball") {
-        if (movement_type == "cardio") {
-            // duration input
-            return (
-                <View style={baseStyles.spacedRow}>
-                    <Text>Set {item.sequenceNumber}</Text>
-                    <Text>Duration: {item.duration}</Text>
-                </View>
-            );
-        } else {
-            return (
-                <View style={baseStyles.spacedRow}>
-                    <Text>Set {item.sequenceNumber}</Text>
-                    <Text>Reps: {item.equipment_identifier}</Text>
-                </View>
-            );
-        }
+    if (movement_type == "cardio") {
+        // duration input
+        return (
+            <View style={baseStyles.spacedRow}>
+                <Text>Set {item.sequenceNumber}</Text>
+                <Text>Duration: {item.duration}</Text>
+            </View>
+        );
+    }
+    else if (equipment_type == "none" || equipment_type == "body only" || equipment_type == "exercise ball") {
+        return (
+            <View style={baseStyles.spacedRow}>
+                <Text>Set {item.sequenceNumber}</Text>
+                <Text>Reps: {item.equipment_identifier}</Text>
+            </View>
+        );
     }
     else if (equipment_type == "resistence bands" || equipment_type == "resistance bands") {
         // identifier and reps
