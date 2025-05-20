@@ -108,6 +108,9 @@ class AnalyticsDomainTest(TestCase):
         test_exercise2 = Exercise.objects.create(
             movement=treadmill, workout=test_workout2, intensity=1, notes="Test treadmill notes"
         )
+        test_exercise3 = Exercise.objects.create(
+            movement=rowing_machine, workout=test_workout2, intensity=1, notes="Test rowing notes"
+        )
 
         self.COMPLETED_REPS_1 = 10
         self.WEIGHT_1 = 135
@@ -150,6 +153,7 @@ class AnalyticsDomainTest(TestCase):
             weight=self.WEIGHT_4,
         )
         Set.objects.create(exercise=test_exercise2, duration="00:45:00")
+        Set.objects.create(exercise=test_exercise3, duration="01:00:15")
 
         self.total_volume = sum(
             [
@@ -163,7 +167,7 @@ class AnalyticsDomainTest(TestCase):
                 self.bb_squat_set5_volume,
             ]
         )
-        self.duration_total = "01:30:00"
+        self.duration_total = "02:30:15"
 
     def test_week_in_review(self):
         result = AnalyticsDomain.calculate_week_summary(self.test_user.id)
