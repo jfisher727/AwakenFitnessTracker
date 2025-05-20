@@ -1,6 +1,9 @@
+import { useState, useEffect } from 'react';
 import { TextInput, Text, View } from 'react-native';
 
 import { baseStyles, darkColors } from '@/styles/global';
+
+const DEBOUNCE_DELAY: number = 1000; // milliseconds
 
 type params = {
     inputMode: any,
@@ -11,6 +14,18 @@ type params = {
     showHeader: boolean
 }
 export default function TextInputField({ inputMode, onChangeText, defaultValue, secureTextEntry, header, showHeader }: params) {
+    const [text, setText] = useState(defaultValue);
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            if (text.length == 0) {
+                setText(defaultValue);
+            }
+            onChangeText(text);
+        }, DEBOUNCE_DELAY);
+    }, [text]);
+
+
     return (
         <View style={{
             ...baseStyles.shadowBox,
@@ -20,8 +35,8 @@ export default function TextInputField({ inputMode, onChangeText, defaultValue, 
                 <Text style={{ fontSize: 24, color: darkColors.background }}>{header}</Text>
             }
             <TextInput
-                onChangeText={newText => onChangeText(newText)}
-                defaultValue={defaultValue}
+                onChangeText={newText => setText(newText)}
+                defaultValue={text}
                 inputMode={inputMode}
                 secureTextEntry={secureTextEntry}
                 style={{ fontSize: 20 }}

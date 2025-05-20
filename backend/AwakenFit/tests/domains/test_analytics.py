@@ -35,6 +35,22 @@ class AnalyticsDomainTest(TestCase):
             equipment_type=Movement.BARBELL,
             movement_type=Movement.STRENGTH,
         )
+        treadmill = Movement.objects.create(
+            name="Treadmill running",
+            description="This is a test movement",
+            primary_muscle_group=Movement.QUADRICEPS,
+            secondary_muscle_group=Movement.NONE,
+            equipment_type=Movement.MACHINE,
+            movement_type=Movement.CARDIO,
+        )
+        rowing_machine = Movement.objects.create(
+            name="Rowing Machine",
+            description="This is a test movement",
+            primary_muscle_group=Movement.BACK,
+            secondary_muscle_group=Movement.QUADRICEPS,
+            equipment_type=Movement.MACHINE,
+            movement_type=Movement.CARDIO,
+        )
 
         start_time = datetime(2025, 5, 5, 4, 30, 0, 0, tzinfo=pytz.timezone("America/New_York"))
         stop_time = start_time + timedelta(minutes=45)
@@ -44,6 +60,12 @@ class AnalyticsDomainTest(TestCase):
 
         test_exercise = Exercise.objects.create(
             movement=bb_bench_press, workout=test_workout, intensity=1, notes="Test Exercise notes"
+        )
+        test_exercise2 = Exercise.objects.create(
+            movement=treadmill, workout=test_workout, intensity=1, notes="Test treadmill notes"
+        )
+        test_exercise3 = Exercise.objects.create(
+            movement=rowing_machine, workout=test_workout, intensity=1, notes="Test rowing notes"
         )
 
         self.COMPLETED_REPS_1 = 10
@@ -70,6 +92,8 @@ class AnalyticsDomainTest(TestCase):
             completed_reps=self.COMPLETED_REPS_3,
             weight=self.WEIGHT_3,
         )
+        Set.objects.create(exercise=test_exercise2, duration="00:30:00")
+        Set.objects.create(exercise=test_exercise3, duration="00:15:00")
 
         # create workout number 2
         start_time = datetime(2025, 5, 6, 4, 30, 0, 0, tzinfo=ZoneInfo("America/New_York"))
@@ -80,6 +104,12 @@ class AnalyticsDomainTest(TestCase):
 
         test_exercise = Exercise.objects.create(
             movement=bb_squat, workout=test_workout2, intensity=1, notes="Test Exercise notes"
+        )
+        test_exercise2 = Exercise.objects.create(
+            movement=treadmill, workout=test_workout2, intensity=1, notes="Test treadmill notes"
+        )
+        test_exercise3 = Exercise.objects.create(
+            movement=rowing_machine, workout=test_workout2, intensity=1, notes="Test rowing notes"
         )
 
         self.COMPLETED_REPS_1 = 10
@@ -122,6 +152,8 @@ class AnalyticsDomainTest(TestCase):
             completed_reps=self.COMPLETED_REPS_4,
             weight=self.WEIGHT_4,
         )
+        Set.objects.create(exercise=test_exercise2, duration="00:45:00")
+        Set.objects.create(exercise=test_exercise3, duration="01:00:15")
 
         self.total_volume = sum(
             [
@@ -135,6 +167,7 @@ class AnalyticsDomainTest(TestCase):
                 self.bb_squat_set5_volume,
             ]
         )
+        self.duration_total = "02:30:15"
 
     def test_week_in_review(self):
         result = AnalyticsDomain.calculate_week_summary(self.test_user.id)
@@ -147,6 +180,7 @@ class AnalyticsDomainTest(TestCase):
         self.assertEqual(result["total_workouts"], 2, "Did not get the expected number of workouts back")
         self.assertEqual(result["total_volume"], str(self.total_volume), "Did not receive the expected volume")
         self.assertEqual(result["favorite_equipment"], "Barbell", "Did not receive the expected favorite equipment")
+        self.assertEqual(result["total_cardio"], self.duration_total, "Did not get the expected cardio total")
 
     def test_week_in_review_no_workouts(self):
         result = AnalyticsDomain.calculate_week_summary(self.test_user2.id)

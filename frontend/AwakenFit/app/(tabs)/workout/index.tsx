@@ -263,6 +263,9 @@ export default function Workout() {
                 if (set.equipment_identifier && set.equipment_identifier.length > 0) {
                     set_data.equipmentIdentifier = set.equipment_identifier;
                 }
+                if (set.duration && set.duration.length > 0) {
+                    set_data.duration = set.duration;
+                }
                 exercise_data.standardSets.push(set_data);
             });
             mutation_input.exercises.push(exercise_data);
@@ -303,9 +306,7 @@ export default function Workout() {
 
     useEffect(() => {
         if (workoutMutationResult.data) {
-            console.log('workoutMutationResult data');
-            console.log(workoutMutationResult.data);
-            if (workoutMutationResult.data.workoutCreateCompleted?.errors) {
+            if (workoutMutationResult.data.workoutCreateCompleted?.errors.length > 0) {
                 console.log(workoutMutationResult.data.workoutCreateCompleted.errors);
             }
             else {
@@ -313,7 +314,6 @@ export default function Workout() {
             }
         }
         if (workoutMutationResult.error) {
-            console.log('workoutMutationResult error');
             console.log(workoutMutationResult.error);
         }
 
