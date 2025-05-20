@@ -8,6 +8,13 @@ from AwakenFit.domains import workout as WorkoutDomain
 from AwakenFit.utils import date_utils
 
 
+def format_timedelta(timedelta):
+    total_seconds = int(timedelta.total_seconds())
+    hours, remainder = divmod(total_seconds, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    return f"{hours:02}:{minutes:02}:{seconds:02}"
+
+
 def calculate_week_summary(user_id: int):
     current_week = datetime.now(pytz.timezone("America/New_York"))
     start_date, end_date = date_utils.get_current_week_date_range(current_week)
@@ -45,6 +52,9 @@ def calculate_week_summary(user_id: int):
     dataframe["volume"] = dataframe["weight"] * dataframe["reps"]
     total_volume = dataframe["volume"].sum()
 
+    dataframe["duration"] = pd.to_timedelta(dataframe["duration"])
+    total_cardio = dataframe["duration"].sum()
+
     volume_by_group = dataframe.groupby("muscle_group")["volume"].sum().sort_values(ascending=False)
     top_muscle_group = volume_by_group.idxmax()
 
@@ -54,7 +64,7 @@ def calculate_week_summary(user_id: int):
         "total_workouts": len(workouts),
         "total_volume": str(total_volume),
         "top_muscle_group": top_muscle_group,
-        "total_cardio": "N/A",
+        "total_cardio": format_timedelta(total_cardio),
         "favorite_equipment": equipment_counts.idxmax(),
         "message": "N/A",
     }
