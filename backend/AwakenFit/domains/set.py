@@ -11,6 +11,7 @@ ERROR_MESSAGES = {
     "COMPLETED_SETS": "Completed sets should contain at least one of the following: completedReps, weight, duration. completed_reps and duration should not be included together.",
     "TEMPLATE_SETS": "Template sets should contain min_reps/max_reps or duration, not both.",
     "INVALID_VALUE": "Provided a value that should be greater than 0.",
+    "BAD_DURATION_INPUT": "The duration input dont follow the expected format (HH:MM:SS).",
     "BAD_TEMPLATE_REPS": "Please make sure min_reps is less than max_reps for templates.",
     "MISSING_SET_TYPE": "Please be sure to include set_type for non-standard sets.",
 }
@@ -71,6 +72,15 @@ def validate_completed_standard_set(standard_set) -> list[str]:
         errors.append(ERROR_MESSAGES["INVALID_VALUE"])
     if standard_set.weight and standard_set.weight < 1:
         errors.append(ERROR_MESSAGES["INVALID_VALUE"])
+    if standard_set.duration:
+        if not ":" in standard_set.duration:
+            errors.append(ERROR_MESSAGES["BAD_DURATION_INPUT"])
+        duration_parts = standard_set.duration.split(":")
+        if len(duration_parts) != 3:
+            errors.append(ERROR_MESSAGES["BAD_DURATION_INPUT"])
+        for part in duration_parts:
+            if len(part) != 2 or not part.isdigit():
+                errors.append(ERROR_MESSAGES["BAD_DURATION_INPUT"])
 
     if standard_set.completed_reps and standard_set.duration:
         errors.append(ERROR_MESSAGES["COMPLETED_SETS"])
