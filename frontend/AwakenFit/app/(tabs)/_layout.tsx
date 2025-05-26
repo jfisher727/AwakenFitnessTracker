@@ -63,10 +63,10 @@ export default function TabsLayout() {
                     }}
                 />
                 <Tabs.Screen
-                    name="calendar"
+                    name="management"
                     options={{
-                        title: 'Schedule',
-                        tabBarIcon: ({ color }) => <FontAwesome size={28} name="calendar" color={color} />,
+                        title: 'Workout',
+                        tabBarIcon: ({ color }) => <FontAwesome size={28} name="gamepad" color={color} />,
                     }}
                 />
                 <Tabs.Screen
@@ -78,13 +78,6 @@ export default function TabsLayout() {
                 />
                 <Tabs.Screen
                     name="workout"
-                    options={{
-                        href: null,
-                        tabBarStyle: { display: 'none' }
-                    }}
-                />
-                <Tabs.Screen
-                    name="templates"
                     options={{
                         href: null,
                         tabBarStyle: { display: 'none' }

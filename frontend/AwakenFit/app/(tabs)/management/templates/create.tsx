@@ -49,7 +49,7 @@ const INITIAL_STATE: workoutStateProps = {
     }
 };
 
-export default function Templates() {
+export default function CreateTemplate() {
     const colorScheme = useColorScheme();
     var initialExercise: MovementNode = { id: '', name: '', description: '', primaryMuscleGroup: '', equipmentType: '', movementType: '' };
 

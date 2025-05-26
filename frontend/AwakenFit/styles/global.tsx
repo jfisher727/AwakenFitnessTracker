@@ -121,5 +121,31 @@ export const baseStyles = StyleSheet.create({
         borderRadius: 10,
         padding: 5,
         fontSize: 15,
-    }
+    },
+    cell: {
+        flex: 1,
+        aspectRatio: 1,
+        borderWidth: 1,
+        borderColor: '#000',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    badge: {
+        position: 'absolute',
+        bottom: 4,
+        right: 4,
+        //backgroundColor: '#4caf50',
+        borderRadius: 10,
+        paddingHorizontal: 5,
+        paddingVertical: 2,
+        minWidth: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    badgeText: {
+        color: '#fff',
+        fontSize: 10,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
 });
