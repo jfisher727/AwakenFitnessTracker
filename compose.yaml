@@ -1,0 +1,13 @@
+services:
+    web:
+        build:
+            context: backend
+            dockerfile: ./backend/dockerfile
+            target: build
+        ports:
+            - "8000:8000"
+        env_file:
+            - ./backend/.env
+        volumes:
+            - ./backend:/backend
+        working_dir: /backend
