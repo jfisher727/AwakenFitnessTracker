@@ -134,7 +134,6 @@ export const baseStyles = StyleSheet.create({
         position: 'absolute',
         bottom: 4,
         right: 4,
-        //backgroundColor: '#4caf50',
         borderRadius: 10,
         paddingHorizontal: 5,
         paddingVertical: 2,

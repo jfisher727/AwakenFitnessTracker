@@ -1,4 +1,5 @@
 import json
+from datetime import datetime, timedelta, UTC
 from datetime import timedelta
 
 from graphql_relay import to_global_id
@@ -35,6 +36,32 @@ class WorkoutSchemaTest(GraphQLTestCase):
 
         self.test_workout = Workout.objects.create(user=self.test_user, template=False, notes="Test Workout")
         self.test_workout2 = Workout.objects.create(user=self.test_user, template=True, notes="Test Template Workout")
+
+        day1 = datetime(2025, 3, 1, 8, 30, tzinfo=UTC)
+        day2 = day1 + timedelta(days=1)
+        day3 = day2 + timedelta(days=1)
+
+        self.test_workout3 = Workout.objects.create(
+            user=self.test_user,
+            template=False,
+            notes="Test Workout 3",
+            start_time=day1,
+            stop_time=(day1 + timedelta(minutes=45)),
+        )
+        self.test_workout4 = Workout.objects.create(
+            user=self.test_user,
+            template=False,
+            notes="Test Workout 4",
+            start_time=day2,
+            stop_time=(day2 + timedelta(minutes=45)),
+        )
+        self.test_workout5 = Workout.objects.create(
+            user=self.test_user,
+            template=False,
+            notes="Test Workout 5",
+            start_time=day3,
+            stop_time=(day3 + timedelta(minutes=45)),
+        )
 
         self.test_exercise = Exercise.objects.create(
             movement=self.test_movement, workout=self.test_workout, intensity=1, notes="Test Exercise notes"
@@ -148,7 +175,36 @@ class WorkoutSchemaTest(GraphQLTestCase):
         content = json.loads(response.content)
 
         self.assertResponseNoErrors(response)
-        self.assertEqual(2, len(content["data"]["workouts"]["edges"]))
+        self.assertEqual(Workout.objects.all().count(), len(content["data"]["workouts"]["edges"]))
+
+    def test_workout_filterset_query(self):
+        self.client.login(username="testuser1", password="testpassword1")
+        response = self.query(
+            """
+            query workouts {
+                workouts(startMonth: 3, startYear: 2025) {
+                    edges {
+                        node {
+                            id
+                            startTime
+                            stopTime
+                            template
+                            notes
+                        }
+                    }
+                }
+            }
+            """,
+            operation_name="workouts",
+        )
+
+        content = json.loads(response.content)
+
+        self.assertResponseNoErrors(response)
+        self.assertEqual(3, len(content["data"]["workouts"]["edges"]))
+        test_notes = ["Test Workout 3", "Test Workout 4", "Test Workout 5"]
+        for entry in content["data"]["workouts"]["edges"]:
+            self.assertTrue(entry["node"]["notes"] in test_notes, "Got an unexpected workout")
 
     def test_workout_create_template_mutation(self):
         self.assertFalse(Workout.objects.filter(notes="Mutation Test Note").exists())

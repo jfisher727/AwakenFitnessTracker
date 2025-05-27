@@ -17,7 +17,7 @@ export default function Management() {
     }
 
     function programPressed() {
-
+        // will be populated once the workout plan backend is implemented
     }
 
     return (
