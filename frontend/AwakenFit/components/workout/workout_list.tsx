@@ -11,7 +11,7 @@ import CustomButton from '../general/button';
 
 type params = {
     workouts: WorkoutProps[],
-    loading: Boolean
+    start_workout_enabled: boolean
 }
 
 type exerciseParams = {
@@ -50,7 +50,7 @@ function MovementList({ exercises }: exerciseParams) {
     );
 }
 
-export default function WorkoutList({ workouts }: params) {
+export default function WorkoutList({ workouts, start_workout_enabled }: params) {
 
     const RowEntry = ({ node }: WorkoutProps) => {
         const [expanded, setExpanded] = useState(false);
@@ -77,13 +77,16 @@ export default function WorkoutList({ workouts }: params) {
                     expanded &&
                     <View>
                         <MovementList exercises={node.exercises} />
-                        <View style={baseStyles.centeredRow}>
-                            <CustomButton
-                                text="Start Workout"
-                                onPress={templateSelected}
-                                disabled={false}
-                            />
-                        </View>
+                        {
+                            start_workout_enabled &&
+                            <View style={baseStyles.centeredRow}>
+                                <CustomButton
+                                    text="Start Workout"
+                                    onPress={templateSelected}
+                                    disabled={false}
+                                />
+                            </View>
+                        }
                     </View>
                 }
             </>

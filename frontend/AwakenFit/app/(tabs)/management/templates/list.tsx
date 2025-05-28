@@ -13,7 +13,7 @@ import Spinner from '@/components/general/spinner';
 import WorkoutList from '@/components/workout/workout_list';
 
 
-export default function TemplateWorkout() {
+export default function List() {
     const [execute, { loading, error, data }] = useLazyQuery(GET_WORKOUT_TEMPLATES);
     const colorScheme = useColorScheme();
 
@@ -38,7 +38,7 @@ export default function TemplateWorkout() {
                     }
                     {
                         data &&
-                        <WorkoutList workouts={data.workouts.edges} start_workout_enabled={true} />
+                        <WorkoutList workouts={data.workouts.edges} start_workout_enabled={false} />
                     }
                 </View>
             </SafeAreaView>
