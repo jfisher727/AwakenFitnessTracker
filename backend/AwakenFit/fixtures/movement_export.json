@@ -861,8 +861,8 @@
       "last_modified": "2025-01-27T23:15:57.674Z",
       "name": "Single-Arm Cable Outward-Facing Biceps Curl",
       "description": "An isolation exercise that strengthens the biceps by flexing the elbow to lift a weight.",
-      "primary_muscle_group": "Abdominals",
-      "secondary_muscle_group": "Biceps",
+      "primary_muscle_group": "Biceps",
+      "secondary_muscle_group": "None",
       "equipment_type": "Cable",
       "movement_type": "Strength"
     }
@@ -875,8 +875,8 @@
       "last_modified": "2025-01-27T23:15:57.674Z",
       "name": "Biceps Rope Curl",
       "description": "An isolation exercise that strengthens the biceps by flexing the elbow to lift a weight.",
-      "primary_muscle_group": "Abdominals",
-      "secondary_muscle_group": "Biceps",
+      "primary_muscle_group": "Biceps",
+      "secondary_muscle_group": "Abdominals",
       "equipment_type": "Cable",
       "movement_type": "Strength"
     }
@@ -892,7 +892,7 @@
       "primary_muscle_group": "Abdominals",
       "secondary_muscle_group": "Chest",
       "equipment_type": "Machine",
-      "movement_type": "Cardio"
+      "movement_type": "Strength"
     }
   },
   {
@@ -7091,7 +7091,7 @@
       "last_modified": "2025-01-27T23:15:57.702Z",
       "name": "Band Good Morning (Pull Through)",
       "description": "A pulling movement that primarily works the back muscles, including the lats and rhomboids, and the biceps.",
-      "primary_muscle_group": "None",
+      "primary_muscle_group": "Hamstring",
       "secondary_muscle_group": "None",
       "equipment_type": "Resistance Bands",
       "movement_type": "Strength"
@@ -7105,8 +7105,8 @@
       "last_modified": "2025-01-27T23:15:57.702Z",
       "name": "Barbell Deadlift",
       "description": "A full-body hinge movement where a weight is lifted from the ground, emphasizing posterior chain strength.",
-      "primary_muscle_group": "None",
-      "secondary_muscle_group": "None",
+      "primary_muscle_group": "Back",
+      "secondary_muscle_group": "Hamstring",
       "equipment_type": "Barbell",
       "movement_type": "Strength"
     }

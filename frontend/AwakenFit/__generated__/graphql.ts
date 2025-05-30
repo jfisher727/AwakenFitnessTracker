@@ -1,0 +1,410 @@
+/* eslint-disable */
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
+  /**
+   * The `DateTime` scalar type represents a DateTime
+   * value as specified by
+   * [iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+   */
+  DateTime: { input: any; output: any; }
+  /** The `Decimal` scalar type represents a python Decimal. */
+  Decimal: { input: any; output: any; }
+};
+
+export type ExerciseCreateCompletedInput = {
+  intensity?: InputMaybe<Scalars['Int']['input']>;
+  movementId: Scalars['ID']['input'];
+  nonStandardSets?: InputMaybe<Array<InputMaybe<SetCreateCompletedParentInput>>>;
+  notes?: InputMaybe<Scalars['String']['input']>;
+  standardSets?: InputMaybe<Array<InputMaybe<SetCreateCompletedInput>>>;
+};
+
+export type ExerciseCreateTemplateInput = {
+  intensity?: InputMaybe<Scalars['Int']['input']>;
+  movementId: Scalars['ID']['input'];
+  nonStandardSets?: InputMaybe<Array<InputMaybe<SetCreateTemplateParentInput>>>;
+  notes?: InputMaybe<Scalars['String']['input']>;
+  standardSets?: InputMaybe<Array<InputMaybe<SetCreateTemplateInput>>>;
+};
+
+export type ExerciseNode = Node & {
+  __typename?: 'ExerciseNode';
+  /** The ID of the object */
+  id: Scalars['ID']['output'];
+  intensity: Scalars['Int']['output'];
+  movement: MovementNode;
+  notes: Scalars['String']['output'];
+  sets?: Maybe<Array<Maybe<SetNode>>>;
+  workout: WorkoutNode;
+};
+
+export type ExerciseNodeConnection = {
+  __typename?: 'ExerciseNodeConnection';
+  /** Contains the nodes in this connection. */
+  edges: Array<Maybe<ExerciseNodeEdge>>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+};
+
+/** A Relay edge containing a `ExerciseNode` and its cursor. */
+export type ExerciseNodeEdge = {
+  __typename?: 'ExerciseNodeEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<ExerciseNode>;
+};
+
+export type MessageNode = {
+  __typename?: 'MessageNode';
+  message?: Maybe<Scalars['String']['output']>;
+};
+
+export type MovementNode = Node & {
+  __typename?: 'MovementNode';
+  description: Scalars['String']['output'];
+  equipmentType: Scalars['String']['output'];
+  /** The ID of the object */
+  id: Scalars['ID']['output'];
+  movementType: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  primaryMuscleGroup: Scalars['String']['output'];
+  secondaryMuscleGroup: Scalars['String']['output'];
+};
+
+export type MovementNodeConnection = {
+  __typename?: 'MovementNodeConnection';
+  /** Contains the nodes in this connection. */
+  edges: Array<Maybe<MovementNodeEdge>>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+};
+
+/** A Relay edge containing a `MovementNode` and its cursor. */
+export type MovementNodeEdge = {
+  __typename?: 'MovementNodeEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<MovementNode>;
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  workoutCreateCompleted?: Maybe<WorkoutCreateCompleted>;
+  workoutCreateTemplate?: Maybe<WorkoutCreateTemplate>;
+};
+
+
+export type MutationWorkoutCreateCompletedArgs = {
+  input: WorkoutCreateCompletedInput;
+};
+
+
+export type MutationWorkoutCreateTemplateArgs = {
+  input: WorkoutCreateTemplateInput;
+};
+
+/** An object with an ID */
+export type Node = {
+  /** The ID of the object */
+  id: Scalars['ID']['output'];
+};
+
+/** The Relay compliant `PageInfo` type, containing data necessary to paginate this connection. */
+export type PageInfo = {
+  __typename?: 'PageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+export type Query = {
+  __typename?: 'Query';
+  exercise?: Maybe<ExerciseNode>;
+  exercises?: Maybe<ExerciseNodeConnection>;
+  movement?: Maybe<MovementNode>;
+  movements?: Maybe<MovementNodeConnection>;
+  set?: Maybe<SetNode>;
+  sets?: Maybe<SetNodeConnection>;
+  weekInReview?: Maybe<WeekInReview>;
+  workout?: Maybe<WorkoutNode>;
+  workouts?: Maybe<WorkoutNodeConnection>;
+};
+
+
+export type QueryExerciseArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryExercisesArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  movementId?: InputMaybe<Scalars['String']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryMovementArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryMovementsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  equipmentType?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  movementType?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  name_Icontains?: InputMaybe<Scalars['String']['input']>;
+  name_Istartswith?: InputMaybe<Scalars['String']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  primaryMuscleGroup?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QuerySetArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QuerySetsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryWorkoutArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryWorkoutsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  name_Icontains?: InputMaybe<Scalars['String']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  startMonth?: InputMaybe<Scalars['Decimal']['input']>;
+  startYear?: InputMaybe<Scalars['Decimal']['input']>;
+  template?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type SetCreateCompletedInput = {
+  completedReps?: InputMaybe<Scalars['Int']['input']>;
+  duration?: InputMaybe<Scalars['String']['input']>;
+  equipmentIdentifier?: InputMaybe<Scalars['String']['input']>;
+  sequenceNumber: Scalars['Int']['input'];
+  weight?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type SetCreateCompletedParentInput = {
+  associatedSets: Array<InputMaybe<SetCreateCompletedInput>>;
+  setType: Scalars['String']['input'];
+};
+
+export type SetCreateTemplateInput = {
+  duration?: InputMaybe<Scalars['String']['input']>;
+  maxReps?: InputMaybe<Scalars['Int']['input']>;
+  minReps?: InputMaybe<Scalars['Int']['input']>;
+  sequenceNumber: Scalars['Int']['input'];
+};
+
+export type SetCreateTemplateParentInput = {
+  associatedSets: Array<InputMaybe<SetCreateTemplateInput>>;
+  setType: Scalars['String']['input'];
+};
+
+export type SetNode = Node & {
+  __typename?: 'SetNode';
+  completedReps: Scalars['Int']['output'];
+  duration: Scalars['String']['output'];
+  equipmentIdentifier: Scalars['String']['output'];
+  exercise?: Maybe<ExerciseNode>;
+  /** The ID of the object */
+  id: Scalars['ID']['output'];
+  maxReps: Scalars['Int']['output'];
+  minReps: Scalars['Int']['output'];
+  oneRepMax?: Maybe<Scalars['Int']['output']>;
+  parentSet?: Maybe<SetNode>;
+  sequenceNumber: Scalars['Int']['output'];
+  setType: Scalars['String']['output'];
+  volume?: Maybe<Scalars['Int']['output']>;
+  weight: Scalars['Int']['output'];
+};
+
+export type SetNodeConnection = {
+  __typename?: 'SetNodeConnection';
+  /** Contains the nodes in this connection. */
+  edges: Array<Maybe<SetNodeEdge>>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+};
+
+/** A Relay edge containing a `SetNode` and its cursor. */
+export type SetNodeEdge = {
+  __typename?: 'SetNodeEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<SetNode>;
+};
+
+export type WeekInReview = {
+  __typename?: 'WeekInReview';
+  favoriteEquipment?: Maybe<Scalars['String']['output']>;
+  message?: Maybe<Scalars['String']['output']>;
+  topMuscleGroup?: Maybe<Scalars['String']['output']>;
+  totalCardio?: Maybe<Scalars['String']['output']>;
+  totalVolume?: Maybe<Scalars['String']['output']>;
+  totalWorkouts?: Maybe<Scalars['Int']['output']>;
+};
+
+export type WorkoutCreateCompleted = {
+  __typename?: 'WorkoutCreateCompleted';
+  errors?: Maybe<Array<Maybe<MessageNode>>>;
+  workout?: Maybe<WorkoutNode>;
+};
+
+export type WorkoutCreateCompletedInput = {
+  exercises: Array<InputMaybe<ExerciseCreateCompletedInput>>;
+  notes?: InputMaybe<Scalars['String']['input']>;
+  startTime: Scalars['DateTime']['input'];
+  stopTime: Scalars['DateTime']['input'];
+};
+
+export type WorkoutCreateTemplate = {
+  __typename?: 'WorkoutCreateTemplate';
+  errors?: Maybe<Array<Maybe<MessageNode>>>;
+  workout?: Maybe<WorkoutNode>;
+};
+
+export type WorkoutCreateTemplateInput = {
+  exercises: Array<InputMaybe<ExerciseCreateTemplateInput>>;
+  name: Scalars['String']['input'];
+  notes?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type WorkoutNode = Node & {
+  __typename?: 'WorkoutNode';
+  exercises?: Maybe<Array<Maybe<ExerciseNode>>>;
+  /** The ID of the object */
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  notes: Scalars['String']['output'];
+  startTime: Scalars['DateTime']['output'];
+  stopTime: Scalars['DateTime']['output'];
+  template: Scalars['Boolean']['output'];
+};
+
+export type WorkoutNodeConnection = {
+  __typename?: 'WorkoutNodeConnection';
+  /** Contains the nodes in this connection. */
+  edges: Array<Maybe<WorkoutNodeEdge>>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+};
+
+/** A Relay edge containing a `WorkoutNode` and its cursor. */
+export type WorkoutNodeEdge = {
+  __typename?: 'WorkoutNodeEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<WorkoutNode>;
+};
+
+export type WorkoutCreateTemplateMutationVariables = Exact<{
+  input: WorkoutCreateTemplateInput;
+}>;
+
+
+export type WorkoutCreateTemplateMutation = { __typename?: 'Mutation', workoutCreateTemplate?: { __typename?: 'WorkoutCreateTemplate', workout?: { __typename?: 'WorkoutNode', id: string } | null, errors?: Array<{ __typename?: 'MessageNode', message?: string | null } | null> | null } | null };
+
+export type GetWorkoutQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type GetWorkoutQuery = { __typename?: 'Query', workout?: { __typename?: 'WorkoutNode', id: string, name: string, notes: string, exercises?: Array<{ __typename?: 'ExerciseNode', id: string, notes: string, movement: { __typename?: 'MovementNode', id: string, name: string, description: string, primaryMuscleGroup: string, equipmentType: string, movementType: string }, sets?: Array<{ __typename?: 'SetNode', id: string, sequenceNumber: number, completedReps: number, minReps: number, maxReps: number, weight: number, duration: string, setType: string } | null> | null } | null> | null } | null };
+
+export type WorkoutCreateCompletedMutationVariables = Exact<{
+  input: WorkoutCreateCompletedInput;
+}>;
+
+
+export type WorkoutCreateCompletedMutation = { __typename?: 'Mutation', workoutCreateCompleted?: { __typename?: 'WorkoutCreateCompleted', workout?: { __typename?: 'WorkoutNode', id: string } | null, errors?: Array<{ __typename?: 'MessageNode', message?: string | null } | null> | null } | null };
+
+export type WeekInReviewQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type WeekInReviewQuery = { __typename?: 'Query', weekInReview?: { __typename?: 'WeekInReview', message?: string | null, totalWorkouts?: number | null, totalVolume?: string | null, topMuscleGroup?: string | null, totalCardio?: string | null, favoriteEquipment?: string | null } | null };
+
+export type GetWorkoutsQueryVariables = Exact<{
+  startMonth?: InputMaybe<Scalars['Decimal']['input']>;
+  startYear?: InputMaybe<Scalars['Decimal']['input']>;
+}>;
+
+
+export type GetWorkoutsQuery = { __typename?: 'Query', workouts?: { __typename?: 'WorkoutNodeConnection', edges: Array<{ __typename?: 'WorkoutNodeEdge', node?: { __typename?: 'WorkoutNode', id: string, startTime: any, name: string } | null } | null> } | null };
+
+export type GetExercisesQueryVariables = Exact<{
+  movementId?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  count?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type GetExercisesQuery = { __typename?: 'Query', exercises?: { __typename?: 'ExerciseNodeConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'ExerciseNodeEdge', node?: { __typename?: 'ExerciseNode', id: string, movement: { __typename?: 'MovementNode', name: string, primaryMuscleGroup: string, equipmentType: string, movementType: string }, workout: { __typename?: 'WorkoutNode', startTime: any }, sets?: Array<{ __typename?: 'SetNode', id: string, sequenceNumber: number, completedReps: number, weight: number, duration: string, oneRepMax?: number | null, volume?: number | null } | null> | null } | null } | null> } | null };
+
+export type GetMovementsQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  count?: InputMaybe<Scalars['Int']['input']>;
+  equipment?: InputMaybe<Scalars['String']['input']>;
+  muscle?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetMovementsQuery = { __typename?: 'Query', movements?: { __typename?: 'MovementNodeConnection', edges: Array<{ __typename?: 'MovementNodeEdge', cursor: string, node?: { __typename?: 'MovementNode', id: string, name: string, description: string, primaryMuscleGroup: string, equipmentType: string, movementType: string } | null } | null> } | null };
+
+
+export const WorkoutCreateTemplateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"WorkoutCreateTemplate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"WorkoutCreateTemplateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"workoutCreateTemplate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"workout"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"errors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]}}]} as unknown as DocumentNode<WorkoutCreateTemplateMutation, WorkoutCreateTemplateMutationVariables>;
+export const GetWorkoutDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetWorkout"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"workout"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"notes"}},{"kind":"Field","name":{"kind":"Name","value":"exercises"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"notes"}},{"kind":"Field","name":{"kind":"Name","value":"movement"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"primaryMuscleGroup"}},{"kind":"Field","name":{"kind":"Name","value":"equipmentType"}},{"kind":"Field","name":{"kind":"Name","value":"movementType"}}]}},{"kind":"Field","name":{"kind":"Name","value":"sets"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"sequenceNumber"}},{"kind":"Field","name":{"kind":"Name","value":"completedReps"}},{"kind":"Field","name":{"kind":"Name","value":"minReps"}},{"kind":"Field","name":{"kind":"Name","value":"maxReps"}},{"kind":"Field","name":{"kind":"Name","value":"weight"}},{"kind":"Field","name":{"kind":"Name","value":"duration"}},{"kind":"Field","name":{"kind":"Name","value":"setType"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetWorkoutQuery, GetWorkoutQueryVariables>;
+export const WorkoutCreateCompletedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"WorkoutCreateCompleted"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"WorkoutCreateCompletedInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"workoutCreateCompleted"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"workout"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"errors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]}}]} as unknown as DocumentNode<WorkoutCreateCompletedMutation, WorkoutCreateCompletedMutationVariables>;
+export const WeekInReviewDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"weekInReview"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"weekInReview"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"totalWorkouts"}},{"kind":"Field","name":{"kind":"Name","value":"totalVolume"}},{"kind":"Field","name":{"kind":"Name","value":"topMuscleGroup"}},{"kind":"Field","name":{"kind":"Name","value":"totalCardio"}},{"kind":"Field","name":{"kind":"Name","value":"favoriteEquipment"}}]}}]}}]} as unknown as DocumentNode<WeekInReviewQuery, WeekInReviewQueryVariables>;
+export const GetWorkoutsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetWorkouts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"startMonth"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Decimal"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"startYear"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Decimal"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"workouts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"startMonth"},"value":{"kind":"Variable","name":{"kind":"Name","value":"startMonth"}}},{"kind":"Argument","name":{"kind":"Name","value":"startYear"},"value":{"kind":"Variable","name":{"kind":"Name","value":"startYear"}}},{"kind":"Argument","name":{"kind":"Name","value":"template"},"value":{"kind":"BooleanValue","value":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"startTime"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetWorkoutsQuery, GetWorkoutsQueryVariables>;
+export const GetExercisesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetExercises"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"movementId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"after"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"before"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"count"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"exercises"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"movementId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"movementId"}}},{"kind":"Argument","name":{"kind":"Name","value":"after"},"value":{"kind":"Variable","name":{"kind":"Name","value":"after"}}},{"kind":"Argument","name":{"kind":"Name","value":"before"},"value":{"kind":"Variable","name":{"kind":"Name","value":"before"}}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"count"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}},{"kind":"Field","name":{"kind":"Name","value":"hasPreviousPage"}},{"kind":"Field","name":{"kind":"Name","value":"startCursor"}},{"kind":"Field","name":{"kind":"Name","value":"endCursor"}}]}},{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"movement"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"primaryMuscleGroup"}},{"kind":"Field","name":{"kind":"Name","value":"equipmentType"}},{"kind":"Field","name":{"kind":"Name","value":"movementType"}}]}},{"kind":"Field","name":{"kind":"Name","value":"workout"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"startTime"}}]}},{"kind":"Field","name":{"kind":"Name","value":"sets"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"sequenceNumber"}},{"kind":"Field","name":{"kind":"Name","value":"completedReps"}},{"kind":"Field","name":{"kind":"Name","value":"weight"}},{"kind":"Field","name":{"kind":"Name","value":"duration"}},{"kind":"Field","name":{"kind":"Name","value":"oneRepMax"}},{"kind":"Field","name":{"kind":"Name","value":"volume"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetExercisesQuery, GetExercisesQueryVariables>;
+export const GetMovementsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMovements"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"after"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"count"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"equipment"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"muscle"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"movements"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"after"},"value":{"kind":"Variable","name":{"kind":"Name","value":"after"}}},{"kind":"Argument","name":{"kind":"Name","value":"name_Icontains"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"count"}}},{"kind":"Argument","name":{"kind":"Name","value":"equipmentType"},"value":{"kind":"Variable","name":{"kind":"Name","value":"equipment"}}},{"kind":"Argument","name":{"kind":"Name","value":"primaryMuscleGroup"},"value":{"kind":"Variable","name":{"kind":"Name","value":"muscle"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cursor"}},{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"primaryMuscleGroup"}},{"kind":"Field","name":{"kind":"Name","value":"equipmentType"}},{"kind":"Field","name":{"kind":"Name","value":"movementType"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetMovementsQuery, GetMovementsQueryVariables>;

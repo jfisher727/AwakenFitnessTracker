@@ -277,7 +277,7 @@ export default function CurrentExercise({ exercise, navigateBack, recordSet }: e
     }
 
     return (
-        <View>
+        <View style={{ height: '100%' }}>
             <View style={baseStyles.leftJustifiedRow}>
                 <FontAwesome size={28} name="chevron-left" />
                 <Button title="Execise List" onPress={handleNavigateBack} />

@@ -21,7 +21,7 @@ export default function AddSets({ navigateBack, addSets }: addSetParams) {
     }
 
     function handleAddSets() {
-        addSets(Number(count));
+        addSets(parseInt(count));
     }
 
     return (

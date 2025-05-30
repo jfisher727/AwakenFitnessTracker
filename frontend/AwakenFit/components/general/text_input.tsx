@@ -23,6 +23,8 @@ export default function TextInputField({ inputMode, onChangeText, defaultValue, 
             }
             onChangeText(text);
         }, DEBOUNCE_DELAY);
+
+        return () => clearTimeout(timeoutId);
     }, [text]);
 
 
