@@ -1,7 +1,4 @@
-import { gql } from "@apollo/client";
-
-export const GET_WORKOUT_TEMPLATES = gql`
-    query GetWorkoutTemplates(
+query GetWorkoutTemplates(
         $after: String,
         $count: Int,
         $name: String,
@@ -40,4 +37,3 @@ export const GET_WORKOUT_TEMPLATES = gql`
                     }
             }
     }
-`;

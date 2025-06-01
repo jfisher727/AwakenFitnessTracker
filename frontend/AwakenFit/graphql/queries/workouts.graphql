@@ -1,0 +1,11 @@
+query GetWorkouts($startMonth: Decimal, $startYear: Decimal) {
+        workouts(startMonth: $startMonth, startYear: $startYear, template: false) {
+            edges {
+                node {
+                    id
+                    startTime
+                    name
+                }
+            }
+        }
+    }

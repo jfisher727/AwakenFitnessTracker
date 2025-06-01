@@ -2,27 +2,17 @@ import { Text, View, useColorScheme } from 'react-native';
 
 import { gql, useQuery } from '@apollo/client';
 
+import { useWeekInReviewQuery } from '@/graphql/types';
+
 import Spinner from './general/spinner';
 
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
 
-const GET_WEEK_IN_REVIEW = gql`
-    query {
-        weekInReview {
-            message
-            totalWorkouts
-            totalVolume
-            topMuscleGroup
-            totalCardio
-            favoriteEquipment
-        }
-    }
-`;
 
 export default function WeekReview() {
     const colorScheme = useColorScheme();
 
-    const { loading, error, data } = useQuery(GET_WEEK_IN_REVIEW);
+    const { loading, error, data } = useWeekInReviewQuery();
 
     if (error) {
         console.log(error);
@@ -42,7 +32,7 @@ export default function WeekReview() {
         );
     }
 
-    if (data && data.message === "N/A") {
+    if (data && data?.weekInReview?.message === "N/A") {
         return (
             <View>
                 <Text
@@ -88,7 +78,7 @@ export default function WeekReview() {
             }
             {
                 data &&
-                <Text>{data.weekInReview.message}</Text>
+                <Text>{data?.weekInReview?.message}</Text>
             }
         </View>
     );

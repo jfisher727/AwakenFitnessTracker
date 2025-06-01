@@ -1,63 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Text, TextInput, View, Pressable, FlatList, useColorScheme } from 'react-native';
 
-import { gql, useLazyQuery } from '@apollo/client';
+import { useGetMovementsLazyQuery, GetMovementsQueryVariables, MovementNodeEdge, MovementNode } from '@/graphql/types';
 
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
 
 import DropdownSelect from '@/components/general/dropdown_select';
 import Spinner from '../general/spinner';
 import HorzontalLine from '../general/horizonal_line';
-
-const GET_MOVEMENTS = gql`
-    query GetMovements(
-        $after: String,
-        $name: String,
-        $count: Int,
-        $equipment: String,
-        $muscle: String) {
-            movements(
-                after: $after,
-                name_Icontains: $name,
-                first: $count,
-                equipmentType: $equipment,
-                primaryMuscleGroup: $muscle) {
-                    edges {
-                        cursor
-                        node {
-                            id
-                            name
-                            description
-                            primaryMuscleGroup
-                            equipmentType
-                            movementType
-                        }
-                    }
-            }
-    }
-`;
-
-type QueryVariables = {
-    after?: string,
-    name?: string,
-    count: number,
-    equipment?: string,
-    muscle?: string
-};
-
-type Movement = {
-    id: string,
-    name: string,
-    description: string,
-    primaryMuscleGroup: string,
-    equipmentType: String,
-    movementType: String
-};
-
-type MovementProps = {
-    cursor: string,
-    node: Movement
-};
 
 type KeyValuePair = {
     key: string,
@@ -98,20 +48,20 @@ const muscleGroupOptions: KeyValuePair[] = [
 const DEBOUNCE_DELAY: number = 500; // milliseconds
 
 interface ExerciseSearchProps {
-    addExercise: (movement: Movement) => void;
+    addExercise: (movement: MovementNode) => void;
 }
 
 export default function ExerciseSearch({ addExercise }: ExerciseSearchProps) {
     const colorScheme = useColorScheme();
 
-    const [execute, { loading, error, data }] = useLazyQuery(GET_MOVEMENTS);
+    const [execute, { loading, error, data }] = useGetMovementsLazyQuery();
 
     const [name, setName] = useState('Search');
     const [debouncedName, setDebouncedName] = useState('');
     const [selectedEquipment, setSelectedEquipment] = useState({ key: '', value: '' });
     const [selectedMuscleGroup, setSelectedMuscleGroup] = useState({ key: '', value: '' });
 
-    const RowEntry = ({ node }: MovementProps) => {
+    const RowEntry = ({ node }: MovementNodeEdge) => {
         return (
             <Pressable style={baseStyles.selectableRow} onPress={() => addExercise(node)}>
                 <Text style={{ color: lightColors.primaryColor, fontSize: 20 }}>{node.name}</Text>
@@ -131,7 +81,7 @@ export default function ExerciseSearch({ addExercise }: ExerciseSearchProps) {
     }, [name]);
 
     useEffect(() => {
-        const variables: QueryVariables = { count: 20 };
+        const variables: GetMovementsQueryVariables = { count: 20 };
         if (debouncedName.length >= 3 && debouncedName != "Search") {
             variables.name = debouncedName;
         }
@@ -197,9 +147,9 @@ export default function ExerciseSearch({ addExercise }: ExerciseSearchProps) {
                     data &&
                     <View style={baseStyles.flatListContainer}>
                         <FlatList
-                            data={data.movements.edges}
-                            renderItem={({ item }) => <RowEntry cursor={item.cursor} node={item.node} />}
-                            keyExtractor={item => item.cursor}
+                            data={data?.movements?.edges}
+                            renderItem={({ item }) => <RowEntry cursor={item?.cursor || ""} node={item?.node} />}
+                            keyExtractor={item => item?.cursor || ""}
                             refreshing={loading}
                             ItemSeparatorComponent={HorzontalLine}
                         />

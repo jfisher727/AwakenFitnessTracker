@@ -11,5 +11,6 @@ from .schema import schema
 
 app_name = "awakenFit"
 urlpatterns = [
+    # path("api/graphql", csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema))),
     path("api/graphql", csrf_exempt(login_required(GraphQLView.as_view(graphiql=True, schema=schema)))),
 ]

@@ -1,0 +1,10 @@
+mutation WorkoutCreateTemplate($input:WorkoutCreateTemplateInput!){
+        workoutCreateTemplate(input:$input){
+            workout {
+                id
+            }
+            errors {
+                message
+            }
+        }
+    }

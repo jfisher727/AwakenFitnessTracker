@@ -3,11 +3,11 @@ import { View, useColorScheme } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { useLocalSearchParams, router } from 'expo-router';
 
-import { gql, useLazyQuery, useMutation } from '@apollo/client';
-
 import { workoutStateReducer, workoutStateProps, ActionTypes, ScreenOptions } from '@/graphql/WorkoutStateReducer';
 
-import { ExerciseProps, MovementNode } from '@/graphql/properties';
+import { ExerciseProps } from '@/graphql/properties';
+
+import { useGetWorkoutLazyQuery, useWorkoutCreateCompletedMutation, MovementNode, WorkoutCreateCompletedInput, ExerciseCreateCompletedInput, SetCreateCompletedInput } from '@/graphql/types';
 
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
 
@@ -21,49 +21,6 @@ import ExerciseHistorical from '@/components/workout/exercise_historical';
 import AddSets from '@/components/workout/add_sets';
 import WorkoutButtons from '@/components/workout/workout_buttons';
 
-const GET_WORKOUT = gql`
-    query GetWorkout($id: ID!) {
-        workout(id: $id) {
-            id
-            name
-            notes
-            exercises {
-                id
-                notes
-                movement {
-                    id
-                    name
-                    description
-                    primaryMuscleGroup
-                    equipmentType
-                    movementType
-                }
-                sets {
-                    id
-                    sequenceNumber
-                    completedReps
-                    minReps
-                    maxReps
-                    weight
-                    duration
-                    setType
-                }
-            }
-        }
-    }
-`;
-
-const RECORD_WORKOUT_MUTATION = gql`
-    mutation WorkoutCreateCompleted($input:WorkoutCreateCompletedInput!){
-        workoutCreateCompleted(input:$input){
-            workout {
-                id
-            }
-            errors {
-                message
-            }
-        }
-    }`;
 
 function CurrentISOFormattedDate() {
     return new Date().toISOString();
@@ -91,8 +48,8 @@ export default function Workout() {
     const colorScheme = useColorScheme();
     const [currentScreen, setCurrentScreen] = useState(<ExerciseSearch addExercise={handleAddExercise} />);
 
-    const [execute, { loading, error, data }] = useLazyQuery(GET_WORKOUT);
-    const [workoutMutation, workoutMutationResult] = useMutation(RECORD_WORKOUT_MUTATION);
+    const [execute, { loading, error, data }] = useGetWorkoutLazyQuery();
+    const [workoutMutation, workoutMutationResult] = useWorkoutCreateCompletedMutation();
 
     const [state, dispatch] = useReducer(workoutStateReducer, INITIAL_STATE);
 
@@ -240,18 +197,18 @@ export default function Workout() {
     function handleRecordWorkout() {
         // TODO: Need to format all the data we've collected into the proper JSON structure
         // to send to the GraphQL mutation
-        var mutation_input = {
+        var mutation_input: WorkoutCreateCompletedInput = {
             'startTime': state.start_time,
             'stopTime': state.start_time,
             'exercises': []
         };
         state.exercises.forEach((element) => {
-            var exercise_data = {
+            var exercise_data: ExerciseCreateCompletedInput = {
                 'movementId': element.movement.id,
                 'standardSets': [],
             };
             element.sets.forEach((set) => {
-                var set_data = {
+                var set_data: SetCreateCompletedInput = {
                     'sequenceNumber': set.sequenceNumber,
                 };
                 if (set.completedReps && set.completedReps > 0) {
@@ -266,7 +223,7 @@ export default function Workout() {
                 if (set.duration && set.duration.length > 0) {
                     set_data.duration = set.duration;
                 }
-                exercise_data.standardSets.push(set_data);
+                exercise_data?.standardSets?.push(set_data);
             });
             mutation_input.exercises.push(exercise_data);
         });
@@ -299,14 +256,14 @@ export default function Workout() {
 
     useEffect(() => {
         if (data) {
-            handleSetExercises(data.workout.exercises);
+            handleSetExercises(data?.workout?.exercises);
             handleChangeScreen(ScreenOptions.MOVEMENT_LIST);
         }
     }, [data, loading]);
 
     useEffect(() => {
         if (workoutMutationResult.data) {
-            if (workoutMutationResult.data.workoutCreateCompleted?.errors.length > 0) {
+            if (workoutMutationResult?.data?.workoutCreateCompleted?.errors?.length > 0) {
                 console.log(workoutMutationResult.data.workoutCreateCompleted.errors);
             }
             else {

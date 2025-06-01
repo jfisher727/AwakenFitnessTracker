@@ -1,9 +1,9 @@
 import { Text, View, useColorScheme, Pressable } from 'react-native';
 import { useState, useEffect } from 'react';
 
-import { gql, useLazyQuery } from '@apollo/client';
-
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+
+import { useGetWorkoutsLazyQuery, WorkoutNodeEdge } from '@/graphql/types';
 
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
 
@@ -11,32 +11,10 @@ import { date_formatter, getFirstDayOfMonth, getDaysInMonth, getMonthName } from
 
 import Spinner from '../general/spinner';
 
-const GET_WORKOUTS = gql`
-    query GetWorkouts($startMonth: Decimal, $startYear: Decimal) {
-        workouts(startMonth: $startMonth, startYear: $startYear, template: false) {
-            edges {
-                node {
-                    id
-                    startTime
-                    name
-                }
-            }
-        }
-    }
-`;
-
-type WorkoutNode = {
-    node: {
-        id: string,
-        startTime: string,
-        name: string,
-    }
-};
-
 type CalendarGridParams = {
     month: number,
     year: number,
-    events: WorkoutNode[],
+    events: WorkoutNodeEdge[],
     theme: string
 };
 
@@ -61,13 +39,13 @@ function CalendarGrid({ month, year, events, theme }: CalendarGridParams) {
     });
 
     const groupedEvents = events.reduce((acc, event) => {
-        const date_string = date_formatter(event.node.startTime);
+        const date_string = date_formatter(event?.node?.startTime);
         if (!acc[date_string]) {
             acc[date_string] = [];
         }
         acc[date_string].push(event);
         return acc;
-    }, {} as Record<string, WorkoutNode[]>);
+    }, {} as Record<string, WorkoutNodeEdge[]>);
 
     function handleCellPress(day: number | null) {
         if (day) {
@@ -152,8 +130,7 @@ export default function Calendar() {
 
     const [month, setMonth] = useState(now.getMonth());
     const [year, setYear] = useState(now.getFullYear());
-
-    const [execute, { loading, error, data }] = useLazyQuery(GET_WORKOUTS);
+    const [execute, { loading, error, data }] = useGetWorkoutsLazyQuery();
 
     useEffect(() => {
         const variables = { startMonth: month + 1, startYear: year };
@@ -200,7 +177,7 @@ export default function Calendar() {
             </View>
             {
                 data &&
-                <CalendarGrid month={month} year={year} events={data.workouts.edges} color={color} />
+                <CalendarGrid month={month} year={year} events={data?.workouts?.edges} color={color} />
             }
             {
                 loading &&
