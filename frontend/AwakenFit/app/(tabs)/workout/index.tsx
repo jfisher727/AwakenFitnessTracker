@@ -1,37 +1,48 @@
-import { useEffect, useState, useReducer } from 'react';
-import { View, useColorScheme } from 'react-native';
-import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-import { useLocalSearchParams, router } from 'expo-router';
+import { useEffect, useState, useReducer } from "react";
+import { View, useColorScheme } from "react-native";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import { useLocalSearchParams, router } from "expo-router";
 
-import { workoutStateReducer, workoutStateProps, ActionTypes, ScreenOptions } from '@/graphql/WorkoutStateReducer';
+import {
+    workoutStateReducer,
+    workoutStateProps,
+    ActionTypes,
+    ScreenOptions,
+} from "@/graphql/WorkoutStateReducer";
 
-import { ExerciseProps } from '@/graphql/properties';
+import { ExerciseProps } from "@/graphql/properties";
 
-import { useGetWorkoutLazyQuery, useWorkoutCreateCompletedMutation, MovementNode, WorkoutCreateCompletedInput, ExerciseCreateCompletedInput, SetCreateCompletedInput } from '@/graphql/types';
+import {
+    useGetWorkoutLazyQuery,
+    useWorkoutCreateCompletedMutation,
+    MovementNode,
+    WorkoutCreateCompletedInput,
+    ExerciseCreateCompletedInput,
+    SetCreateCompletedInput,
+} from "@/graphql/types";
 
-import { baseStyles, lightColors, darkColors } from '@/styles/global';
+import { baseStyles, lightColors, darkColors } from "@/styles/global";
 
-import Spinner from '@/components/general/spinner';
+import Spinner from "@/components/general/spinner";
 
-import ExerciseSearch from '@/components/workout/exercise_search';
-import MovementList from '@/components/workout/movement_list';
-import CurrentExercise from '@/components/workout/current_exercise';
-import WorkoutReview from '@/components/workout/workout_review';
-import ExerciseHistorical from '@/components/workout/exercise_historical';
-import AddSets from '@/components/workout/add_sets';
-import WorkoutButtons from '@/components/workout/workout_buttons';
-
+import ExerciseSearch from "@/components/workout/exercise_search";
+import MovementList from "@/components/workout/movement_list";
+import CurrentExercise from "@/components/workout/current_exercise";
+import WorkoutReview from "@/components/workout/workout_review";
+import ExerciseHistorical from "@/components/workout/exercise_historical";
+import AddSets from "@/components/workout/add_sets";
+import WorkoutButtons from "@/components/workout/workout_buttons";
 
 function CurrentISOFormattedDate() {
     return new Date().toISOString();
 }
 
 const INITIAL_STATE: workoutStateProps = {
-    screen: 'blank',
-    template_id: '',
+    screen: "blank",
+    template_id: "",
     start_time: CurrentISOFormattedDate(),
-    stop_time: '',
-    current_exercise: '',
+    stop_time: "",
+    current_exercise: "",
     exercises: [],
     editing: false,
     buttons: {
@@ -40,74 +51,86 @@ const INITIAL_STATE: workoutStateProps = {
         end_workout: true,
         add_set: false,
         edit_movements: false,
-    }
+    },
 };
 
 export default function Workout() {
     const params = useLocalSearchParams();
     const colorScheme = useColorScheme();
-    const [currentScreen, setCurrentScreen] = useState(<ExerciseSearch addExercise={handleAddExercise} />);
+    const [currentScreen, setCurrentScreen] = useState(
+        <ExerciseSearch addExercise={handleAddExercise} />
+    );
 
     const [execute, { loading, error, data }] = useGetWorkoutLazyQuery();
-    const [workoutMutation, workoutMutationResult] = useWorkoutCreateCompletedMutation();
+    const [workoutMutation, workoutMutationResult] =
+        useWorkoutCreateCompletedMutation();
 
     const [state, dispatch] = useReducer(workoutStateReducer, INITIAL_STATE);
 
     function handleSetExercises(exercises: ExerciseProps[]) {
         dispatch({
             type: ActionTypes.SET_EXERCISES,
-            payload: exercises
+            payload: exercises,
         });
     }
 
     function handleSetStopTime() {
         dispatch({
             type: ActionTypes.SET_STOP_TIME,
-            payload: CurrentISOFormattedDate()
+            payload: CurrentISOFormattedDate(),
         });
     }
 
     function handleAddExercise(movement: MovementNode) {
         const currentExerciseCount = state.exercises.length + 1;
         var exercise: ExerciseProps = {
-            id: 'addedExercise' + currentExerciseCount.toString(),
-            notes: '',
+            id: "addedExercise" + currentExerciseCount.toString(),
+            notes: "",
             movement: movement,
-            sets: [{
-                id: '',
-                sequenceNumber: 1,
-                minReps: 0,
-                maxReps: 0,
-                completedReps: 0,
-                weight: 0,
-                duration: '',
-                equipment_identifier: '',
-                setType: 'Standard',
-                parentSet: ''
-            }]
+            sets: [
+                {
+                    id: "",
+                    sequenceNumber: 1,
+                    minReps: 0,
+                    maxReps: 0,
+                    completedReps: 0,
+                    weight: 0,
+                    duration: "",
+                    equipment_identifier: "",
+                    setType: "Standard",
+                    parentSet: "",
+                },
+            ],
         };
         dispatch({
             type: ActionTypes.ADD_EXERCISE,
-            payload: exercise
+            payload: exercise,
         });
     }
 
     function handleRemoveExercise(id: string) {
         dispatch({
             type: ActionTypes.REMOVE_EXERCISE,
-            payload: id
+            payload: id,
         });
     }
 
     function handleSetCurrentExercise(id: string) {
         dispatch({
             type: ActionTypes.SET_CURRENT_EXERCISE,
-            payload: id
+            payload: id,
         });
         handleChangeScreen(ScreenOptions.CURRENT_EXERCISE);
     }
 
-    function handleRecordSet(exercise_id: string, sequence_number: number, reps?: number, weight?: number, duration?: string, equipment_identifier?: string) {
+    function handleRecordSet(
+        exercise_id: string,
+        sequence_number: number,
+        reps?: number,
+        weight?: number,
+        duration?: string,
+        equipment_identifier?: string
+    ) {
         dispatch({
             type: ActionTypes.RECORD_SET,
             payload: {
@@ -117,32 +140,40 @@ export default function Workout() {
                 weight: weight,
                 duration: duration,
                 equipment_identifier: equipment_identifier,
-            }
+            },
         });
         // need to see if we've completed all the sets for the current exercise
-        var exercise_id_to_display = '';
-        state.exercises.every(exercise => {
-            var all_sets_complete = exercise.sets.every(set => {
-                // this is the set that we just recorded, the state hasn't updated to reflect this set
-                if (exercise.id === exercise_id && set.sequenceNumber === sequence_number) {
-                    return true;
-                }
-                if (!(set.completedReps || set.weight || set.duration)) {
-                    return false;
-                }
-                return true;
-            });
-            if (!all_sets_complete) {
-                exercise_id_to_display = exercise.id;
-                return false;
-            }
-            return true;
-        });
-        if (state.current_exercise !== exercise_id_to_display && exercise_id_to_display) {
-            // if the exercise_id_to_display is different from what we're currently displaying, update it
-            handleSetCurrentExercise(exercise_id_to_display);
+        const currentExerciseIdx = state.exercises.findIndex(
+            (exercise) => exercise.id === exercise_id
+        );
+        if (currentExerciseIdx === -1) return;
+        const currentExercise = state.exercises[currentExerciseIdx];
+        const currentSets = (currentExercise.sets ?? []).filter(Boolean);
+        const allSetsComplete = currentSets.every(
+            (set) => set?.completedReps || set?.weight || set?.duration
+        );
+        if (!allSetsComplete) {
+            // Stay on this exercise, let the user keep working
+            return;
         }
-        else if (!exercise_id_to_display) {
+
+        // Find the next exercise (after current) that isn't fully complete
+        let nextIncompleteExerciseId: string | null = null;
+        for (let i = currentExerciseIdx + 1; i < state.exercises.length; i++) {
+            const exercise = state.exercises[i];
+            const sets = (exercise.sets ?? []).filter(Boolean);
+            const isIncomplete = sets.some(
+                (set) => !(set?.completedReps || set?.weight || set?.duration)
+            );
+            if (isIncomplete) {
+                nextIncompleteExerciseId = exercise.id;
+                break;
+            }
+        }
+        if (nextIncompleteExerciseId) {
+            // if the exercise_id_to_display is different from what we're currently displaying, update it
+            handleSetCurrentExercise(nextIncompleteExerciseId);
+        } else {
             // we've completed all the exercises so we should end the workout?
             handleSetStopTime();
             handleChangeScreen(ScreenOptions.WORKOUT_REVIEW);
@@ -155,12 +186,18 @@ export default function Workout() {
             payload: {
                 exercise_id: state.current_exercise,
                 sets: count,
-            }
+            },
         });
         handleChangeScreen(ScreenOptions.CURRENT_EXERCISE);
     }
 
-    function handleButtonsToShow(historical: boolean, add_exercise: boolean, end_workout: boolean, add_set: boolean, edit_movements: boolean) {
+    function handleButtonsToShow(
+        historical: boolean,
+        add_exercise: boolean,
+        end_workout: boolean,
+        add_set: boolean,
+        edit_movements: boolean
+    ) {
         dispatch({
             type: ActionTypes.UPDATE_BUTTONS,
             payload: {
@@ -168,29 +205,29 @@ export default function Workout() {
                 add_exercise: add_exercise,
                 edit_movements: edit_movements,
                 end_workout: end_workout,
-                add_set: add_set
-            }
+                add_set: add_set,
+            },
         });
     }
 
     function handleEditMovements() {
         dispatch({
             type: ActionTypes.EDIT_MOVEMENTS,
-            payload: !state.editing
+            payload: !state.editing,
         });
     }
 
     function handleMoveExerciseUp(index: number) {
         dispatch({
             type: ActionTypes.MOVE_EXERCISE_UP,
-            payload: index
+            payload: index,
         });
     }
 
     function handleMoveExerciseDown(index: number) {
         dispatch({
             type: ActionTypes.MOVE_EXERCISE_DOWN,
-            payload: index
+            payload: index,
         });
     }
 
@@ -198,39 +235,31 @@ export default function Workout() {
         // TODO: Need to format all the data we've collected into the proper JSON structure
         // to send to the GraphQL mutation
         var mutation_input: WorkoutCreateCompletedInput = {
-            'startTime': state.start_time,
-            'stopTime': state.start_time,
-            'exercises': []
+            startTime: state.start_time,
+            stopTime: state.start_time,
+            exercises: [],
         };
         state.exercises.forEach((element) => {
             var exercise_data: ExerciseCreateCompletedInput = {
-                'movementId': element.movement.id,
-                'standardSets': [],
+                movementId: element.movement.id,
+                standardSets: [],
             };
-            element.sets.forEach((set) => {
+            element?.sets?.forEach((set) => {
                 var set_data: SetCreateCompletedInput = {
-                    'sequenceNumber': set.sequenceNumber,
+                    sequenceNumber: set?.sequenceNumber || 1,
+                    completedReps: set?.completedReps,
+                    weight: set?.weight,
+                    equipmentIdentifier: set?.equipmentIdentifier,
+                    duration: set?.duration,
                 };
-                if (set.completedReps && set.completedReps > 0) {
-                    set_data.completedReps = set.completedReps;
-                }
-                if (set.weight && set.weight > 0) {
-                    set_data.weight = set.weight;
-                }
-                if (set.equipment_identifier && set.equipment_identifier.length > 0) {
-                    set_data.equipmentIdentifier = set.equipment_identifier;
-                }
-                if (set.duration && set.duration.length > 0) {
-                    set_data.duration = set.duration;
-                }
                 exercise_data?.standardSets?.push(set_data);
             });
             mutation_input.exercises.push(exercise_data);
         });
         workoutMutation({
             variables: {
-                input: mutation_input
-            }
+                input: mutation_input,
+            },
         });
     }
 
@@ -239,8 +268,8 @@ export default function Workout() {
             type: ActionTypes.CHANGE_SCREEN,
             payload: {
                 name: name,
-                template_id: template_id
-            }
+                template_id: template_id,
+            },
         });
     }
 
@@ -263,17 +292,20 @@ export default function Workout() {
 
     useEffect(() => {
         if (workoutMutationResult.data) {
-            if (workoutMutationResult?.data?.workoutCreateCompleted?.errors?.length > 0) {
-                console.log(workoutMutationResult.data.workoutCreateCompleted.errors);
-            }
-            else {
+            if (
+                workoutMutationResult?.data?.workoutCreateCompleted?.errors
+                    ?.length > 0
+            ) {
+                console.log(
+                    workoutMutationResult.data.workoutCreateCompleted.errors
+                );
+            } else {
                 router.navigate("/(tabs)");
             }
         }
         if (workoutMutationResult.error) {
             console.log(workoutMutationResult.error);
         }
-
     }, [workoutMutationResult.data, workoutMutationResult.error]);
 
     useEffect(() => {
@@ -289,12 +321,15 @@ export default function Workout() {
                             moveExerciseDown={handleMoveExerciseDown}
                             setCurrentExercise={handleSetCurrentExercise}
                             removeExercise={handleRemoveExercise}
-                        />);
+                        />
+                    );
                     handleButtonsToShow(false, true, true, false, true);
                     return;
                 }
                 case ScreenOptions.ADD_EXERCISE: {
-                    setCurrentScreen(<ExerciseSearch addExercise={handleAddExercise} />);
+                    setCurrentScreen(
+                        <ExerciseSearch addExercise={handleAddExercise} />
+                    );
                     handleButtonsToShow(false, false, false, false, false);
                     return;
                 }
@@ -309,23 +344,29 @@ export default function Workout() {
                     return;
                 }
                 case ScreenOptions.CURRENT_EXERCISE: {
-                    var current_exercise = state.exercises.filter((e) => e.id === state.current_exercise)[0];
+                    var current_exercise = state.exercises.filter(
+                        (e) => e.id === state.current_exercise
+                    )[0];
                     setCurrentScreen(
                         <CurrentExercise
                             exercise={current_exercise}
                             recordSet={handleRecordSet}
                             navigateBack={handleChangeScreen}
-                        />);
+                        />
+                    );
                     handleButtonsToShow(true, false, false, true, false);
                     return;
                 }
                 case ScreenOptions.HISTORICAL: {
-                    var current_exercise = state.exercises.filter((e) => e.id === state.current_exercise)[0];
+                    var current_exercise = state.exercises.filter(
+                        (e) => e.id === state.current_exercise
+                    )[0];
                     setCurrentScreen(
                         <ExerciseHistorical
                             movementId={current_exercise.movement.id}
                             navigateBack={navigateToCurrentExercise}
-                        />);
+                        />
+                    );
                     handleButtonsToShow(false, false, false, false, false);
                     return;
                 }
@@ -337,26 +378,27 @@ export default function Workout() {
                             stop_time={state.stop_time}
                             recordWorkout={handleRecordWorkout}
                         />
-                    )
+                    );
                     handleButtonsToShow(false, false, false, false, false);
                     return;
                 }
                 default: {
-                    setCurrentScreen(<MovementList
-                        exercises={state.exercises}
-                        editable={state.editing}
-                        showSets={false}
-                        moveExerciseUp={handleMoveExerciseUp}
-                        moveExerciseDown={handleMoveExerciseDown}
-                        setCurrentExercise={handleSetCurrentExercise}
-                        removeExercise={handleRemoveExercise}
-                    />);
+                    setCurrentScreen(
+                        <MovementList
+                            exercises={state.exercises}
+                            editable={state.editing}
+                            showSets={false}
+                            moveExerciseUp={handleMoveExerciseUp}
+                            moveExerciseDown={handleMoveExerciseDown}
+                            setCurrentExercise={handleSetCurrentExercise}
+                            removeExercise={handleRemoveExercise}
+                        />
+                    );
                     handleButtonsToShow(false, true, false, false, true);
                     return;
                 }
             }
         }
-
     }, [state.screen, state.exercises, state.current_exercise, state.editing]);
 
     function stopWorkoutPressed() {
@@ -377,13 +419,19 @@ export default function Workout() {
 
     return (
         <SafeAreaProvider>
-            <SafeAreaView style={{
-                ...baseStyles.container,
-                backgroundColor: colorScheme === 'light' ? lightColors.background : darkColors.background
-            }}>
+            <SafeAreaView
+                style={{
+                    ...baseStyles.container,
+                    backgroundColor:
+                        colorScheme === "light"
+                            ? lightColors.background
+                            : darkColors.background,
+                }}
+            >
                 <View style={baseStyles.container}>
                     <View style={baseStyles.screenContainer}>
-                        {loading || workoutMutationResult.loading && <Spinner />}
+                        {loading ||
+                            (workoutMutationResult.loading && <Spinner />)}
                         {currentScreen}
                     </View>
                     <View style={baseStyles.buttonContainer}>

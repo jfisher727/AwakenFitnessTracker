@@ -5,7 +5,6 @@ import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { workoutStateReducer, workoutStateProps, ActionTypes, ScreenOptions } from '@/graphql/WorkoutStateReducer';
 
-
 import { useWorkoutCreateTemplateMutation, MovementNode, SetNode, WorkoutNode, ExerciseCreateTemplateInput, WorkoutCreateTemplateInput, SetCreateTemplateInput } from '@/graphql/types';
 import { ExerciseProps } from '@/graphql/properties';
 
@@ -143,12 +142,12 @@ export default function CreateTemplate() {
                 movementId: element.movement.id,
                 standardSets: [],
             };
-            element.sets.forEach((set) => {
+            element?.sets?.forEach((set) => {
                 var set_data: SetCreateTemplateInput = {
-                    sequenceNumber: set.sequenceNumber,
-                    minReps: set.minReps,
-                    maxReps: set.maxReps,
-                    duration: set.duration,
+                    sequenceNumber: set?.sequenceNumber || 1,
+                    minReps: set?.minReps,
+                    maxReps: set?.maxReps,
+                    duration: set?.duration,
                 };
                 exercise_data.standardSets?.push(set_data);
             });
@@ -252,8 +251,10 @@ export default function CreateTemplate() {
                 }
             }
             else {
+                dispatch({
+                    type: ActionTypes.RESET_WORKOUT_STATE
+                });
                 router.replace("/");
-                //
             }
         }
     }, [workoutMutationResult]);

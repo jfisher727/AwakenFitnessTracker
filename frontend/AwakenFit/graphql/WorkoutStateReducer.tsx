@@ -1,5 +1,4 @@
-import { act } from "react"
-import { ExerciseProps, SetNode } from "./properties"
+import { SetNode, ExerciseNode } from "./types";
 
 export type workoutStateProps = {
     screen: string,
@@ -7,7 +6,7 @@ export type workoutStateProps = {
     start_time: string,
     stop_time: string,
     current_exercise: string,
-    exercises: ExerciseProps[],
+    exercises: ExerciseNode[],
     editing: boolean,
     buttons: {
         historical: boolean,
@@ -30,7 +29,8 @@ export const ActionTypes = {
     EDIT_MOVEMENTS: 'EDIT_MOVEMENTS',
     MOVE_EXERCISE_UP: 'MOVE_EXERCISE_UP',
     MOVE_EXERCISE_DOWN: 'MOVE_EXERCISE_DOWN',
-    UPDATE_BUTTONS: 'UPDATE_BUTTONS'
+    UPDATE_BUTTONS: 'UPDATE_BUTTONS',
+    RESET_WORKOUT_STATE: 'RESET_WORKOUT_STATE'
 }
 
 export const ScreenOptions = {
@@ -44,7 +44,7 @@ export const ScreenOptions = {
 
 interface AddExerciseAction {
     type: typeof ActionTypes.ADD_EXERCISE,
-    payload: ExerciseProps
+    payload: ExerciseNode
 }
 
 interface AddSetsAction {
@@ -62,7 +62,7 @@ interface SetStopTimeAction {
 
 interface SetExercisesAction {
     type: typeof ActionTypes.SET_EXERCISES,
-    payload: ExerciseProps[]
+    payload: ExerciseNode[]
 }
 
 interface RemoveExerciseAction {
@@ -121,48 +121,56 @@ interface UpdateButtonsAction {
     }
 }
 
+interface ResetStateAction {
+    type: typeof ActionTypes.RESET_WORKOUT_STATE
+}
+
 
 type WorkoutActions = (
     AddExerciseAction | AddSetsAction | SetStopTimeAction | SetExercisesAction | RemoveExerciseAction |
     ChangeScreenAction | SetCurrentExerciseAction | RecordSetAction | UpdateButtonsAction | EditMovementsAction |
-    MoveExerciseUpAction | MoveExerciseDownAction
+    MoveExerciseUpAction | MoveExerciseDownAction | ResetStateAction
 );
 
 export function workoutStateReducer(state: workoutStateProps, action: WorkoutActions): workoutStateProps {
     switch (action.type) {
         case ActionTypes.ADD_EXERCISE: {
+            const payload = (action as AddExerciseAction).payload;
             const currentExercises = state.exercises;
-            const updatedExercises = currentExercises.concat(action.payload);
+            const updatedExercises = currentExercises.concat(payload);
             return {
                 ...state,
-                current_exercise: action.payload.id,
+                current_exercise: payload.id,
                 exercises: updatedExercises,
                 screen: ScreenOptions.CURRENT_EXERCISE
             }
         }
         case ActionTypes.ADD_SETS: {
-            const { exercise_id, sets } = action.payload;
+            const { exercise_id, sets } = (action as AddSetsAction).payload;
 
             const updatedExercises = state.exercises.map((exercise) => {
                 if (exercise.id === exercise_id) {
-                    var updatedSets: SetNode[] = [...exercise.sets];
-                    const existingSets = exercise.sets.length;
+                    var currentSets: SetNode[] = (exercise.sets ?? []).filter(Boolean) as SetNode[];
+                    const existingSets = currentSets.length;
                     for (var index = 1; index <= sets; index++) {
                         const sequence_number = existingSets + index;
-                        var newSet = {
+                        var newSet: SetNode = {
                             id: 'addedSet' + sequence_number,
                             sequenceNumber: sequence_number,
                             minReps: 0,
                             maxReps: 0,
                             setType: 'standard',
-                            parentSet: '',
                             duration: '',
+                            exercise: null,
+                            completedReps: 0,
+                            equipmentIdentifier: '',
+                            weight: 0
                         };
-                        updatedSets = [...updatedSets, newSet];
+                        currentSets.push(newSet);
                     }
                     return {
                         ...exercise,
-                        sets: updatedSets
+                        sets: currentSets
                     };
                 }
                 return exercise;
@@ -173,15 +181,17 @@ export function workoutStateReducer(state: workoutStateProps, action: WorkoutAct
             }
         }
         case ActionTypes.SET_STOP_TIME: {
+            const payload = (action as SetStopTimeAction).payload;
             return {
                 ...state,
-                stop_time: action.payload
+                stop_time: payload
             }
         }
         case ActionTypes.SET_EXERCISES: {
+            const payload = (action as SetExercisesAction).payload;
             return {
                 ...state,
-                exercises: action.payload
+                exercises: payload
             }
         }
         case ActionTypes.REMOVE_EXERCISE: {
@@ -192,32 +202,34 @@ export function workoutStateReducer(state: workoutStateProps, action: WorkoutAct
             };
         }
         case ActionTypes.CHANGE_SCREEN: {
+            const payload = (action as ChangeScreenAction).payload;
             return {
                 ...state,
-                screen: action.payload.name
+                screen: payload.name
             };
         }
         case ActionTypes.SET_CURRENT_EXERCISE: {
+            const payload = (action as SetCurrentExerciseAction).payload;
             return {
                 ...state,
-                current_exercise: action.payload
+                current_exercise: payload
             };
         }
         case ActionTypes.RECORD_SET: {
-            const { exercise_id, sequence_number, reps, weight, duration, equipment_identifier } = action.payload;
+            const { exercise_id, sequence_number, reps, weight, duration, equipment_identifier } = (action as RecordSetAction).payload;
 
             const updatedExercises = state.exercises.map((exercise) => {
                 if (exercise.id === exercise_id) {
                     // Update the set within the exercise
-                    const updatedSets = exercise.sets.map((set) => {
-                        if (set.sequenceNumber === sequence_number) {
-                            const updatedSet = { ...set };
-                            updatedSet.completedReps = reps;
-                            updatedSet.weight = weight;
-                            updatedSet.duration = duration;
-                            updatedSet.equipment_identifier = equipment_identifier;
-
-                            return updatedSet;
+                    const updatedSets: SetNode[] = (exercise.sets ?? []).filter(Boolean).map((set) => {
+                        if (set?.sequenceNumber === sequence_number) {
+                            return {
+                                ...set,
+                                completedReps: reps,
+                                weight: weight,
+                                duration: duration,
+                                equipmentIdentifier: equipment_identifier
+                            };
                         }
                         return set;
                     });
@@ -234,13 +246,14 @@ export function workoutStateReducer(state: workoutStateProps, action: WorkoutAct
             };
         }
         case ActionTypes.EDIT_MOVEMENTS: {
+            const payload = (action as EditMovementsAction).payload;
             return {
                 ...state,
-                editing: action.payload
+                editing: payload
             };
         }
         case ActionTypes.MOVE_EXERCISE_UP: {
-            const index = parseInt(action.payload, 10);
+            const index = (action as MoveExerciseUpAction).payload;
             if (index == 0) {
                 return state;
             }
@@ -253,7 +266,7 @@ export function workoutStateReducer(state: workoutStateProps, action: WorkoutAct
             };
         }
         case ActionTypes.MOVE_EXERCISE_DOWN: {
-            const index = parseInt(action.payload, 10);
+            const index = (action as MoveExerciseDownAction).payload;
             if (index == state.exercises.length - 1) {
                 return state;
             }
@@ -266,14 +279,33 @@ export function workoutStateReducer(state: workoutStateProps, action: WorkoutAct
             };
         }
         case ActionTypes.UPDATE_BUTTONS: {
+            const payload = (action as UpdateButtonsAction).payload;
             return {
                 ...state,
                 buttons: {
-                    historical: action.payload.historical,
-                    add_exercise: action.payload.add_exercise,
-                    end_workout: action.payload.end_workout,
-                    edit_movements: action.payload.edit_movements,
-                    add_set: action.payload.add_set
+                    historical: payload.historical,
+                    add_exercise: payload.add_exercise,
+                    end_workout: payload.end_workout,
+                    edit_movements: payload.edit_movements,
+                    add_set: payload.add_set
+                }
+            }
+        }
+        case ActionTypes.RESET_WORKOUT_STATE: {
+            return {
+                screen: 'blank',
+                template_id: '',
+                start_time: '',
+                stop_time: '',
+                current_exercise: '',
+                exercises: [],
+                editing: false,
+                buttons: {
+                    historical: true,
+                    add_exercise: true,
+                    end_workout: true,
+                    add_set: false,
+                    edit_movements: false,
                 }
             }
         }
