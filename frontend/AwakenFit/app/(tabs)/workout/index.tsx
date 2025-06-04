@@ -149,9 +149,13 @@ export default function Workout() {
         if (currentExerciseIdx === -1) return;
         const currentExercise = state.exercises[currentExerciseIdx];
         const currentSets = (currentExercise.sets ?? []).filter(Boolean);
-        const allSetsComplete = currentSets.every(
-            (set) => set?.completedReps || set?.weight || set?.duration
-        );
+        const allSetsComplete = currentSets.every((set) => {
+            // if the current set, return true for it
+            if (set?.sequenceNumber == sequence_number) {
+                return true;
+            }
+            return set?.completedReps || set?.weight || set?.duration;
+        });
         if (!allSetsComplete) {
             // Stay on this exercise, let the user keep working
             return;
@@ -166,6 +170,7 @@ export default function Workout() {
                 (set) => !(set?.completedReps || set?.weight || set?.duration)
             );
             if (isIncomplete) {
+                console.log("incomplete exercise found");
                 nextIncompleteExerciseId = exercise.id;
                 break;
             }
@@ -232,8 +237,6 @@ export default function Workout() {
     }
 
     function handleRecordWorkout() {
-        // TODO: Need to format all the data we've collected into the proper JSON structure
-        // to send to the GraphQL mutation
         var mutation_input: WorkoutCreateCompletedInput = {
             startTime: state.start_time,
             stopTime: state.start_time,

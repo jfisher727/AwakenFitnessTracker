@@ -135,7 +135,7 @@ function IdentifierInput({
                     value={equipmentIdentifier}
                     inputMode="text"
                     style={baseStyles.selectHeader}
-                    /*onFocus={() => setEquipmentIdentifier('')}*/
+                    onFocus={() => setEquipmentIdentifier("")}
                 />
             </Pressable>
             <Pressable
@@ -149,7 +149,7 @@ function IdentifierInput({
                     value={reps}
                     inputMode="numeric"
                     style={baseStyles.selectHeader}
-                    /*onFocus={() => setReps('')}*/
+                    onFocus={() => setReps("")}
                 />
             </Pressable>
         </View>
@@ -294,7 +294,6 @@ const SetEntry = ({
     function handleOnSaveSet() {
         setSaveCalled(true);
         var setIsValid = validateSetInput();
-        console.log(`set is valid: ${setIsValid}`);
         setValidSet(setIsValid);
         if (setIsValid) {
             saveSet(
@@ -314,9 +313,21 @@ const SetEntry = ({
     return (
         <Pressable onPress={handleOnSelect}>
             <View style={baseStyles.spacedRow}>
-                <Text style={{ ...baseStyles.subHeader, color: color }}>
-                    Set {item.sequenceNumber}{" "}
-                </Text>
+                <View>
+                    <Text style={{ ...baseStyles.subHeader, color: color }}>
+                        Set {item.sequenceNumber}{" "}
+                    </Text>
+                    {(item.minReps || item.maxReps) && (
+                        <>
+                            <Text style={{ color: color }}>
+                                {item.minReps && <>Min Reps: {item.minReps}</>}
+                            </Text>
+                            <Text style={{ color: color }}>
+                                {item.maxReps && <>Max Reps: {item.maxReps}</>}
+                            </Text>
+                        </>
+                    )}
+                </View>
                 <SetInput
                     equipment_type={movement.equipmentType.toLowerCase()}
                     movement_type={movement.movementType.toLocaleLowerCase()}

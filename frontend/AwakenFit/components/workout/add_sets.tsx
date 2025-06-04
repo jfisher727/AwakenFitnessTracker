@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { View, Button } from "react-native";
 
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import CustomButton from "../general/button";
 import TextInputField from "../general/text_input";
@@ -9,12 +9,12 @@ import TextInputField from "../general/text_input";
 import { baseStyles } from "@/styles/global";
 
 type addSetParams = {
-    navigateBack: () => void,
-    addSets: (count: number) => void,
-}
+    navigateBack: () => void;
+    addSets: (count: number) => void;
+};
 
 export default function AddSets({ navigateBack, addSets }: addSetParams) {
-    const [count, setCount] = useState('1');
+    const [count, setCount] = useState("1");
 
     function handleNavigateBack() {
         navigateBack();
@@ -30,7 +30,7 @@ export default function AddSets({ navigateBack, addSets }: addSetParams) {
                 <FontAwesome size={28} name="chevron-left" />
                 <Button title="Current Exercise" onPress={handleNavigateBack} />
             </View>
-            <View style={{ padding: 10 }}>
+            <View style={baseStyles.modal}>
                 <TextInputField
                     inputMode="numeric"
                     onChangeText={setCount}
