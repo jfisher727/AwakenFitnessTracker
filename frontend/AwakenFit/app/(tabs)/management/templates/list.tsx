@@ -2,11 +2,9 @@ import { useEffect } from 'react';
 import { View, useColorScheme } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { gql, useLazyQuery } from '@apollo/client';
-
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
 
-import { GET_WORKOUT_TEMPLATES } from '@/graphql/queries';
+import { useGetWorkoutTemplatesLazyQuery } from '@/graphql/types';
 
 import Spinner from '@/components/general/spinner';
 
@@ -14,7 +12,7 @@ import WorkoutList from '@/components/workout/workout_list';
 
 
 export default function List() {
-    const [execute, { loading, error, data }] = useLazyQuery(GET_WORKOUT_TEMPLATES);
+    const [execute, { loading, error, data }] = useGetWorkoutTemplatesLazyQuery();
     const colorScheme = useColorScheme();
 
     useEffect(() => {

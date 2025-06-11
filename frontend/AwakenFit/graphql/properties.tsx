@@ -1,15 +1,4 @@
-export type SetNode = {
-    id?: string,
-    sequenceNumber: number,
-    minReps: number,
-    maxReps: number,
-    completedReps?: number,
-    duration?: string,
-    weight?: number,
-    equipment_identifier?: string,
-    setType?: string,
-    parentSet?: string
-};
+import { SetNode } from "./types";
 
 export type MovementNode = {
     id: string,

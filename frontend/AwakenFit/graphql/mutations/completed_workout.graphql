@@ -1,0 +1,10 @@
+ mutation WorkoutCreateCompleted($input:WorkoutCreateCompletedInput!){
+        workoutCreateCompleted(input:$input){
+            workout {
+                id
+            }
+            errors {
+                message
+            }
+        }
+    }

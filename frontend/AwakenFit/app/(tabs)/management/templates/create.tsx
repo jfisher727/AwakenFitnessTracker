@@ -3,11 +3,10 @@ import { View, useColorScheme } from 'react-native';
 import { router } from 'expo-router';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { gql, useMutation } from '@apollo/client';
-
 import { workoutStateReducer, workoutStateProps, ActionTypes, ScreenOptions } from '@/graphql/WorkoutStateReducer';
 
-import { ExerciseProps, MovementNode, SetNode, WorkoutNode } from '@/graphql/properties';
+import { useWorkoutCreateTemplateMutation, MovementNode, SetNode, WorkoutNode, ExerciseCreateTemplateInput, WorkoutCreateTemplateInput, SetCreateTemplateInput } from '@/graphql/types';
+import { ExerciseProps } from '@/graphql/properties';
 
 import { baseStyles, lightColors, darkColors } from '@/styles/global';
 
@@ -19,18 +18,6 @@ import AddTemplateSets from '@/components/workout/add_template_sets';
 import ExerciseSearch from '@/components/workout/exercise_search';
 import MovementList from '@/components/workout/movement_list';
 import TemplateButtons from '@/components/workout/template_buttons';
-
-const RECORD_WORKOUT_MUTATION = gql`
-    mutation WorkoutCreateTemplate($input:WorkoutCreateTemplateInput!){
-        workoutCreateTemplate(input:$input){
-            workout {
-                id
-            }
-            errors {
-                message
-            }
-        }
-    }`;
 
 const INITIAL_STATE: workoutStateProps = {
     screen: 'blank',
@@ -51,12 +38,12 @@ const INITIAL_STATE: workoutStateProps = {
 
 export default function CreateTemplate() {
     const colorScheme = useColorScheme();
-    var initialExercise: MovementNode = { id: '', name: '', description: '', primaryMuscleGroup: '', equipmentType: '', movementType: '' };
+    var initialExercise: MovementNode = { id: '', name: '', description: '', primaryMuscleGroup: '', secondaryMuscleGroup: '', equipmentType: '', movementType: '' };
 
     const [templateName, setTemplateName] = useState('Test template');
     const [currentScreen, setCurrentScreen] = useState(<ExerciseSearch addExercise={handleSetCurrentExercise} />);
     const [currentExercise, setCurrentExercise] = useState(initialExercise);
-    const [workoutMutation, workoutMutationResult] = useMutation(RECORD_WORKOUT_MUTATION);
+    const [workoutMutation, workoutMutationResult] = useWorkoutCreateTemplateMutation();
     const [state, dispatch] = useReducer(workoutStateReducer, INITIAL_STATE);
 
     function handleAddExercise(movement: MovementNode, setDetails: SetNode[]) {
@@ -146,23 +133,23 @@ export default function CreateTemplate() {
     }
 
     function handleSaveTemplate() {
-        var mutation_input: WorkoutNode = {
+        var mutation_input: WorkoutCreateTemplateInput = {
             name: templateName,
             exercises: []
         }
         state.exercises.forEach((element) => {
-            var exercise_data = {
-                'movementId': element.movement.id,
-                'standardSets': [],
+            var exercise_data: ExerciseCreateTemplateInput = {
+                movementId: element.movement.id,
+                standardSets: [],
             };
-            element.sets.forEach((set) => {
-                var set_data: SetNode = {
-                    sequenceNumber: set.sequenceNumber,
-                    minReps: set.minReps,
-                    maxReps: set.maxReps,
-                    duration: set.duration,
+            element?.sets?.forEach((set) => {
+                var set_data: SetCreateTemplateInput = {
+                    sequenceNumber: set?.sequenceNumber || 1,
+                    minReps: set?.minReps,
+                    maxReps: set?.maxReps,
+                    duration: set?.duration,
                 };
-                exercise_data.standardSets.push(set_data);
+                exercise_data.standardSets?.push(set_data);
             });
             mutation_input.exercises.push(exercise_data);
         });
@@ -257,12 +244,16 @@ export default function CreateTemplate() {
             console.log(workoutMutationResult.error);
         }
         if (workoutMutationResult.data) {
-            if (workoutMutationResult.data.workoutCreateTemplate?.errors.length > 0) {
+            if (workoutMutationResult.data?.workoutCreateTemplate?.errors?.length &&  workoutMutationResult.data?.workoutCreateTemplate?.errors?.length> 0) {
                 for (let i = 0; i < workoutMutationResult.data.workoutCreateTemplate.errors?.length; i++) {
-                    console.log(workoutMutationResult.data.workoutCreateTemplate.errors[i].message);
+                    //console.log(workoutMutationResult.data?.workoutCreateTemplate?.errors[i]?.message);
+                    console.log("mutation error happened");
                 }
             }
             else {
+                dispatch({
+                    type: ActionTypes.RESET_WORKOUT_STATE
+                });
                 router.replace("/");
             }
         }

@@ -28,6 +28,7 @@ class SetNode(DjangoObjectType):
             "max_reps",
             "weight",
             "duration",
+            "equipment_identifier",
             "set_type",
             "parent_set",
         )

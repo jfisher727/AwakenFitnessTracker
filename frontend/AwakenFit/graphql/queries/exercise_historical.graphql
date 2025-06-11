@@ -1,0 +1,33 @@
+query GetExercises($movementId: String, $after: String, $before: String, $count: Int) {
+        exercises(movementId: $movementId, after: $after, before: $before, first: $count) {
+            pageInfo {
+                hasNextPage
+                hasPreviousPage
+                startCursor
+                endCursor
+            }
+            edges {
+                node{
+                    id
+                    movement {
+                        name
+                        primaryMuscleGroup
+                        equipmentType
+                        movementType
+                    }
+                    workout {
+                        startTime
+                    }
+                    sets {
+                        id
+                        sequenceNumber
+                        completedReps
+                        weight
+                        duration
+                        oneRepMax
+                        volume
+                    }
+                }
+            }
+        }
+    }

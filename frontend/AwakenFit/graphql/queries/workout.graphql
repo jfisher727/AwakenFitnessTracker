@@ -1,0 +1,29 @@
+query GetWorkout($id: ID!) {
+        workout(id: $id) {
+            id
+            name
+            notes
+            exercises {
+                id
+                notes
+                movement {
+                    id
+                    name
+                    description
+                    primaryMuscleGroup
+                    equipmentType
+                    movementType
+                }
+                sets {
+                    id
+                    sequenceNumber
+                    completedReps
+                    minReps
+                    maxReps
+                    weight
+                    duration
+                    setType
+                }
+            }
+        }
+    }

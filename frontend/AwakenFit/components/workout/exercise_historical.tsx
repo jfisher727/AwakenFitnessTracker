@@ -1,88 +1,27 @@
 import { useState, useEffect } from 'react';
 import { View, Text, Button, Pressable, FlatList, useColorScheme } from "react-native";
 
-import { gql, useLazyQuery } from '@apollo/client';
-
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 import { baseStyles, lightColors, darkColors } from "@/styles/global";
 
+import { useGetExercisesLazyQuery, ExerciseNode, SetNode } from '@/graphql/types';
+
 import HorzontalLine from '../general/horizonal_line';
 import Spinner from '../general/spinner';
-
-import { MovementNode } from '@/graphql/properties';
 
 import { date_formatter } from '@/util/date';
 import { hexToRGBA } from '@/util/color';
 
-
-const GET_EXERCISE_HISTORICAL = gql`
-    query GetExercises($movementId: String, $after: String, $before: String, $count: Int) {
-        exercises(movementId: $movementId, after: $after, before: $before, first: $count) {
-            pageInfo {
-                hasNextPage
-                hasPreviousPage
-                startCursor
-                endCursor
-            }
-            edges {
-                node{
-                    id
-                    movement {
-                        name
-                        primaryMuscleGroup
-                        equipmentType
-                        movementType
-                    }
-                    workout {
-                        startTime
-                    }
-                    sets {
-                        id
-                        sequenceNumber
-                        completedReps
-                        weight
-                        duration
-                        oneRepMax
-                        volume
-                    }
-                }
-            }
-        }
-    }
-`;
 
 type historicalParams = {
     movementId: string,
     navigateBack: () => void,
 }
 
-type ExerciseEntry = {
-    node: ExerciseNode
-}
-
-type SetNode = {
-    id: string,
-    sequenceNumber: number,
-    completedReps: number,
-    duration: string,
-    weight: number,
-    oneRepMax: number,
-    volume: number
-}
-
-type ExerciseNode = {
-    id: string,
-    movement: MovementNode,
-    workout: {
-        startTime: string
-    },
-    sets: SetNode[]
-}
-
 export default function ExerciseHistorical({ movementId, navigateBack }: historicalParams) {
     const colorScheme = useColorScheme();
-    const [execute, { loading, error, data }] = useLazyQuery(GET_EXERCISE_HISTORICAL);
+    const [execute, { loading, error, data }] = useGetExercisesLazyQuery();
     const [name, setName] = useState('');
     const [index, setIndex] = useState(-1);
     const [body, setBody] = useState(<Text></Text>);
@@ -99,13 +38,13 @@ export default function ExerciseHistorical({ movementId, navigateBack }: histori
     }, []);
 
     useEffect(() => {
-        if (index === -1 && data) {
-            setIndex(data?.exercises.edges.length - 1);
+        if (index === -1 && data?.exercises) {
+            setIndex(data?.exercises?.edges?.length - 1);
         }
     }, [data]);
 
     useEffect(() => {
-        if (index !== -1 && data.exercises.edges[index]?.node) {
+        if (index !== -1 && data?.exercises?.edges[index]?.node) {
             setName(data.exercises.edges[index].node.movement.name);
             setBody(<WorkoutEntry node={data.exercises.edges[index].node} />);
         }
@@ -123,10 +62,10 @@ export default function ExerciseHistorical({ movementId, navigateBack }: histori
         );
     }
 
-    const WorkoutEntry = ({ node }: ExerciseEntry) => {
+    const WorkoutEntry = (node: ExerciseNode) => {
         function previousPressed() {
             if (index === 0) {
-                execute({ variables: { count: 10, movementId: movementId, before: data.exercises.pageInfo.startCursor } });
+                execute({ variables: { count: 10, movementId: movementId, before: data?.exercises?.pageInfo.startCursor } });
             }
             else {
                 setIndex(index - 1);
@@ -134,8 +73,8 @@ export default function ExerciseHistorical({ movementId, navigateBack }: histori
         }
 
         function nextPressed() {
-            if (index === data.exercises.edges.length - 1) {
-                execute({ variables: { count: 10, movementId: movementId, after: data.exercises.pageInfo.endCursor } });
+            if (index === data?.exercises?.edges?.length - 1) {
+                execute({ variables: { count: 10, movementId: movementId, after: data?.exercises?.pageInfo.endCursor } });
             }
             else {
                 setIndex(index + 1);
@@ -171,7 +110,7 @@ export default function ExerciseHistorical({ movementId, navigateBack }: histori
             <View style={baseStyles.modal}>
                 <View style={baseStyles.spacedRow}>
                     {
-                        (index > 0 || data.exercises.pageInfo.hasPreviousPage) ?
+                        (index > 0 || data?.exercises?.pageInfo.hasPreviousPage) ?
                             <Pressable onPress={previousPressed} style={baseStyles.selectableRow} disabled={loading}>
                                 <FontAwesome size={28} name="chevron-left" color={loading ? disabledColor : enabledColor} />
                                 <Text style={{ color: loading ? disabledColor : enabledColor }}>Previous</Text>
@@ -179,7 +118,7 @@ export default function ExerciseHistorical({ movementId, navigateBack }: histori
                             <View></View>
                     }
                     {
-                        (index < data.exercises.edges.length || data.exercises.pageInfo.hasNextPage) &&
+                        (index < data?.exercises?.edges?.length || data.exercises.pageInfo.hasNextPage) &&
                         <Pressable onPress={nextPressed} style={baseStyles.selectableRow} disabled={loading}>
                             <Text style={{ color: loading ? disabledColor : enabledColor }}>Next</Text>
                             <FontAwesome size={28} name="chevron-right" color={loading ? disabledColor : enabledColor} />
@@ -199,15 +138,15 @@ export default function ExerciseHistorical({ movementId, navigateBack }: histori
                 <FlatList
                     data={node.sets}
                     renderItem={({ item }) => <SetEntry
-                        id={item.id}
-                        sequenceNumber={item.sequenceNumber}
-                        oneRepMax={item.oneRepMax}
-                        duration={item.duration}
-                        volume={item.volume}
-                        completedReps={item.completedReps}
-                        weight={item.weight}
+                        id={item?.id || ""}
+                        sequenceNumber={item?.sequenceNumber || 0}
+                        oneRepMax={item?.oneRepMax || 0}
+                        duration={item?.duration || ""}
+                        volume={item?.volume || 0}
+                        completedReps={item?.completedReps || 0}
+                        weight={item?.weight || 0}
                     />}
-                    keyExtractor={item => item.id}
+                    keyExtractor={item => item?.id || ""}
                     ItemSeparatorComponent={HorzontalLine}
                 />
             </View>
