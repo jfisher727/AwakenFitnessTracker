@@ -68,6 +68,36 @@ export type MessageNode = {
   message?: Maybe<Scalars['String']['output']>;
 };
 
+export type MovementCreate = {
+  __typename?: 'MovementCreate';
+  errors?: Maybe<Array<Maybe<MessageNode>>>;
+  movement?: Maybe<MovementNode>;
+};
+
+export type MovementCreateInput = {
+  description: Scalars['String']['input'];
+  equipmentType: Scalars['String']['input'];
+  movementType: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  primaryMuscleGroup: Scalars['String']['input'];
+  secondaryMuscleGroup: Scalars['String']['input'];
+};
+
+export type MovementEdit = {
+  __typename?: 'MovementEdit';
+  errors?: Maybe<Array<Maybe<MessageNode>>>;
+  movement?: Maybe<MovementNode>;
+};
+
+export type MovementEditInput = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  equipmentType: Scalars['String']['input'];
+  id: Scalars['ID']['input'];
+  movementType: Scalars['String']['input'];
+  primaryMuscleGroup: Scalars['String']['input'];
+  secondaryMuscleGroup: Scalars['String']['input'];
+};
+
 export type MovementNode = Node & {
   __typename?: 'MovementNode';
   description: Scalars['String']['output'];
@@ -99,8 +129,20 @@ export type MovementNodeEdge = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  movementCreate?: Maybe<MovementCreate>;
+  movementEdit?: Maybe<MovementEdit>;
   workoutCreateCompleted?: Maybe<WorkoutCreateCompleted>;
   workoutCreateTemplate?: Maybe<WorkoutCreateTemplate>;
+};
+
+
+export type MutationMovementCreateArgs = {
+  input: MovementCreateInput;
+};
+
+
+export type MutationMovementEditArgs = {
+  input: MovementEditInput;
 };
 
 
@@ -136,6 +178,7 @@ export type Query = {
   __typename?: 'Query';
   exercise?: Maybe<ExerciseNode>;
   exercises?: Maybe<ExerciseNodeConnection>;
+  isSuperUser?: Maybe<Scalars['Boolean']['output']>;
   movement?: Maybe<MovementNode>;
   movements?: Maybe<MovementNodeConnection>;
   set?: Maybe<SetNode>;
@@ -347,6 +390,30 @@ export type WorkoutCreateCompletedMutationVariables = Exact<{
 
 export type WorkoutCreateCompletedMutation = { __typename?: 'Mutation', workoutCreateCompleted?: { __typename?: 'WorkoutCreateCompleted', workout?: { __typename?: 'WorkoutNode', id: string } | null, errors?: Array<{ __typename?: 'MessageNode', message?: string | null } | null> | null } | null };
 
+export type MovementCreateMutationVariables = Exact<{
+  name: Scalars['String']['input'];
+  description: Scalars['String']['input'];
+  primaryMuscleGroup: Scalars['String']['input'];
+  secondaryMuscleGroup: Scalars['String']['input'];
+  equipmentType: Scalars['String']['input'];
+  movementType: Scalars['String']['input'];
+}>;
+
+
+export type MovementCreateMutation = { __typename?: 'Mutation', movementCreate?: { __typename?: 'MovementCreate', movement?: { __typename?: 'MovementNode', id: string } | null, errors?: Array<{ __typename?: 'MessageNode', message?: string | null } | null> | null } | null };
+
+export type MovementEditMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  primaryMuscleGroup: Scalars['String']['input'];
+  secondaryMuscleGroup: Scalars['String']['input'];
+  equipmentType: Scalars['String']['input'];
+  movementType: Scalars['String']['input'];
+}>;
+
+
+export type MovementEditMutation = { __typename?: 'Mutation', movementEdit?: { __typename?: 'MovementEdit', movement?: { __typename?: 'MovementNode', id: string } | null, errors?: Array<{ __typename?: 'MessageNode', message?: string | null } | null> | null } | null };
+
 export type WorkoutCreateTemplateMutationVariables = Exact<{
   input: WorkoutCreateTemplateInput;
 }>;
@@ -363,6 +430,11 @@ export type GetExercisesQueryVariables = Exact<{
 
 
 export type GetExercisesQuery = { __typename?: 'Query', exercises?: { __typename?: 'ExerciseNodeConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'ExerciseNodeEdge', node?: { __typename?: 'ExerciseNode', id: string, movement: { __typename?: 'MovementNode', name: string, primaryMuscleGroup: string, equipmentType: string, movementType: string }, workout: { __typename?: 'WorkoutNode', startTime: any }, sets?: Array<{ __typename?: 'SetNode', id: string, sequenceNumber: number, completedReps: number, weight: number, duration: string, oneRepMax?: number | null, volume?: number | null } | null> | null } | null } | null> } | null };
+
+export type GetIsSuperuserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetIsSuperuserQuery = { __typename?: 'Query', isSuperUser?: boolean | null };
 
 export type GetMovementsQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']['input']>;
@@ -444,6 +516,96 @@ export function useWorkoutCreateCompletedMutation(baseOptions?: Apollo.MutationH
 export type WorkoutCreateCompletedMutationHookResult = ReturnType<typeof useWorkoutCreateCompletedMutation>;
 export type WorkoutCreateCompletedMutationResult = Apollo.MutationResult<WorkoutCreateCompletedMutation>;
 export type WorkoutCreateCompletedMutationOptions = Apollo.BaseMutationOptions<WorkoutCreateCompletedMutation, WorkoutCreateCompletedMutationVariables>;
+export const MovementCreateDocument = gql`
+    mutation movementCreate($name: String!, $description: String!, $primaryMuscleGroup: String!, $secondaryMuscleGroup: String!, $equipmentType: String!, $movementType: String!) {
+  movementCreate(
+    input: {name: $name, description: $description, primaryMuscleGroup: $primaryMuscleGroup, secondaryMuscleGroup: $secondaryMuscleGroup, equipmentType: $equipmentType, movementType: $movementType}
+  ) {
+    movement {
+      id
+    }
+    errors {
+      message
+    }
+  }
+}
+    `;
+export type MovementCreateMutationFn = Apollo.MutationFunction<MovementCreateMutation, MovementCreateMutationVariables>;
+
+/**
+ * __useMovementCreateMutation__
+ *
+ * To run a mutation, you first call `useMovementCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMovementCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [movementCreateMutation, { data, loading, error }] = useMovementCreateMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *      description: // value for 'description'
+ *      primaryMuscleGroup: // value for 'primaryMuscleGroup'
+ *      secondaryMuscleGroup: // value for 'secondaryMuscleGroup'
+ *      equipmentType: // value for 'equipmentType'
+ *      movementType: // value for 'movementType'
+ *   },
+ * });
+ */
+export function useMovementCreateMutation(baseOptions?: Apollo.MutationHookOptions<MovementCreateMutation, MovementCreateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<MovementCreateMutation, MovementCreateMutationVariables>(MovementCreateDocument, options);
+      }
+export type MovementCreateMutationHookResult = ReturnType<typeof useMovementCreateMutation>;
+export type MovementCreateMutationResult = Apollo.MutationResult<MovementCreateMutation>;
+export type MovementCreateMutationOptions = Apollo.BaseMutationOptions<MovementCreateMutation, MovementCreateMutationVariables>;
+export const MovementEditDocument = gql`
+    mutation movementEdit($id: ID!, $description: String, $primaryMuscleGroup: String!, $secondaryMuscleGroup: String!, $equipmentType: String!, $movementType: String!) {
+  movementEdit(
+    input: {id: $id, description: $description, primaryMuscleGroup: $primaryMuscleGroup, secondaryMuscleGroup: $secondaryMuscleGroup, equipmentType: $equipmentType, movementType: $movementType}
+  ) {
+    movement {
+      id
+    }
+    errors {
+      message
+    }
+  }
+}
+    `;
+export type MovementEditMutationFn = Apollo.MutationFunction<MovementEditMutation, MovementEditMutationVariables>;
+
+/**
+ * __useMovementEditMutation__
+ *
+ * To run a mutation, you first call `useMovementEditMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMovementEditMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [movementEditMutation, { data, loading, error }] = useMovementEditMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      description: // value for 'description'
+ *      primaryMuscleGroup: // value for 'primaryMuscleGroup'
+ *      secondaryMuscleGroup: // value for 'secondaryMuscleGroup'
+ *      equipmentType: // value for 'equipmentType'
+ *      movementType: // value for 'movementType'
+ *   },
+ * });
+ */
+export function useMovementEditMutation(baseOptions?: Apollo.MutationHookOptions<MovementEditMutation, MovementEditMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<MovementEditMutation, MovementEditMutationVariables>(MovementEditDocument, options);
+      }
+export type MovementEditMutationHookResult = ReturnType<typeof useMovementEditMutation>;
+export type MovementEditMutationResult = Apollo.MutationResult<MovementEditMutation>;
+export type MovementEditMutationOptions = Apollo.BaseMutationOptions<MovementEditMutation, MovementEditMutationVariables>;
 export const WorkoutCreateTemplateDocument = gql`
     mutation WorkoutCreateTemplate($input: WorkoutCreateTemplateInput!) {
   workoutCreateTemplate(input: $input) {
@@ -558,6 +720,43 @@ export type GetExercisesQueryHookResult = ReturnType<typeof useGetExercisesQuery
 export type GetExercisesLazyQueryHookResult = ReturnType<typeof useGetExercisesLazyQuery>;
 export type GetExercisesSuspenseQueryHookResult = ReturnType<typeof useGetExercisesSuspenseQuery>;
 export type GetExercisesQueryResult = Apollo.QueryResult<GetExercisesQuery, GetExercisesQueryVariables>;
+export const GetIsSuperuserDocument = gql`
+    query GetIsSuperuser {
+  isSuperUser
+}
+    `;
+
+/**
+ * __useGetIsSuperuserQuery__
+ *
+ * To run a query within a React component, call `useGetIsSuperuserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetIsSuperuserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetIsSuperuserQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetIsSuperuserQuery(baseOptions?: Apollo.QueryHookOptions<GetIsSuperuserQuery, GetIsSuperuserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetIsSuperuserQuery, GetIsSuperuserQueryVariables>(GetIsSuperuserDocument, options);
+      }
+export function useGetIsSuperuserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetIsSuperuserQuery, GetIsSuperuserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetIsSuperuserQuery, GetIsSuperuserQueryVariables>(GetIsSuperuserDocument, options);
+        }
+export function useGetIsSuperuserSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetIsSuperuserQuery, GetIsSuperuserQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetIsSuperuserQuery, GetIsSuperuserQueryVariables>(GetIsSuperuserDocument, options);
+        }
+export type GetIsSuperuserQueryHookResult = ReturnType<typeof useGetIsSuperuserQuery>;
+export type GetIsSuperuserLazyQueryHookResult = ReturnType<typeof useGetIsSuperuserLazyQuery>;
+export type GetIsSuperuserSuspenseQueryHookResult = ReturnType<typeof useGetIsSuperuserSuspenseQuery>;
+export type GetIsSuperuserQueryResult = Apollo.QueryResult<GetIsSuperuserQuery, GetIsSuperuserQueryVariables>;
 export const GetMovementsDocument = gql`
     query GetMovements($after: String, $name: String, $count: Int, $equipment: String, $muscle: String) {
   movements(

@@ -1,0 +1,26 @@
+mutation movementCreate(
+    $name: String!
+    $description: String!
+    $primaryMuscleGroup: String!
+    $secondaryMuscleGroup: String!
+    $equipmentType: String!
+    $movementType: String!
+) {
+    movementCreate(
+        input: {
+            name: $name
+            description: $description
+            primaryMuscleGroup: $primaryMuscleGroup
+            secondaryMuscleGroup: $secondaryMuscleGroup
+            equipmentType: $equipmentType
+            movementType: $movementType
+        }
+    ) {
+        movement {
+            id
+        }
+        errors {
+            message
+        }
+    }
+}

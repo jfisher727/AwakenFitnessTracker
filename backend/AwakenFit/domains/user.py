@@ -1,7 +1,10 @@
 from django.contrib.auth.models import User
 
 
-ERROR_MESSAGES = {"UNAUTHENTICATED": "Must be logged in to perform that action."}
+ERROR_MESSAGES = {
+    "UNAUTHENTICATED": "Must be logged in to perform that action.",
+    "MISSING_PERMISSIONS": "Must be super user to perform this action.",
+}
 
 
 def is_valid_id(id: int) -> bool:
