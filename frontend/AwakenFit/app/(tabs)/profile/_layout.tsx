@@ -10,17 +10,9 @@ export default function ProfileLayout() {
                 }}
             />
             <Stack.Screen
-                name="template_workout"
-                options={{
-                    title: "",
-                    headerBackTitle: "Back",
-                }}
-            />
-            <Stack.Screen
                 name="movement"
                 options={{
-                    title: "",
-                    headerBackTitle: "Back",
+                    headerShown: false,
                 }}
             />
         </Stack>

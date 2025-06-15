@@ -67,8 +67,7 @@ export default function Profile() {
                                 onPress={verifyEmailPressed}
                                 disabled={false}
                             />
-                            {(data?.isSuperUser ?? false) &
-                            (
+                            {(data?.isSuperUser ?? false) && (
                                 <CustomButton
                                     text="Movement Management"
                                     onPress={movementPressed}

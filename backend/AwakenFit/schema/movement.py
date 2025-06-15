@@ -1,4 +1,5 @@
 from graphene import Node, ObjectType, Mutation, Field, List, InputObjectType, String, ID
+from graphql_relay import from_global_id
 
 from graphene_django import DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
@@ -123,7 +124,7 @@ class MovementEdit(Mutation):
 
         if not errors:
             movement = MovementDomain.edit_movement(
-                input.id,
+                from_global_id(input.id).id,
                 input.primary_muscle_group,
                 input.secondary_muscle_group,
                 input.equipment_type,

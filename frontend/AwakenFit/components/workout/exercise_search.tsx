@@ -1,49 +1,26 @@
-import { useState, useEffect } from 'react';
-import { Text, TextInput, View, Pressable, FlatList, useColorScheme } from 'react-native';
+import { useState, useEffect } from "react";
+import {
+    Text,
+    TextInput,
+    View,
+    Pressable,
+    FlatList,
+    useColorScheme,
+} from "react-native";
 
-import { useGetMovementsLazyQuery, GetMovementsQueryVariables, MovementNodeEdge, MovementNode } from '@/graphql/types';
+import {
+    useGetMovementsLazyQuery,
+    GetMovementsQueryVariables,
+    MovementNodeEdge,
+    MovementNode,
+} from "@/graphql/types";
 
-import { baseStyles, lightColors, darkColors } from '@/styles/global';
+import { baseStyles, lightColors, darkColors } from "@/styles/global";
 
-import DropdownSelect from '@/components/general/dropdown_select';
-import Spinner from '../general/spinner';
-import HorzontalLine from '../general/horizonal_line';
-
-type KeyValuePair = {
-    key: string,
-    value: string
-};
-
-const equipmentOptions: KeyValuePair[] = [
-    { key: 'Barbell', value: 'Barbell' },
-    { key: 'Body Only', value: 'Body Only' },
-    { key: 'Cable', value: 'Cable' },
-    { key: 'Dumbbell', value: 'Dumbbell' },
-    { key: 'Exercise Ball', value: 'EZ-Curl Bar' },
-    { key: 'Kettlebell', value: 'Kettlebell' },
-    { key: 'Machine', value: 'Machine' },
-    { key: 'Medicine Ball', value: 'Medicine Ball' },
-    { key: 'None', value: 'None' },
-    { key: 'Resistance Bands', value: 'Resistance Bands' },
-];
-
-
-const muscleGroupOptions: KeyValuePair[] = [
-    { key: 'Abdominals', value: 'Abdominals' },
-    //{ key: 'Back', value: 'Back' },
-    { key: 'Biceps', value: 'Biceps' },
-    { key: 'Calf', value: 'Calf' },
-    { key: 'Chest', value: 'Chest' },
-    { key: 'Forearm', value: 'Forearm' },
-    { key: 'Glutes', value: 'Glutes' },
-    { key: 'Hamstring', value: 'Hamstring' },
-    { key: 'Lats', value: 'Lats' },
-    { key: 'None', value: 'None' },
-    { key: 'Quadriceps', value: 'Quadriceps' },
-    { key: 'Shoulders', value: 'Shoulders' },
-    { key: 'Trapezius', value: 'Trapezius' },
-    { key: 'Triceps', value: 'Triceps' },
-];
+import DropdownSelect from "@/components/general/dropdown_select";
+import Spinner from "../general/spinner";
+import HorzontalLine from "../general/horizonal_line";
+import { equipmentOptions, muscleGroupOptions } from "@/util/workout";
 
 const DEBOUNCE_DELAY: number = 500; // milliseconds
 
@@ -56,15 +33,26 @@ export default function ExerciseSearch({ addExercise }: ExerciseSearchProps) {
 
     const [execute, { loading, error, data }] = useGetMovementsLazyQuery();
 
-    const [name, setName] = useState('Search');
-    const [debouncedName, setDebouncedName] = useState('');
-    const [selectedEquipment, setSelectedEquipment] = useState({ key: '', value: '' });
-    const [selectedMuscleGroup, setSelectedMuscleGroup] = useState({ key: '', value: '' });
+    const [name, setName] = useState("Search");
+    const [debouncedName, setDebouncedName] = useState("");
+    const [selectedEquipment, setSelectedEquipment] = useState({
+        key: "",
+        value: "",
+    });
+    const [selectedMuscleGroup, setSelectedMuscleGroup] = useState({
+        key: "",
+        value: "",
+    });
 
     const RowEntry = ({ node }: MovementNodeEdge) => {
         return (
-            <Pressable style={baseStyles.selectableRow} onPress={() => addExercise(node)}>
-                <Text style={{ color: lightColors.primaryColor, fontSize: 20 }}>{node.name}</Text>
+            <Pressable
+                style={baseStyles.selectableRow}
+                onPress={() => addExercise(node)}
+            >
+                <Text style={{ color: lightColors.primaryColor, fontSize: 20 }}>
+                    {node.name}
+                </Text>
             </Pressable>
         );
     };
@@ -92,9 +80,8 @@ export default function ExerciseSearch({ addExercise }: ExerciseSearchProps) {
             variables.muscle = selectedMuscleGroup.value;
         }
         execute({
-            variables: variables
+            variables: variables,
         });
-
     }, [selectedEquipment, selectedMuscleGroup, debouncedName]);
 
     useEffect(() => {
@@ -111,54 +98,71 @@ export default function ExerciseSearch({ addExercise }: ExerciseSearchProps) {
             <Text
                 style={{
                     ...baseStyles.subHeader,
-                    color: colorScheme === 'light' ? lightColors.primaryColor : darkColors.primaryColor
-                }}>
+                    color:
+                        colorScheme === "light"
+                            ? lightColors.primaryColor
+                            : darkColors.primaryColor,
+                }}
+            >
                 Search for Exercises
             </Text>
-            <View style={{
-                ...baseStyles.modal
-            }}>
-                <View style={{ ...baseStyles.modal, borderWidth: 1, borderColor: darkColors.background, margin: 2 }}>
+            <View
+                style={{
+                    ...baseStyles.modal,
+                }}
+            >
+                <View
+                    style={{
+                        ...baseStyles.modal,
+                        borderWidth: 1,
+                        borderColor: darkColors.background,
+                        margin: 2,
+                    }}
+                >
                     <TextInput
                         inputMode="text"
                         defaultValue={name}
-                        onChangeText={newText => setName(newText)}
+                        onChangeText={(newText) => setName(newText)}
                         style={{
                             ...baseStyles.selectHeader,
-                            color: colorScheme === 'light' ? lightColors.primaryColor : darkColors.primaryColor
+                            color:
+                                colorScheme === "light"
+                                    ? lightColors.primaryColor
+                                    : darkColors.primaryColor,
                         }}
                     />
                 </View>
                 <DropdownSelect
-                    placeHolder='Equipment'
+                    placeHolder="Equipment"
                     selectedValue={selectedEquipment}
                     options={equipmentOptions}
                     onSelect={setSelectedEquipment}
                     showSearch={false}
                 />
                 <DropdownSelect
-                    placeHolder='Muscle Group'
+                    placeHolder="Muscle Group"
                     selectedValue={selectedMuscleGroup}
                     options={muscleGroupOptions}
                     onSelect={setSelectedMuscleGroup}
                     showSearch={false}
                 />
-                {
-                    data &&
+                {data && (
                     <View style={baseStyles.flatListContainer}>
                         <FlatList
                             data={data?.movements?.edges}
-                            renderItem={({ item }) => <RowEntry cursor={item?.cursor || ""} node={item?.node} />}
-                            keyExtractor={item => item?.cursor || ""}
+                            renderItem={({ item }) => (
+                                <RowEntry
+                                    cursor={item?.cursor || ""}
+                                    node={item?.node}
+                                />
+                            )}
+                            keyExtractor={(item) => item?.cursor || ""}
                             refreshing={loading}
                             ItemSeparatorComponent={HorzontalLine}
                         />
                     </View>
-                }
-                {
-                    loading &&
-                    <Spinner />
-                }
+                )}
+                {loading && <Spinner />}
             </View>
         </>
     );

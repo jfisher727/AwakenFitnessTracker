@@ -1,3 +1,5 @@
+from graphql_relay import from_global_id
+
 from AwakenFit.domains import workout as WorkoutDomain
 from AwakenFit.domains import set as SetDomain
 from AwakenFit.domains import exercise as ExerciseDomain
@@ -88,7 +90,7 @@ def validate_movement_create_input(movement) -> list[str]:
 
 def validate_movement_edit_input(movement) -> list[str]:
     errors = list()
-    if not MovementDomain.is_valid_id(movement.id):
+    if not MovementDomain.is_valid_id(from_global_id(movement.id).id):
         errors.append(ERROR_MESSAGES["INVALID_ID"])
     if movement.description and len(movement.description) > 500:
         errors.append(ERROR_MESSAGES["DESCRIPTION_LENGTH"])
