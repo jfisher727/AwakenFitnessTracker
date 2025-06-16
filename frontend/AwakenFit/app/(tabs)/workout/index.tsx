@@ -186,6 +186,7 @@ export default function Workout() {
     }
 
     function handleAddSets(count: number) {
+        console.log(`add sets param: ${count}`);
         dispatch({
             type: ActionTypes.ADD_SETS,
             payload: {

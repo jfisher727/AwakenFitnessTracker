@@ -176,7 +176,7 @@ function WeightInput({ weight, reps, setWeight, setReps }: weightInputParams) {
                     ref={weightRef}
                     onChangeText={(newText) => setWeight(newText)}
                     value={weight}
-                    inputMode="numeric"
+                    inputMode="decimal"
                     style={baseStyles.selectHeader}
                     onFocus={() => setWeight("")}
                 />
@@ -263,7 +263,7 @@ const SetEntry = ({
     const [weight, setWeight] = useState(item.weight?.toString() || "");
     const [duration, setDuration] = useState(item.duration?.toString() || "");
     const [equipmentIdentifier, setEquipmentIdentifier] = useState(
-        item.equipment_identifier?.toString() || ""
+        item.equipmentIdentifier?.toString() || ""
     );
     const [validSet, setValidSet] = useState(false);
     const [saveCalled, setSaveCalled] = useState(false);
