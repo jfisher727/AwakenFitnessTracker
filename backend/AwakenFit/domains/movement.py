@@ -36,6 +36,30 @@ def is_valid_id(id: int) -> bool:
     return Movement.objects.filter(id=id).exists()
 
 
+def movement_already_exists(name: str) -> bool:
+    return Movement.objects.filter(name=name).exists()
+
+
+def edit_movement(
+    id: int,
+    primary_muscle_group: str,
+    secondary_muscle_group: str,
+    equipment_type: str,
+    movement_type: str,
+    description: str = "",
+) -> Movement:
+    movement = Movement.objects.get(id=id)
+    movement.primary_muscle_group = primary_muscle_group
+    movement.secondary_muscle_group = secondary_muscle_group
+    movement.equipment_type = equipment_type
+    movement.movement_type = movement_type
+    if description:
+        movement.description = description
+    movement.save()
+
+    return movement
+
+
 def create_movement(
     name: str,
     description: str,

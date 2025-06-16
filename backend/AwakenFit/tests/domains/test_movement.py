@@ -81,6 +81,51 @@ class MovementDomainTest(TestCase):
         result = MovementDomain.get_by_movement_type(Movement.STRENGTH)
         self.assertEqual(4, len(result), "Did not get the appropriate number of records back")
 
+    def test_is_valid_id(self):
+        self.assertTrue(MovementDomain.is_valid_id(self.test_movement.id), "Should be a valid Movement ID")
+        self.assertFalse(MovementDomain.is_valid_id(1234), "Should not be a valid Movement ID")
+
+    def test_movement_already_exists(self):
+        self.assertTrue(
+            MovementDomain.movement_already_exists(self.test_movement.name), "Movement name should already exist"
+        )
+        self.assertFalse(
+            MovementDomain.movement_already_exists("This is a random name"), "Movement with this name should not exist"
+        )
+
+    def test_edit_movement(self):
+        updated_movement = MovementDomain.edit_movement(
+            self.test_movement.id, "Biceps", "Back", "Dumbell", "Cardio", "This description is updated"
+        )
+        self.assertIsNotNone(updated_movement, "Should have returned an object")
+        self.assertEqual(updated_movement.id, self.test_movement.id, "Should have been the same ID returned")
+        self.assertEqual(updated_movement.name, self.test_movement.name, "Name should not have been updated")
+        self.assertNotEqual(
+            self.test_movement.primary_muscle_group,
+            updated_movement.primary_muscle_group,
+            "Primary Muscle Group should have updated",
+        )
+        self.assertNotEqual(
+            self.test_movement.secondary_muscle_group,
+            updated_movement.secondary_muscle_group,
+            "Secondary Muscle Group should have updated",
+        )
+        self.assertNotEqual(
+            self.test_movement.equipment_type,
+            updated_movement.equipment_type,
+            "Equipment Type should have updated",
+        )
+        self.assertNotEqual(
+            self.test_movement.movement_type,
+            updated_movement.movement_type,
+            "Movement should have updated",
+        )
+        self.assertNotEqual(
+            self.test_movement.description,
+            updated_movement.description,
+            "Description should have updated",
+        )
+
     def test_create_movement(self):
         existing_movements = Movement.objects.count()
 

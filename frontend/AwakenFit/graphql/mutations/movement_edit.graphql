@@ -1,0 +1,26 @@
+mutation movementEdit(
+    $id: ID!
+    $description: String
+    $primaryMuscleGroup: String!
+    $secondaryMuscleGroup: String!
+    $equipmentType: String!
+    $movementType: String!
+) {
+    movementEdit(
+        input: {
+            id: $id
+            description: $description
+            primaryMuscleGroup: $primaryMuscleGroup
+            secondaryMuscleGroup: $secondaryMuscleGroup
+            equipmentType: $equipmentType
+            movementType: $movementType
+        }
+    ) {
+        movement {
+            id
+        }
+        errors {
+            message
+        }
+    }
+}

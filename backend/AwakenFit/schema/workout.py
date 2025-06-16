@@ -76,12 +76,14 @@ class WorkoutCreateTemplate(Mutation):
         errors = list()
 
         if not info.context.user.is_authenticated:
-            errors.append(MessageNode(message=UserDomain.ERROR_MESSAGES["UNAUTHENTICATED"]))
+            errors.append(MessageNode(message=UserDomain.ERROR_MESSAGES.get("UNAUTHENTICATED")))
         else:
             user = info.context.user
             user_id = user.id
 
-        errors.extend(MutationDomain.validate_workout_template_input(user_id, input))
+        validation_errors = MutationDomain.validate_workout_template_input(user_id, input)
+        for entry in validation_errors:
+            errors.append(MessageNode(message=entry))
 
         if not errors:
             workout = WorkoutDomain.create_workout(
