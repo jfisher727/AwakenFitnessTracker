@@ -170,7 +170,7 @@ class MovementSchemaTest(GraphQLTestCase):
             self.movement_edit_mutation,
             operation_name="movementEdit",
             variables={
-                "id": self.test_movement.id,
+                "id": to_global_id("Movement", self.test_movement.id),
                 "description": updated_description,
                 "primaryMuscleGroup": updated_pmg,
                 "secondaryMuscleGroup": updated_smg,
@@ -215,7 +215,7 @@ class MovementSchemaTest(GraphQLTestCase):
             self.movement_edit_mutation,
             operation_name="movementEdit",
             variables={
-                "id": self.test_movement.id,
+                "id": to_global_id("Movement", self.test_movement.id),
                 "description": updated_description,
                 "primaryMuscleGroup": updated_pmg,
                 "secondaryMuscleGroup": updated_smg,
@@ -238,7 +238,7 @@ class MovementSchemaTest(GraphQLTestCase):
             self.movement_edit_mutation,
             operation_name="movementEdit",
             variables={
-                "id": self.test_movement.id,
+                "id": to_global_id("Movement", self.test_movement.id),
                 "description": updated_description,
                 "primaryMuscleGroup": "None",
                 "secondaryMuscleGroup": "None",
