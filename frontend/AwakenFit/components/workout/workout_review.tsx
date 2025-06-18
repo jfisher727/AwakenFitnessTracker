@@ -1,10 +1,4 @@
-import {
-    View,
-    Text,
-    FlatList,
-    useColorScheme,
-    KeyboardAvoidingView,
-} from "react-native";
+import { View, Text, FlatList, useColorScheme, ScrollView } from "react-native";
 
 import { ExerciseProps, MovementNode, SetNode } from "@/graphql/properties";
 
@@ -155,7 +149,7 @@ export default function WorkoutReview({
     const stopTimeDate = new Date(stop_time);
     // we should let users tap on various items to edit their values?
     return (
-        <KeyboardAvoidingView>
+        <ScrollView style={{ height: "100%", overflow: "scroll" }}>
             <Text style={{ ...baseStyles.header, color: color }}>
                 Workout Review
             </Text>
@@ -183,6 +177,6 @@ export default function WorkoutReview({
                 onPress={handleRecordWorkout}
                 disabled={false}
             />
-        </KeyboardAvoidingView>
+        </ScrollView>
     );
 }

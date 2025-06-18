@@ -6,7 +6,9 @@ import {
     FlatList,
     Pressable,
     Button,
+    Platform,
     useColorScheme,
+    KeyboardAvoidingView,
 } from "react-native";
 
 import FontAwesome from "@expo/vector-icons/FontAwesome";
@@ -398,28 +400,33 @@ export default function CurrentExercise({
     }
 
     return (
-        <View style={{ height: "100%" }}>
-            <View style={baseStyles.leftJustifiedRow}>
-                <FontAwesome size={28} name="chevron-left" />
+        <View>
+            <View style={{ ...baseStyles.leftJustifiedRow, height: "auto" }}>
+                <FontAwesome size={28} name="chevron-left" color={color} />
                 <Button title="Execise List" onPress={handleNavigateBack} />
             </View>
             <Text style={{ ...baseStyles.mediumHeader, color: color }}>
                 {exercise.movement.name}
             </Text>
-            <FlatList
-                data={exercise.sets}
-                renderItem={({ item }) => (
-                    <SetEntry
-                        item={item}
-                        movement={exercise.movement}
-                        currentSet={currentSet === item.sequenceNumber}
-                        saveSet={saveSet}
-                        setSelectedSet={setSelectedSet}
-                    />
-                )}
-                keyExtractor={(item) => item.id}
-                ItemSeparatorComponent={HorzontalLine}
-            />
+            <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+            >
+                <FlatList
+                    data={exercise.sets}
+                    renderItem={({ item }) => (
+                        <SetEntry
+                            item={item}
+                            movement={exercise.movement}
+                            currentSet={currentSet === item.sequenceNumber}
+                            saveSet={saveSet}
+                            setSelectedSet={setSelectedSet}
+                        />
+                    )}
+                    keyExtractor={(item) => item.id}
+                    ItemSeparatorComponent={HorzontalLine}
+                    style={{ height: "80%" }}
+                />
+            </KeyboardAvoidingView>
         </View>
     );
 }

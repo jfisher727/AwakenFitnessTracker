@@ -33,6 +33,7 @@ export const baseStyles = StyleSheet.create({
     },
     buttonContainer: {
         justifyContent: "space-around",
+        height: "10%",
     },
     header: {
         fontSize: 50,

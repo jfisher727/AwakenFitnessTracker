@@ -3,7 +3,7 @@ import { TextInput, Text, View } from "react-native";
 
 import { baseStyles, darkColors } from "@/styles/global";
 
-const DEBOUNCE_DELAY: number = 750; // milliseconds
+const DEBOUNCE_DELAY: number = 250; // milliseconds
 
 type params = {
     inputMode: any;
@@ -25,9 +25,6 @@ export default function TextInputField({
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
-            if (text.length == 0) {
-                setText(defaultValue);
-            }
             onChangeText(text);
         }, DEBOUNCE_DELAY);
 
