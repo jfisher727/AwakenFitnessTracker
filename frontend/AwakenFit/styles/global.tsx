@@ -26,14 +26,12 @@ export const baseStyles = StyleSheet.create({
     },
     screenContainer: {
         flex: 1,
-        height: "80%",
     },
     flatListContainer: {
         height: "60%",
     },
     buttonContainer: {
         justifyContent: "space-around",
-        height: "10%",
     },
     header: {
         fontSize: 50,

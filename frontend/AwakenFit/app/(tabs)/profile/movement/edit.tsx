@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Text, ScrollView, useColorScheme } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
-import { router } from "expo-router";
 
 import { MovementNode, useMovementEditMutation } from "@/graphql/types";
 
@@ -91,10 +90,6 @@ export default function Edit() {
             console.log(data.movementEdit?.errors);
         } else {
         }
-    }
-
-    if (error) {
-        console.log(error);
     }
 
     return (

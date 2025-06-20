@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
     View,
     Text,
@@ -391,6 +391,10 @@ export default function CurrentExercise({
         );
     }
 
+    useEffect(() => {
+        setCurrentSet(1);
+    }, [exercise.movement.id]);
+
     function setSelectedSet(sequence_number: number) {
         setCurrentSet(sequence_number);
     }
@@ -410,6 +414,7 @@ export default function CurrentExercise({
             </Text>
             <KeyboardAvoidingView
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
+                keyboardVerticalOffset={50}
             >
                 <FlatList
                     data={exercise.sets}

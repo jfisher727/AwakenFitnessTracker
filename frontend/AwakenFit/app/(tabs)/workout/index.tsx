@@ -1,10 +1,5 @@
-import { useEffect, useState, useReducer } from "react";
-import {
-    View,
-    useColorScheme,
-    ScrollView,
-    KeyboardAvoidingView,
-} from "react-native";
+import { useEffect, useReducer } from "react";
+import { View, useColorScheme } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { useLocalSearchParams, router } from "expo-router";
 
@@ -172,7 +167,6 @@ export default function Workout() {
                 (set) => !(set?.completedReps || set?.weight || set?.duration)
             );
             if (isIncomplete) {
-                console.log("incomplete exercise found");
                 nextIncompleteExerciseId = exercise.id;
                 break;
             }
@@ -188,7 +182,6 @@ export default function Workout() {
     }
 
     function handleAddSets(count: number) {
-        console.log(`add sets param: ${count}`);
         dispatch({
             type: ActionTypes.ADD_SETS,
             payload: {
@@ -347,7 +340,7 @@ export default function Workout() {
                 }
             }
         }
-    }, [state.screen, state.exercises, state.current_exercise, state.editing]);
+    }, [state.screen]);
 
     function stopWorkoutPressed() {
         handleChangeScreen(ScreenOptions.WORKOUT_REVIEW);

@@ -35,7 +35,6 @@ export default function DurationInput({
 
     useEffect(() => {
         if (duration.length > 0) {
-            console.log(`duration: ${duration}`);
             // 00H00M00S
             setHours(duration.slice(0, 2));
             setMinutes(duration.slice(3, 5));

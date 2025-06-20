@@ -36,7 +36,7 @@ export default function WorkoutButtons({
     const disabledColor = hexToRGBA(enabledColor, 0.6);
 
     return (
-        <View style={{ ...baseStyles.spacedRow, backgroundColor: "#ffffff" }}>
+        <View style={{ ...baseStyles.spacedRow }}>
             {state.edit_movements ? (
                 <Pressable
                     style={baseStyles.button}
