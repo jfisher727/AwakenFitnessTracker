@@ -222,5 +222,6 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
-frontend/AwakenFit/expo-env.d.ts
+**/expo-env.d.ts
 frontend/AwakenFit/package-lock.json
+frontend/AwakenFit/.env

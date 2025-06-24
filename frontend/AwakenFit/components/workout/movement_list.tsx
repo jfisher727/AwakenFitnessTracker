@@ -6,6 +6,7 @@ import { baseStyles, lightColors, darkColors } from "@/styles/global";
 
 import { ExerciseProps, SetNode } from "@/graphql/properties";
 import HorzontalLine from "../general/horizonal_line";
+import { hexToRGBA } from "@/util/color";
 
 type entryParams = {
     item: ExerciseProps;
@@ -51,6 +52,8 @@ export default function MovementList({
                 ? lightColors.primaryColor
                 : darkColors.primaryColor;
 
+        const disabledColor = hexToRGBA(textColor, 0.6);
+
         const SetEntry = ({ entry }: setEntryParams) => {
             const equipment_type = item.movement.equipmentType;
             const movement_type = item.movement.movementType;
@@ -87,6 +90,14 @@ export default function MovementList({
             );
         };
 
+        function isComplete() {
+            return item.sets.every((set) => {
+                return set?.completedReps || set?.weight || set?.duration;
+            });
+        }
+
+        const currentColor = isComplete() ? disabledColor : textColor;
+
         return (
             <Pressable
                 style={baseStyles.selectableRow}
@@ -98,14 +109,14 @@ export default function MovementList({
                             <FontAwesome
                                 size={28}
                                 name="chevron-up"
-                                color={textColor}
+                                color={currentColor}
                             />
                         </Pressable>
                         <Pressable onPress={() => moveExerciseDown(index)}>
                             <FontAwesome
                                 size={28}
                                 name="chevron-down"
-                                color={textColor}
+                                color={currentColor}
                             />
                         </Pressable>
                     </View>
@@ -117,7 +128,7 @@ export default function MovementList({
                         <Text
                             style={{
                                 ...baseStyles.subHeader,
-                                color: textColor,
+                                color: currentColor,
                             }}
                         >
                             {item.movement.name}
@@ -127,24 +138,26 @@ export default function MovementList({
                         <View
                             style={{ ...baseStyles.spacedRow, width: "100%" }}
                         >
-                            <Text style={{ color: textColor }}>
+                            <Text style={{ color: currentColor }}>
                                 Muscle Group:
                             </Text>
-                            <Text style={{ color: textColor }}>
+                            <Text style={{ color: currentColor }}>
                                 {item.movement.primaryMuscleGroup}
                             </Text>
                         </View>
                         <View style={baseStyles.spacedRow}>
-                            <Text style={{ color: textColor }}>Equipment:</Text>
-                            <Text style={{ color: textColor }}>
+                            <Text style={{ color: currentColor }}>
+                                Equipment:
+                            </Text>
+                            <Text style={{ color: currentColor }}>
                                 {item.movement.equipmentType}
                             </Text>
                         </View>
                         <View style={baseStyles.spacedRow}>
-                            <Text style={{ color: textColor }}>
+                            <Text style={{ color: currentColor }}>
                                 Exercise Type:
                             </Text>
-                            <Text style={{ color: textColor }}>
+                            <Text style={{ color: currentColor }}>
                                 {item.movement.movementType}
                             </Text>
                         </View>
@@ -167,7 +180,7 @@ export default function MovementList({
                             <FontAwesome
                                 size={28}
                                 name="trash"
-                                color={textColor}
+                                color={currentColor}
                             />
                         </Pressable>
                     </View>

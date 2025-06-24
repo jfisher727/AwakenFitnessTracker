@@ -1,4 +1,4 @@
-cservices:
+services:
     web:
         build:
             context: backend
