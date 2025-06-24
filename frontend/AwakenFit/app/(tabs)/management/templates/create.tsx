@@ -1,30 +1,43 @@
-import { useEffect, useState, useReducer } from 'react';
-import { View, useColorScheme } from 'react-native';
-import { router } from 'expo-router';
-import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
+import { useEffect, useState, useReducer } from "react";
+import { View, useColorScheme } from "react-native";
+import { router } from "expo-router";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 
-import { workoutStateReducer, workoutStateProps, ActionTypes, ScreenOptions } from '@/graphql/WorkoutStateReducer';
+import {
+    workoutStateReducer,
+    workoutStateProps,
+    ActionTypes,
+    ScreenOptions,
+} from "@/graphql/WorkoutStateReducer";
 
-import { useWorkoutCreateTemplateMutation, MovementNode, SetNode, WorkoutNode, ExerciseCreateTemplateInput, WorkoutCreateTemplateInput, SetCreateTemplateInput } from '@/graphql/types';
-import { ExerciseProps } from '@/graphql/properties';
+import {
+    useWorkoutCreateTemplateMutation,
+    MovementNode,
+    SetNode,
+    WorkoutNode,
+    ExerciseCreateTemplateInput,
+    WorkoutCreateTemplateInput,
+    SetCreateTemplateInput,
+} from "@/graphql/types";
+import { ExerciseProps } from "@/graphql/properties";
 
-import { baseStyles, lightColors, darkColors } from '@/styles/global';
+import { baseStyles, lightColors, darkColors } from "@/styles/global";
 
-import Spinner from '@/components/general/spinner';
-import HorzontalLine from '@/components/general/horizonal_line';
-import TextInputField from '@/components/general/text_input';
+import Spinner from "@/components/general/spinner";
+import HorzontalLine from "@/components/general/horizonal_line";
+import TextInputField from "@/components/general/text_input";
 
-import AddTemplateSets from '@/components/workout/add_template_sets';
-import ExerciseSearch from '@/components/workout/exercise_search';
-import MovementList from '@/components/workout/movement_list';
-import TemplateButtons from '@/components/workout/template_buttons';
+import AddTemplateSets from "@/components/workout/add_template_sets";
+import ExerciseSearch from "@/components/workout/exercise_search";
+import MovementList from "@/components/workout/movement_list";
+import TemplateButtons from "@/components/workout/template_buttons";
 
 const INITIAL_STATE: workoutStateProps = {
-    screen: 'blank',
-    template_id: '',
-    start_time: '',
-    stop_time: '',
-    current_exercise: '',
+    screen: "blank",
+    template_id: "",
+    start_time: "",
+    stop_time: "",
+    current_exercise: "",
     exercises: [],
     editing: false,
     buttons: {
@@ -33,30 +46,41 @@ const INITIAL_STATE: workoutStateProps = {
         end_workout: true,
         add_set: false,
         edit_movements: false,
-    }
+    },
 };
 
 export default function CreateTemplate() {
     const colorScheme = useColorScheme();
-    var initialExercise: MovementNode = { id: '', name: '', description: '', primaryMuscleGroup: '', secondaryMuscleGroup: '', equipmentType: '', movementType: '' };
+    var initialExercise: MovementNode = {
+        id: "",
+        name: "",
+        description: "",
+        primaryMuscleGroup: "",
+        secondaryMuscleGroup: "",
+        equipmentType: "",
+        movementType: "",
+    };
 
-    const [templateName, setTemplateName] = useState('Test template');
-    const [currentScreen, setCurrentScreen] = useState(<ExerciseSearch addExercise={handleSetCurrentExercise} />);
+    const [templateName, setTemplateName] = useState("Test template");
+    const [currentScreen, setCurrentScreen] = useState(
+        <ExerciseSearch addExercise={handleSetCurrentExercise} />
+    );
     const [currentExercise, setCurrentExercise] = useState(initialExercise);
-    const [workoutMutation, workoutMutationResult] = useWorkoutCreateTemplateMutation();
+    const [workoutMutation, workoutMutationResult] =
+        useWorkoutCreateTemplateMutation();
     const [state, dispatch] = useReducer(workoutStateReducer, INITIAL_STATE);
 
     function handleAddExercise(movement: MovementNode, setDetails: SetNode[]) {
         const currentExerciseCount = state.exercises.length + 1;
         var exercise: ExerciseProps = {
-            id: 'addedExercise' + currentExerciseCount.toString(),
-            notes: '',
+            id: "addedExercise" + currentExerciseCount.toString(),
+            notes: "",
             movement: movement,
-            sets: setDetails
+            sets: setDetails,
         };
         dispatch({
             type: ActionTypes.ADD_EXERCISE,
-            payload: exercise
+            payload: exercise,
         });
     }
 
@@ -69,7 +93,10 @@ export default function CreateTemplate() {
         handleAddExercise(currentExercise, setDetails);
     }
 
-    function handleButtonsToShow(add_exercise: boolean, edit_movements: boolean) {
+    function handleButtonsToShow(
+        add_exercise: boolean,
+        edit_movements: boolean
+    ) {
         dispatch({
             type: ActionTypes.UPDATE_BUTTONS,
             payload: {
@@ -77,8 +104,8 @@ export default function CreateTemplate() {
                 add_exercise: add_exercise,
                 edit_movements: edit_movements,
                 end_workout: false,
-                add_set: false
-            }
+                add_set: false,
+            },
         });
     }
 
@@ -93,28 +120,28 @@ export default function CreateTemplate() {
     function handleEditMovements() {
         dispatch({
             type: ActionTypes.EDIT_MOVEMENTS,
-            payload: !state.editing
+            payload: !state.editing,
         });
     }
 
     function handleMoveExerciseUp(index: number) {
         dispatch({
             type: ActionTypes.MOVE_EXERCISE_UP,
-            payload: index
+            payload: index,
         });
     }
 
     function handleMoveExerciseDown(index: number) {
         dispatch({
             type: ActionTypes.MOVE_EXERCISE_DOWN,
-            payload: index
+            payload: index,
         });
     }
 
     function handleRemoveExercise(id: string) {
         dispatch({
             type: ActionTypes.REMOVE_EXERCISE,
-            payload: id
+            payload: id,
         });
     }
 
@@ -123,8 +150,8 @@ export default function CreateTemplate() {
             type: ActionTypes.CHANGE_SCREEN,
             payload: {
                 name: name,
-                template_id: template_id
-            }
+                template_id: template_id,
+            },
         });
     }
 
@@ -135,8 +162,8 @@ export default function CreateTemplate() {
     function handleSaveTemplate() {
         var mutation_input: WorkoutCreateTemplateInput = {
             name: templateName,
-            exercises: []
-        }
+            exercises: [],
+        };
         state.exercises.forEach((element) => {
             var exercise_data: ExerciseCreateTemplateInput = {
                 movementId: element.movement.id,
@@ -156,8 +183,8 @@ export default function CreateTemplate() {
         console.log(JSON.stringify(mutation_input));
         workoutMutation({
             variables: {
-                input: mutation_input
-            }
+                input: mutation_input,
+            },
         });
     }
 
@@ -187,7 +214,8 @@ export default function CreateTemplate() {
                                 setCurrentExercise={handleSetCurrentExercise}
                                 removeExercise={handleRemoveExercise}
                             />
-                        </View>);
+                        </View>
+                    );
                     handleButtonsToShow(true, true);
                     return;
                 }
@@ -214,63 +242,90 @@ export default function CreateTemplate() {
                                 setCurrentExercise={handleSetCurrentExercise}
                                 removeExercise={handleRemoveExercise}
                             />
-                        </View>);
+                        </View>
+                    );
                     handleButtonsToShow(true, true);
                     return;
-
                 }
                 case ScreenOptions.ADD_EXERCISE: {
-                    setCurrentScreen(<ExerciseSearch addExercise={handleSelectExercise} />);
+                    setCurrentScreen(
+                        <ExerciseSearch addExercise={handleSelectExercise} />
+                    );
                     handleButtonsToShow(false, false);
                     return;
                 }
                 case ScreenOptions.ADD_SETS: {
-                    setCurrentScreen(<AddTemplateSets movement={currentExercise} navigateBack={navigateToMovementList} addSets={handleAddSets} />);
+                    setCurrentScreen(
+                        <AddTemplateSets
+                            movement={currentExercise}
+                            navigateBack={navigateToMovementList}
+                            addSets={handleAddSets}
+                        />
+                    );
                     handleButtonsToShow(false, false);
                     return;
                 }
                 default: {
-                    setCurrentScreen(<ExerciseSearch addExercise={handleSelectExercise} />);
+                    setCurrentScreen(
+                        <ExerciseSearch addExercise={handleSelectExercise} />
+                    );
                     handleButtonsToShow(false, false);
                     return;
                 }
             }
         }
-
-    }, [state.screen, state.exercises, state.current_exercise, state.editing, templateName]);
+    }, [
+        state.screen,
+        state.exercises,
+        state.current_exercise,
+        state.editing,
+        templateName,
+    ]);
 
     useEffect(() => {
         if (workoutMutationResult.error) {
             console.log(workoutMutationResult.error);
         }
         if (workoutMutationResult.data) {
-            if (workoutMutationResult.data?.workoutCreateTemplate?.errors?.length &&  workoutMutationResult.data?.workoutCreateTemplate?.errors?.length> 0) {
-                for (let i = 0; i < workoutMutationResult.data.workoutCreateTemplate.errors?.length; i++) {
+            if (
+                workoutMutationResult.data?.workoutCreateTemplate?.errors
+                    ?.length &&
+                workoutMutationResult.data?.workoutCreateTemplate?.errors
+                    ?.length > 0
+            ) {
+                for (
+                    let i = 0;
+                    i <
+                    workoutMutationResult.data.workoutCreateTemplate.errors
+                        ?.length;
+                    i++
+                ) {
                     //console.log(workoutMutationResult.data?.workoutCreateTemplate?.errors[i]?.message);
                     console.log("mutation error happened");
                 }
-            }
-            else {
+            } else {
                 dispatch({
-                    type: ActionTypes.RESET_WORKOUT_STATE
+                    type: ActionTypes.RESET_WORKOUT_STATE,
                 });
                 router.replace("/");
             }
         }
     }, [workoutMutationResult]);
 
-
     return (
         <SafeAreaProvider>
-            <SafeAreaView style={{
-                ...baseStyles.container,
-                backgroundColor: colorScheme === 'light' ? lightColors.background : darkColors.background
-            }}>
+            <SafeAreaView
+                style={{
+                    ...baseStyles.container,
+                    backgroundColor:
+                        colorScheme === "light"
+                            ? lightColors.background
+                            : darkColors.background,
+                }}
+            >
                 <View style={baseStyles.container}>
                     <View style={baseStyles.screenContainer}>
-                        {workoutMutationResult.loading &&
-                            <Spinner />
-                        }
+                        {workoutMutationResult.loading && <Spinner />}
                         {currentScreen}
                     </View>
                     <View style={baseStyles.buttonContainer}>
