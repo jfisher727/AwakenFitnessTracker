@@ -60,7 +60,7 @@ export default function ExerciseSearch({ addExercise }: ExerciseSearchProps) {
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             if (name.length == 0) {
-                setName("Search");
+                //setName("Search");
             }
             setDebouncedName(name);
         }, DEBOUNCE_DELAY);

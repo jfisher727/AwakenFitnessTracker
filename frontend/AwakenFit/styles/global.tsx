@@ -26,7 +26,6 @@ export const baseStyles = StyleSheet.create({
     },
     screenContainer: {
         flex: 1,
-        height: "80%",
     },
     flatListContainer: {
         height: "60%",

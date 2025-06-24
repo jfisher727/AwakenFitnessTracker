@@ -7,6 +7,10 @@ import CustomButton from "@/components/general/button";
 
 export default function Profile() {
     const colorScheme = useColorScheme();
+    const color =
+        colorScheme === "light"
+            ? lightColors.primaryColor
+            : darkColors.primaryColor;
 
     function createPressed() {
         router.navigate("/(tabs)/profile/movement/create");
@@ -30,10 +34,7 @@ export default function Profile() {
                 <Text
                     style={{
                         ...baseStyles.header,
-                        color:
-                            colorScheme === "light"
-                                ? lightColors.primaryColor
-                                : darkColors.primaryColor,
+                        color: color,
                     }}
                 >
                     Manage Stored Movements

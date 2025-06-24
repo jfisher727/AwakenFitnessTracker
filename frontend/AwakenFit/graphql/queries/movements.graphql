@@ -1,25 +1,28 @@
 query GetMovements(
-        $after: String,
-        $name: String,
-        $count: Int,
-        $equipment: String,
-        $muscle: String) {
-            movements(
-                after: $after,
-                name_Icontains: $name,
-                first: $count,
-                equipmentType: $equipment,
-                primaryMuscleGroup: $muscle) {
-                    edges {
-                        cursor
-                        node {
-                            id
-                            name
-                            description
-                            primaryMuscleGroup
-                            equipmentType
-                            movementType
-                        }
-                    }
+    $after: String
+    $name: String
+    $count: Int
+    $equipment: String
+    $muscle: String
+) {
+    movements(
+        after: $after
+        name_Icontains: $name
+        first: $count
+        equipmentType: $equipment
+        primaryMuscleGroup: $muscle
+    ) {
+        edges {
+            cursor
+            node {
+                id
+                name
+                description
+                primaryMuscleGroup
+                secondaryMuscleGroup
+                equipmentType
+                movementType
             }
+        }
     }
+}

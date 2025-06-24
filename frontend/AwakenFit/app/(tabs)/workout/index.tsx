@@ -1,4 +1,4 @@
-import { useEffect, useState, useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { View, useColorScheme } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { useLocalSearchParams, router } from "expo-router";
@@ -57,9 +57,6 @@ const INITIAL_STATE: workoutStateProps = {
 export default function Workout() {
     const params = useLocalSearchParams();
     const colorScheme = useColorScheme();
-    const [currentScreen, setCurrentScreen] = useState(
-        <ExerciseSearch addExercise={handleAddExercise} />
-    );
 
     const [execute, { loading, error, data }] = useGetWorkoutLazyQuery();
     const [workoutMutation, workoutMutationResult] =
@@ -170,7 +167,6 @@ export default function Workout() {
                 (set) => !(set?.completedReps || set?.weight || set?.duration)
             );
             if (isIncomplete) {
-                console.log("incomplete exercise found");
                 nextIncompleteExerciseId = exercise.id;
                 break;
             }
@@ -315,94 +311,36 @@ export default function Workout() {
         if (state.screen) {
             switch (state.screen) {
                 case ScreenOptions.MOVEMENT_LIST: {
-                    setCurrentScreen(
-                        <MovementList
-                            exercises={state.exercises}
-                            editable={state.editing}
-                            showSets={false}
-                            moveExerciseUp={handleMoveExerciseUp}
-                            moveExerciseDown={handleMoveExerciseDown}
-                            setCurrentExercise={handleSetCurrentExercise}
-                            removeExercise={handleRemoveExercise}
-                        />
-                    );
                     handleButtonsToShow(false, true, true, false, true);
                     return;
                 }
                 case ScreenOptions.ADD_EXERCISE: {
-                    setCurrentScreen(
-                        <ExerciseSearch addExercise={handleAddExercise} />
-                    );
                     handleButtonsToShow(false, false, false, false, false);
                     return;
                 }
                 case ScreenOptions.ADD_SETS: {
-                    setCurrentScreen(
-                        <AddSets
-                            navigateBack={navigateToCurrentExercise}
-                            addSets={handleAddSets}
-                        />
-                    );
                     handleButtonsToShow(false, false, false, false, false);
                     return;
                 }
                 case ScreenOptions.CURRENT_EXERCISE: {
-                    var current_exercise = state.exercises.filter(
-                        (e) => e.id === state.current_exercise
-                    )[0];
-                    setCurrentScreen(
-                        <CurrentExercise
-                            exercise={current_exercise}
-                            recordSet={handleRecordSet}
-                            navigateBack={handleChangeScreen}
-                        />
-                    );
                     handleButtonsToShow(true, false, false, true, false);
                     return;
                 }
                 case ScreenOptions.HISTORICAL: {
-                    var current_exercise = state.exercises.filter(
-                        (e) => e.id === state.current_exercise
-                    )[0];
-                    setCurrentScreen(
-                        <ExerciseHistorical
-                            movementId={current_exercise.movement.id}
-                            navigateBack={navigateToCurrentExercise}
-                        />
-                    );
                     handleButtonsToShow(false, false, false, false, false);
                     return;
                 }
                 case ScreenOptions.WORKOUT_REVIEW: {
-                    setCurrentScreen(
-                        <WorkoutReview
-                            exercises={state.exercises}
-                            start_time={state.start_time}
-                            stop_time={state.stop_time}
-                            recordWorkout={handleRecordWorkout}
-                        />
-                    );
                     handleButtonsToShow(false, false, false, false, false);
                     return;
                 }
                 default: {
-                    setCurrentScreen(
-                        <MovementList
-                            exercises={state.exercises}
-                            editable={state.editing}
-                            showSets={false}
-                            moveExerciseUp={handleMoveExerciseUp}
-                            moveExerciseDown={handleMoveExerciseDown}
-                            setCurrentExercise={handleSetCurrentExercise}
-                            removeExercise={handleRemoveExercise}
-                        />
-                    );
                     handleButtonsToShow(false, true, false, false, true);
                     return;
                 }
             }
         }
-    }, [state.screen, state.exercises, state.current_exercise, state.editing]);
+    }, [state.screen]);
 
     function stopWorkoutPressed() {
         handleChangeScreen(ScreenOptions.WORKOUT_REVIEW);
@@ -420,6 +358,12 @@ export default function Workout() {
         handleChangeScreen(ScreenOptions.HISTORICAL);
     }
 
+    function getCurrentExercise() {
+        return state.exercises.filter(
+            (e) => e.id === state.current_exercise
+        )[0];
+    }
+
     return (
         <SafeAreaProvider>
             <SafeAreaView
@@ -432,10 +376,55 @@ export default function Workout() {
                 }}
             >
                 <View style={baseStyles.container}>
-                    <View style={baseStyles.screenContainer}>
-                        {loading ||
-                            (workoutMutationResult.loading && <Spinner />)}
-                        {currentScreen}
+                    <View
+                        style={{
+                            ...baseStyles.screenContainer,
+                        }}
+                    >
+                        {(loading || workoutMutationResult.loading) && (
+                            <Spinner />
+                        )}
+                        {state.screen === ScreenOptions.MOVEMENT_LIST && (
+                            <MovementList
+                                exercises={state.exercises}
+                                editable={state.editing}
+                                showSets={false}
+                                moveExerciseUp={handleMoveExerciseUp}
+                                moveExerciseDown={handleMoveExerciseDown}
+                                setCurrentExercise={handleSetCurrentExercise}
+                                removeExercise={handleRemoveExercise}
+                            />
+                        )}
+                        {state.screen === ScreenOptions.ADD_SETS && (
+                            <AddSets
+                                navigateBack={navigateToCurrentExercise}
+                                addSets={handleAddSets}
+                            />
+                        )}
+                        {state.screen === ScreenOptions.ADD_EXERCISE && (
+                            <ExerciseSearch addExercise={handleAddExercise} />
+                        )}
+                        {state.screen === ScreenOptions.CURRENT_EXERCISE && (
+                            <CurrentExercise
+                                exercise={getCurrentExercise()}
+                                recordSet={handleRecordSet}
+                                navigateBack={handleChangeScreen}
+                            />
+                        )}
+                        {state.screen === ScreenOptions.HISTORICAL && (
+                            <ExerciseHistorical
+                                movementId={getCurrentExercise().movement.id}
+                                navigateBack={navigateToCurrentExercise}
+                            />
+                        )}
+                        {state.screen === ScreenOptions.WORKOUT_REVIEW && (
+                            <WorkoutReview
+                                exercises={state.exercises}
+                                start_time={state.start_time}
+                                stop_time={state.stop_time}
+                                recordWorkout={handleRecordWorkout}
+                            />
+                        )}
                     </View>
                     <View style={baseStyles.buttonContainer}>
                         <WorkoutButtons

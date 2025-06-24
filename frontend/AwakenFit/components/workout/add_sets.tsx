@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { View, Button } from "react-native";
 
 import FontAwesome from "@expo/vector-icons/FontAwesome";
