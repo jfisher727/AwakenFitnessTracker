@@ -224,4 +224,3 @@ yarn-error.*
 
 **/expo-env.d.ts
 frontend/AwakenFit/package-lock.json
-frontend/AwakenFit/.env

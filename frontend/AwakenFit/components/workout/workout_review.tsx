@@ -1,4 +1,4 @@
-import { View, Text, FlatList, useColorScheme, ScrollView } from "react-native";
+import { View, Text, Pressable, FlatList, useColorScheme } from "react-native";
 
 import { ExerciseProps, MovementNode, SetNode } from "@/graphql/properties";
 
@@ -12,6 +12,7 @@ type reviewParams = {
     start_time: string;
     stop_time: string;
     recordWorkout: () => void;
+    setCurrentExercise: (id: string) => void;
 };
 
 type setParams = {
@@ -21,6 +22,7 @@ type setParams = {
 
 type exerciseParams = {
     exercise: ExerciseProps;
+    setCurrentExercise: (id: string) => void;
 };
 
 type DurationParams = {
@@ -40,7 +42,13 @@ function SetEntry({ item, movement }: setParams) {
     if (movement_type == "cardio") {
         // duration input
         return (
-            <View style={baseStyles.spacedRow}>
+            <View
+                style={{
+                    ...baseStyles.spacedRow,
+                    paddingLeft: 10,
+                    paddingRight: 10,
+                }}
+            >
                 <Text style={{ color: color }}>Set {item.sequenceNumber}</Text>
                 <Text style={{ color: color }}>Duration: {item.duration}</Text>
             </View>
@@ -51,11 +59,15 @@ function SetEntry({ item, movement }: setParams) {
         equipment_type == "exercise ball"
     ) {
         return (
-            <View style={baseStyles.spacedRow}>
+            <View
+                style={{
+                    ...baseStyles.spacedRow,
+                    paddingLeft: 10,
+                    paddingRight: 10,
+                }}
+            >
                 <Text style={{ color: color }}>Set {item.sequenceNumber}</Text>
-                <Text style={{ color: color }}>
-                    Reps: {item.equipment_identifier}
-                </Text>
+                <Text style={{ color: color }}>Reps: {item.completedReps}</Text>
             </View>
         );
     } else if (
@@ -64,10 +76,16 @@ function SetEntry({ item, movement }: setParams) {
     ) {
         // identifier and reps
         return (
-            <View style={baseStyles.spacedRow}>
+            <View
+                style={{
+                    ...baseStyles.spacedRow,
+                    paddingLeft: 10,
+                    paddingRight: 10,
+                }}
+            >
                 <Text style={{ color: color }}>Set {item.sequenceNumber}</Text>
                 <Text style={{ color: color }}>
-                    Identifier: {item.equipment_identifier}
+                    Identifier: {item.equipmentIdentifier}
                 </Text>
                 <Text style={{ color: color }}>Reps: {item.completedReps}</Text>
             </View>
@@ -75,7 +93,13 @@ function SetEntry({ item, movement }: setParams) {
     } else {
         // weight and reps
         return (
-            <View style={baseStyles.spacedRow}>
+            <View
+                style={{
+                    ...baseStyles.spacedRow,
+                    paddingLeft: 10,
+                    paddingRight: 10,
+                }}
+            >
                 <Text style={{ color: color }}>Set {item.sequenceNumber}</Text>
                 <Text style={{ color: color }}>Weight: {item.weight}</Text>
                 <Text style={{ color: color }}>Reps: {item.completedReps}</Text>
@@ -84,14 +108,14 @@ function SetEntry({ item, movement }: setParams) {
     }
 }
 
-function ExerciseEntry({ exercise }: exerciseParams) {
+function ExerciseEntry({ exercise, setCurrentExercise }: exerciseParams) {
     const colorScheme = useColorScheme();
     const color =
         colorScheme === "light"
             ? lightColors.primaryColor
             : darkColors.primaryColor;
     return (
-        <View>
+        <Pressable onPress={() => setCurrentExercise(exercise.id)}>
             <Text style={{ ...baseStyles.subHeader, color: color }}>
                 {exercise.movement.name}
             </Text>
@@ -101,7 +125,7 @@ function ExerciseEntry({ exercise }: exerciseParams) {
                     <SetEntry item={item} movement={exercise.movement} />
                 )}
             />
-        </View>
+        </Pressable>
     );
 }
 
@@ -134,6 +158,7 @@ export default function WorkoutReview({
     exercises,
     start_time,
     stop_time,
+    setCurrentExercise,
     recordWorkout,
 }: reviewParams) {
     const colorScheme = useColorScheme();
@@ -147,9 +172,8 @@ export default function WorkoutReview({
     }
     const startTimeDate = new Date(start_time);
     const stopTimeDate = new Date(stop_time);
-    // we should let users tap on various items to edit their values?
     return (
-        <ScrollView style={{ height: "100%", overflow: "scroll" }}>
+        <View style={{ height: "100%", overflow: "scroll" }}>
             <Text style={{ ...baseStyles.header, color: color }}>
                 Workout Review
             </Text>
@@ -168,7 +192,12 @@ export default function WorkoutReview({
             <HorzontalLine />
             <FlatList
                 data={exercises}
-                renderItem={({ item }) => <ExerciseEntry exercise={item} />}
+                renderItem={({ item }) => (
+                    <ExerciseEntry
+                        exercise={item}
+                        setCurrentExercise={setCurrentExercise}
+                    />
+                )}
                 keyExtractor={(item) => item.id}
                 ItemSeparatorComponent={HorzontalLine}
             />
@@ -177,6 +206,6 @@ export default function WorkoutReview({
                 onPress={handleRecordWorkout}
                 disabled={false}
             />
-        </ScrollView>
+        </View>
     );
 }
