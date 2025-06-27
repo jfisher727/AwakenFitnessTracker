@@ -81,7 +81,7 @@ export default function Workout() {
     function handleAddExercise(movement: MovementNode) {
         const currentExerciseCount = state.exercises.length + 1;
         var exercise: ExerciseProps = {
-            id: "addedExercise" + currentExerciseCount.toString(),
+            id: "addedExercise" + Math.floor(Date.now() / 1000),
             notes: "",
             movement: movement,
             sets: [
@@ -298,8 +298,6 @@ export default function Workout() {
                 console.log(
                     workoutMutationResult.data.workoutCreateCompleted.errors
                 );
-            } else {
-                router.navigate("/(tabs)");
             }
         }
         if (workoutMutationResult.error) {
@@ -422,6 +420,7 @@ export default function Workout() {
                                 exercises={state.exercises}
                                 start_time={state.start_time}
                                 stop_time={state.stop_time}
+                                setCurrentExercise={handleSetCurrentExercise}
                                 recordWorkout={handleRecordWorkout}
                             />
                         )}

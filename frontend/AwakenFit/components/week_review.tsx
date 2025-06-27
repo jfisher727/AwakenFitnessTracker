@@ -1,18 +1,17 @@
-import { Text, View, useColorScheme } from 'react-native';
+import { Text, View, useColorScheme } from "react-native";
 
-import { gql, useQuery } from '@apollo/client';
+import { useWeekInReviewQuery } from "@/graphql/types";
 
-import { useWeekInReviewQuery } from '@/graphql/types';
+import Spinner from "./general/spinner";
 
-import Spinner from './general/spinner';
-
-import { baseStyles, lightColors, darkColors } from '@/styles/global';
-
+import { baseStyles, lightColors, darkColors } from "@/styles/global";
 
 export default function WeekReview() {
     const colorScheme = useColorScheme();
 
-    const { loading, error, data } = useWeekInReviewQuery();
+    const { loading, error, data } = useWeekInReviewQuery({
+        fetchPolicy: "no-cache",
+    });
 
     if (error) {
         console.log(error);
@@ -23,8 +22,12 @@ export default function WeekReview() {
                 <Text
                     style={{
                         ...baseStyles.subHeader,
-                        color: colorScheme === 'light' ? lightColors.primaryColor : darkColors.primaryColor
-                    }}>
+                        color:
+                            colorScheme === "light"
+                                ? lightColors.primaryColor
+                                : darkColors.primaryColor,
+                    }}
+                >
                     Week in Review
                     <Text>Loading</Text>
                 </Text>
@@ -38,8 +41,12 @@ export default function WeekReview() {
                 <Text
                     style={{
                         ...baseStyles.subHeader,
-                        color: colorScheme === 'light' ? lightColors.primaryColor : darkColors.primaryColor
-                    }}>
+                        color:
+                            colorScheme === "light"
+                                ? lightColors.primaryColor
+                                : darkColors.primaryColor,
+                    }}
+                >
                     Week in Review
                 </Text>
                 <View>
@@ -68,18 +75,16 @@ export default function WeekReview() {
             <Text
                 style={{
                     ...baseStyles.subHeader,
-                    color: colorScheme === 'light' ? lightColors.primaryColor : darkColors.primaryColor
-                }}>
+                    color:
+                        colorScheme === "light"
+                            ? lightColors.primaryColor
+                            : darkColors.primaryColor,
+                }}
+            >
                 Week in Review
             </Text>
-            {
-                loading &&
-                <Spinner />
-            }
-            {
-                data &&
-                <Text>{data?.weekInReview?.message}</Text>
-            }
+            {loading && <Spinner />}
+            {data && <Text>{data?.weekInReview?.message}</Text>}
         </View>
     );
 }
