@@ -7,7 +7,6 @@ import { useGetIsSuperuserQuery } from "@/graphql/types";
 
 import { baseStyles, lightColors, darkColors } from "@/styles/global";
 import CustomButton from "@/components/general/button";
-import Spinner from "@/components/general/spinner";
 
 export default function Profile() {
     const colorScheme = useColorScheme();
@@ -58,29 +57,23 @@ export default function Profile() {
                         ...baseStyles.modal,
                     }}
                 >
-                    {loading ? (
-                        <Spinner />
-                    ) : (
-                        <>
-                            <CustomButton
-                                text="Verify Email"
-                                onPress={verifyEmailPressed}
-                                disabled={false}
-                            />
-                            {(data?.isSuperUser ?? false) && (
-                                <CustomButton
-                                    text="Movement Management"
-                                    onPress={movementPressed}
-                                    disabled={false}
-                                />
-                            )}
-                            <CustomButton
-                                text="Logout"
-                                onPress={logoutPressed}
-                                disabled={false}
-                            />
-                        </>
+                    <CustomButton
+                        text="Verify Email"
+                        onPress={verifyEmailPressed}
+                        disabled={false}
+                    />
+                    {(data?.isSuperUser ?? false) && (
+                        <CustomButton
+                            text="Movement Management"
+                            onPress={movementPressed}
+                            disabled={false}
+                        />
                     )}
+                    <CustomButton
+                        text="Logout"
+                        onPress={logoutPressed}
+                        disabled={false}
+                    />
                 </View>
             </SafeAreaView>
         </SafeAreaProvider>
