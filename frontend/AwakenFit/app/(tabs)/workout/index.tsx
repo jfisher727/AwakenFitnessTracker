@@ -299,9 +299,10 @@ export default function Workout() {
                     workoutMutationResult.data.workoutCreateCompleted.errors
                 );
             }
-        }
-        if (workoutMutationResult.error) {
+        } else if (workoutMutationResult.error) {
             console.log(workoutMutationResult.error);
+        } else {
+            router.navigate("/(tabs)");
         }
     }, [workoutMutationResult.data, workoutMutationResult.error]);
 
@@ -341,6 +342,7 @@ export default function Workout() {
     }, [state.screen]);
 
     function stopWorkoutPressed() {
+        handleSetStopTime();
         handleChangeScreen(ScreenOptions.WORKOUT_REVIEW);
     }
 

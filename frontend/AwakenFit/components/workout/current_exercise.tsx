@@ -404,7 +404,7 @@ export default function CurrentExercise({
     }
 
     return (
-        <View>
+        <View style={{ height: "100%" }}>
             <View style={{ ...baseStyles.leftJustifiedRow, height: "auto" }}>
                 <FontAwesome size={28} name="chevron-left" color={color} />
                 <Button title="Execise List" onPress={handleNavigateBack} />
