@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from "react";
-import { View, useColorScheme } from "react-native";
+import { View, Text, useColorScheme } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { useLocalSearchParams, router } from "expo-router";
 
@@ -298,11 +298,11 @@ export default function Workout() {
                 console.log(
                     workoutMutationResult.data.workoutCreateCompleted.errors
                 );
+            } else {
+                router.navigate("/(tabs)");
             }
         } else if (workoutMutationResult.error) {
             console.log(workoutMutationResult.error);
-        } else {
-            router.navigate("/(tabs)");
         }
     }, [workoutMutationResult.data, workoutMutationResult.error]);
 
@@ -356,6 +356,10 @@ export default function Workout() {
 
     function historicalPresssed() {
         handleChangeScreen(ScreenOptions.HISTORICAL);
+    }
+
+    function notesPressed() {
+        handleChangeScreen(ScreenOptions.NOTES);
     }
 
     function getCurrentExercise() {
@@ -417,6 +421,11 @@ export default function Workout() {
                                 navigateBack={navigateToCurrentExercise}
                             />
                         )}
+                        {state.screen === ScreenOptions.NOTES && (
+                            <View>
+                                <Text>Test Notes</Text>
+                            </View>
+                        )}
                         {state.screen === ScreenOptions.WORKOUT_REVIEW && (
                             <WorkoutReview
                                 exercises={state.exercises}
@@ -435,6 +444,7 @@ export default function Workout() {
                             editMovementsPressed={handleEditMovements}
                             addSetPressed={addSetPressed}
                             historicalPressed={historicalPresssed}
+                            notesPressed={notesPressed}
                         />
                     </View>
                 </View>

@@ -18,6 +18,7 @@ type workoutButtonsParams = {
     editMovementsPressed: () => void;
     addSetPressed: () => void;
     historicalPressed: () => void;
+    noesPressed: () => void;
 };
 
 export default function WorkoutButtons({
@@ -27,6 +28,7 @@ export default function WorkoutButtons({
     editMovementsPressed,
     addSetPressed,
     historicalPressed,
+    notesPressed,
 }: workoutButtonsParams) {
     const colorScheme = useColorScheme();
     const enabledColor =
@@ -82,18 +84,32 @@ export default function WorkoutButtons({
                     <Text style={{ color: enabledColor }}>Add Exercise</Text>
                 </Pressable>
             ) : (
-                <Pressable
-                    style={baseStyles.button}
-                    onPress={addSetPressed}
-                    disabled={!state.add_set}
-                >
-                    <FontAwesome
-                        size={28}
-                        name="plus-circle"
-                        color={enabledColor}
-                    />
-                    <Text style={{ color: enabledColor }}>Add Sets</Text>
-                </Pressable>
+                <>
+                    <Pressable
+                        style={baseStyles.button}
+                        onPress={addSetPressed}
+                        disabled={!state.add_set}
+                    >
+                        <FontAwesome
+                            size={28}
+                            name="plus-circle"
+                            color={enabledColor}
+                        />
+                        <Text style={{ color: enabledColor }}>Add Sets</Text>
+                    </Pressable>
+                    <Pressable
+                        style={baseStyles.button}
+                        onPress={notesPressed}
+                        disabled={!state.add_set}
+                    >
+                        <FontAwesome
+                            size={28}
+                            name="sticky-note"
+                            color={enabledColor}
+                        />
+                        <Text style={{ color: enabledColor }}>Notes</Text>
+                    </Pressable>
+                </>
             )}
             <Pressable
                 style={baseStyles.button}

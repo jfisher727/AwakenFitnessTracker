@@ -40,6 +40,7 @@ export const ScreenOptions = {
     CURRENT_EXERCISE: "CURRENT_EXERCISE",
     HISTORICAL: "HISTORICAL",
     WORKOUT_REVIEW: "WORKOUT_REVIEW",
+    NOTES: "NOTES",
 };
 
 interface AddExerciseAction {

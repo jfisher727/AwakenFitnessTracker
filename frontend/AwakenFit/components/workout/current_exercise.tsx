@@ -317,17 +317,17 @@ const SetEntry = ({
             <View style={baseStyles.spacedRow}>
                 <View>
                     <Text style={{ ...baseStyles.subHeader, color: color }}>
-                        Set {item.sequenceNumber}{" "}
+                        Set {item.sequenceNumber}
                     </Text>
-                    {(item.minReps || item.maxReps) && (
-                        <>
-                            <Text style={{ color: color }}>
-                                {item.minReps && <>Min Reps: {item.minReps}</>}
-                            </Text>
-                            <Text style={{ color: color }}>
-                                {item.maxReps && <>Max Reps: {item.maxReps}</>}
-                            </Text>
-                        </>
+                    {item.minReps && (
+                        <Text style={{ color: color }}>
+                            Min Reps: {item.minReps}
+                        </Text>
+                    )}
+                    {item.maxReps && (
+                        <Text style={{ color: color }}>
+                            Max Reps: {item.maxReps}
+                        </Text>
                     )}
                 </View>
                 <SetInput
@@ -404,7 +404,7 @@ export default function CurrentExercise({
     }
 
     return (
-        <View style={{ height: "100%" }}>
+        <View style={{ height: "95%" }}>
             <View style={{ ...baseStyles.leftJustifiedRow, height: "auto" }}>
                 <FontAwesome size={28} name="chevron-left" color={color} />
                 <Button title="Execise List" onPress={handleNavigateBack} />
