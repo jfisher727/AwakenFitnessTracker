@@ -18,7 +18,7 @@ type workoutButtonsParams = {
     editMovementsPressed: () => void;
     addSetPressed: () => void;
     historicalPressed: () => void;
-    noesPressed: () => void;
+    notesPressed: () => void;
 };
 
 export default function WorkoutButtons({

@@ -1,5 +1,6 @@
 import { useEffect, useReducer } from "react";
 import { View, Text, useColorScheme } from "react-native";
+import { View, Text, useColorScheme } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { useLocalSearchParams, router } from "expo-router";
 
@@ -434,6 +435,11 @@ export default function Workout() {
                                 setCurrentExercise={handleSetCurrentExercise}
                                 recordWorkout={handleRecordWorkout}
                             />
+                        )}
+                        {state.screen === ScreenOptions.DESCRIPTION && (
+                            <View>
+                                <Text>Description</Text>
+                            </View>
                         )}
                     </View>
                     <View style={baseStyles.buttonContainer}>
