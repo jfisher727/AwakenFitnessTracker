@@ -1,6 +1,5 @@
 import { useEffect, useReducer } from "react";
 import { View, Text, useColorScheme } from "react-native";
-import { View, Text, useColorScheme } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { useLocalSearchParams, router } from "expo-router";
 
@@ -33,6 +32,7 @@ import WorkoutReview from "@/components/workout/workout_review";
 import ExerciseHistorical from "@/components/workout/exercise_historical";
 import AddSets from "@/components/workout/add_sets";
 import WorkoutButtons from "@/components/workout/workout_buttons";
+import Notes from "@/components/workout/notes";
 
 function CurrentISOFormattedDate() {
     return new Date().toISOString();
@@ -52,6 +52,7 @@ const INITIAL_STATE: workoutStateProps = {
         end_workout: true,
         add_set: false,
         edit_movements: false,
+        notes: false,
     },
 };
 
@@ -198,7 +199,8 @@ export default function Workout() {
         add_exercise: boolean,
         end_workout: boolean,
         add_set: boolean,
-        edit_movements: boolean
+        edit_movements: boolean,
+        notes: boolean
     ) {
         dispatch({
             type: ActionTypes.UPDATE_BUTTONS,
@@ -208,6 +210,7 @@ export default function Workout() {
                 edit_movements: edit_movements,
                 end_workout: end_workout,
                 add_set: add_set,
+                notes: notes,
             },
         });
     }
@@ -311,31 +314,59 @@ export default function Workout() {
         if (state.screen) {
             switch (state.screen) {
                 case ScreenOptions.MOVEMENT_LIST: {
-                    handleButtonsToShow(false, true, true, false, true);
+                    handleButtonsToShow(false, true, true, false, true, false);
                     return;
                 }
                 case ScreenOptions.ADD_EXERCISE: {
-                    handleButtonsToShow(false, false, false, false, false);
+                    handleButtonsToShow(
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false
+                    );
                     return;
                 }
                 case ScreenOptions.ADD_SETS: {
-                    handleButtonsToShow(false, false, false, false, false);
+                    handleButtonsToShow(
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false
+                    );
                     return;
                 }
                 case ScreenOptions.CURRENT_EXERCISE: {
-                    handleButtonsToShow(true, false, false, true, false);
+                    handleButtonsToShow(true, false, false, true, false, true);
                     return;
                 }
                 case ScreenOptions.HISTORICAL: {
-                    handleButtonsToShow(false, false, false, false, false);
+                    handleButtonsToShow(
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false
+                    );
                     return;
                 }
                 case ScreenOptions.WORKOUT_REVIEW: {
-                    handleButtonsToShow(false, false, false, false, false);
+                    handleButtonsToShow(
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false
+                    );
                     return;
                 }
                 default: {
-                    handleButtonsToShow(false, true, false, false, true);
+                    handleButtonsToShow(false, true, false, false, true, false);
                     return;
                 }
             }
@@ -423,9 +454,10 @@ export default function Workout() {
                             />
                         )}
                         {state.screen === ScreenOptions.NOTES && (
-                            <View>
-                                <Text>Test Notes</Text>
-                            </View>
+                            <Notes
+                                exercise={getCurrentExercise()}
+                                navigateBack={navigateToCurrentExercise}
+                            />
                         )}
                         {state.screen === ScreenOptions.WORKOUT_REVIEW && (
                             <WorkoutReview
@@ -435,11 +467,6 @@ export default function Workout() {
                                 setCurrentExercise={handleSetCurrentExercise}
                                 recordWorkout={handleRecordWorkout}
                             />
-                        )}
-                        {state.screen === ScreenOptions.DESCRIPTION && (
-                            <View>
-                                <Text>Description</Text>
-                            </View>
                         )}
                     </View>
                     <View style={baseStyles.buttonContainer}>
