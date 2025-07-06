@@ -14,6 +14,7 @@ export type workoutStateProps = {
         edit_movements: boolean;
         add_exercise: boolean;
         add_set: boolean;
+        notes: boolean;
     };
 };
 
@@ -119,6 +120,7 @@ interface UpdateButtonsAction {
         end_workout: boolean;
         edit_movements: boolean;
         add_set: boolean;
+        notes: boolean;
     };
 }
 
@@ -318,6 +320,7 @@ export function workoutStateReducer(
                     end_workout: payload.end_workout,
                     edit_movements: payload.edit_movements,
                     add_set: payload.add_set,
+                    notes: payload.notes,
                 },
             };
         }

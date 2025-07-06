@@ -12,13 +12,14 @@ type workoutButtonsParams = {
         add_exercise: boolean;
         add_set: boolean;
         edit_movements: boolean;
+        notes: boolean;
     };
     stopWorkoutPressed: () => void;
     addExercisePressed: () => void;
     editMovementsPressed: () => void;
     addSetPressed: () => void;
     historicalPressed: () => void;
-    noesPressed: () => void;
+    notesPressed: () => void;
 };
 
 export default function WorkoutButtons({
@@ -84,32 +85,32 @@ export default function WorkoutButtons({
                     <Text style={{ color: enabledColor }}>Add Exercise</Text>
                 </Pressable>
             ) : (
-                <>
-                    <Pressable
-                        style={baseStyles.button}
-                        onPress={addSetPressed}
-                        disabled={!state.add_set}
-                    >
-                        <FontAwesome
-                            size={28}
-                            name="plus-circle"
-                            color={enabledColor}
-                        />
-                        <Text style={{ color: enabledColor }}>Add Sets</Text>
-                    </Pressable>
-                    <Pressable
-                        style={baseStyles.button}
-                        onPress={notesPressed}
-                        disabled={!state.add_set}
-                    >
-                        <FontAwesome
-                            size={28}
-                            name="sticky-note"
-                            color={enabledColor}
-                        />
-                        <Text style={{ color: enabledColor }}>Notes</Text>
-                    </Pressable>
-                </>
+                <Pressable
+                    style={baseStyles.button}
+                    onPress={addSetPressed}
+                    disabled={!state.add_set}
+                >
+                    <FontAwesome
+                        size={28}
+                        name="plus-circle"
+                        color={enabledColor}
+                    />
+                    <Text style={{ color: enabledColor }}>Add Sets</Text>
+                </Pressable>
+            )}
+            {state.notes && (
+                <Pressable
+                    style={baseStyles.button}
+                    onPress={notesPressed}
+                    disabled={!state.add_set}
+                >
+                    <FontAwesome
+                        size={28}
+                        name="sticky-note"
+                        color={enabledColor}
+                    />
+                    <Text style={{ color: enabledColor }}>Notes</Text>
+                </Pressable>
             )}
             <Pressable
                 style={baseStyles.button}

@@ -1,32 +1,53 @@
-import { useState, useEffect } from 'react';
-import { View, Text, Button, Pressable, FlatList, useColorScheme } from "react-native";
+import { useState, useEffect } from "react";
+import {
+    View,
+    Text,
+    Button,
+    Pressable,
+    FlatList,
+    useColorScheme,
+} from "react-native";
 
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import { baseStyles, lightColors, darkColors } from "@/styles/global";
 
-import { useGetExercisesLazyQuery, ExerciseNode, SetNode } from '@/graphql/types';
+import {
+    PageInfo,
+    useGetExercisesLazyQuery,
+    ExerciseNode,
+    SetNode,
+} from "@/graphql/types";
 
-import HorzontalLine from '../general/horizonal_line';
-import Spinner from '../general/spinner';
+import HorzontalLine from "../general/horizonal_line";
+import Spinner from "../general/spinner";
 
-import { date_formatter } from '@/util/date';
-import { hexToRGBA } from '@/util/color';
-
+import { date_formatter } from "@/util/date";
+import { hexToRGBA } from "@/util/color";
 
 type historicalParams = {
-    movementId: string,
-    navigateBack: () => void,
-}
+    movementId: string;
+    navigateBack: () => void;
+};
+type entryParams = {
+    node: ExerciseNode;
+    pageInfo: PageInfo;
+    length: number;
+};
 
-export default function ExerciseHistorical({ movementId, navigateBack }: historicalParams) {
+export default function ExerciseHistorical({
+    movementId,
+    navigateBack,
+}: historicalParams) {
     const colorScheme = useColorScheme();
     const [execute, { loading, error, data }] = useGetExercisesLazyQuery();
-    const [name, setName] = useState('');
+    const [name, setName] = useState("");
     const [index, setIndex] = useState(-1);
-    const [body, setBody] = useState(<Text></Text>);
 
-    const enabledColor = colorScheme === 'light' ? lightColors.primaryColor : darkColors.primaryColor;
+    const enabledColor =
+        colorScheme === "light"
+            ? lightColors.primaryColor
+            : darkColors.primaryColor;
     const disabledColor = hexToRGBA(enabledColor, 0.6);
 
     function handleNavigateBack() {
@@ -46,11 +67,17 @@ export default function ExerciseHistorical({ movementId, navigateBack }: histori
     useEffect(() => {
         if (index !== -1 && data?.exercises?.edges[index]?.node) {
             setName(data.exercises.edges[index].node.movement.name);
-            setBody(<WorkoutEntry node={data.exercises.edges[index].node} />);
         }
     }, [index]);
 
-    const SetEntry = ({ id, sequenceNumber, completedReps, weight, oneRepMax, volume }: SetNode) => {
+    const SetEntry = ({
+        id,
+        sequenceNumber,
+        completedReps,
+        weight,
+        oneRepMax,
+        volume,
+    }: SetNode) => {
         return (
             <View style={{ ...baseStyles.spacedRow, padding: 10 }}>
                 <Text style={{ color: enabledColor }}>{sequenceNumber}</Text>
@@ -60,25 +87,39 @@ export default function ExerciseHistorical({ movementId, navigateBack }: histori
                 <Text style={{ color: enabledColor }}>{volume}</Text>
             </View>
         );
-    }
+    };
 
-    const WorkoutEntry = (node: ExerciseNode) => {
+    const WorkoutEntry = ({ node, pageInfo, length }: entryParams) => {
         function previousPressed() {
             if (index === 0) {
-                execute({ variables: { count: 10, movementId: movementId, before: data?.exercises?.pageInfo.startCursor } });
-            }
-            else {
+                execute({
+                    variables: {
+                        count: 10,
+                        movementId: movementId,
+                        before: data?.exercises?.pageInfo.startCursor,
+                    },
+                });
+            } else {
                 setIndex(index - 1);
             }
         }
 
         function nextPressed() {
             if (index === data?.exercises?.edges?.length - 1) {
-                execute({ variables: { count: 10, movementId: movementId, after: data?.exercises?.pageInfo.endCursor } });
-            }
-            else {
+                execute({
+                    variables: {
+                        count: 10,
+                        movementId: movementId,
+                        after: data?.exercises?.pageInfo.endCursor,
+                    },
+                });
+            } else {
                 setIndex(index + 1);
             }
+        }
+
+        if (!node?.movement.movementType) {
+            return <View></View>;
         }
 
         const movement_type = node.movement.movementType.toLowerCase();
@@ -91,7 +132,11 @@ export default function ExerciseHistorical({ movementId, navigateBack }: histori
                 </View>
             );
         }
-        if (equipment_type == "none" || equipment_type === "body only" || equipment_type === "exercise ball") {
+        if (
+            equipment_type == "none" ||
+            equipment_type === "body only" ||
+            equipment_type === "exercise ball"
+        ) {
             return (
                 <View>
                     <Text>Reps Only</Text>
@@ -109,24 +154,62 @@ export default function ExerciseHistorical({ movementId, navigateBack }: histori
         return (
             <View style={baseStyles.modal}>
                 <View style={baseStyles.spacedRow}>
-                    {
-                        (index > 0 || data?.exercises?.pageInfo.hasPreviousPage) ?
-                            <Pressable onPress={previousPressed} style={baseStyles.selectableRow} disabled={loading}>
-                                <FontAwesome size={28} name="chevron-left" color={loading ? disabledColor : enabledColor} />
-                                <Text style={{ color: loading ? disabledColor : enabledColor }}>Previous</Text>
-                            </Pressable> :
-                            <View></View>
-                    }
-                    {
-                        (index < data?.exercises?.edges?.length || data.exercises.pageInfo.hasNextPage) &&
-                        <Pressable onPress={nextPressed} style={baseStyles.selectableRow} disabled={loading}>
-                            <Text style={{ color: loading ? disabledColor : enabledColor }}>Next</Text>
-                            <FontAwesome size={28} name="chevron-right" color={loading ? disabledColor : enabledColor} />
+                    {index > 0 || pageInfo.hasPreviousPage ? (
+                        <Pressable
+                            onPress={previousPressed}
+                            style={baseStyles.selectableRow}
+                            disabled={loading}
+                        >
+                            <FontAwesome
+                                size={28}
+                                name="chevron-left"
+                                color={loading ? disabledColor : enabledColor}
+                            />
+                            <Text
+                                style={{
+                                    color: loading
+                                        ? disabledColor
+                                        : enabledColor,
+                                }}
+                            >
+                                Previous
+                            </Text>
                         </Pressable>
-                    }
+                    ) : (
+                        <View></View>
+                    )}
+                    {(index < length - 1 || pageInfo.hasNextPage) && (
+                        <Pressable
+                            onPress={nextPressed}
+                            style={baseStyles.selectableRow}
+                            disabled={loading}
+                        >
+                            <Text
+                                style={{
+                                    color: loading
+                                        ? disabledColor
+                                        : enabledColor,
+                                }}
+                            >
+                                Next
+                            </Text>
+                            <FontAwesome
+                                size={28}
+                                name="chevron-right"
+                                color={loading ? disabledColor : enabledColor}
+                            />
+                        </Pressable>
+                    )}
                 </View>
                 <View style={baseStyles.centeredRow}>
-                    <Text style={{ ...baseStyles.mediumHeader, color: enabledColor }}>{date_formatter(node.workout.startTime)}</Text>
+                    <Text
+                        style={{
+                            ...baseStyles.mediumHeader,
+                            color: enabledColor,
+                        }}
+                    >
+                        {date_formatter(node.workout.startTime)}
+                    </Text>
                 </View>
                 <View style={baseStyles.spacedRow}>
                     <Text style={{ color: enabledColor }}>Set #</Text>
@@ -137,37 +220,61 @@ export default function ExerciseHistorical({ movementId, navigateBack }: histori
                 </View>
                 <FlatList
                     data={node.sets}
-                    renderItem={({ item }) => <SetEntry
-                        id={item?.id || ""}
-                        sequenceNumber={item?.sequenceNumber || 0}
-                        oneRepMax={item?.oneRepMax || 0}
-                        duration={item?.duration || ""}
-                        volume={item?.volume || 0}
-                        completedReps={item?.completedReps || 0}
-                        weight={item?.weight || 0}
-                    />}
-                    keyExtractor={item => item?.id || ""}
+                    renderItem={({ item }) => (
+                        <SetEntry
+                            id={item?.id || ""}
+                            sequenceNumber={item?.sequenceNumber || 0}
+                            oneRepMax={item?.oneRepMax || 0}
+                            duration={item?.duration || ""}
+                            volume={item?.volume || 0}
+                            completedReps={item?.completedReps || 0}
+                            weight={item?.weight || 0}
+                        />
+                    )}
+                    keyExtractor={(item) => item?.id || ""}
                     ItemSeparatorComponent={HorzontalLine}
                 />
             </View>
         );
-    }
-
+    };
 
     return (
         <View>
             <View style={baseStyles.leftJustifiedRow}>
-                <FontAwesome size={28} name="chevron-left" color={enabledColor} />
+                <FontAwesome
+                    size={28}
+                    name="chevron-left"
+                    color={enabledColor}
+                />
                 <Button title="Current Exercise" onPress={handleNavigateBack} />
             </View>
-            <View style={baseStyles.centeredRow}>
-                <Text style={{ ...baseStyles.subHeader, color: enabledColor }}>{name} - Historical</Text>
-            </View>
-            {
-                loading &&
+            {loading ? (
                 <Spinner />
-            }
-            {body}
+            ) : (
+                <>
+                    <View style={baseStyles.centeredRow}>
+                        <Text
+                            style={{
+                                ...baseStyles.subHeader,
+                                color: enabledColor,
+                            }}
+                        >
+                            {name} - Historical
+                        </Text>
+                    </View>
+                    {data?.exercises?.edges[index]?.node ? (
+                        <WorkoutEntry
+                            node={data?.exercises.edges[index].node}
+                            pageInfo={data?.exercises.pageInfo}
+                            length={data?.exercises.edges.length}
+                        />
+                    ) : (
+                        <View>
+                            <Text>Missing node data</Text>
+                        </View>
+                    )}
+                </>
+            )}
         </View>
     );
 }
