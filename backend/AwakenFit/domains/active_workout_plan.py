@@ -1,5 +1,8 @@
 from datetime import date
 
+from django.db.models import QuerySet
+from django.contrib.auth.models import User
+
 from AwakenFit.models import ActiveWorkoutPlan
 
 from AwakenFit.domains import user as UserDomain
@@ -24,6 +27,10 @@ def get_by_user_id(user_id: int) -> list[ActiveWorkoutPlan] | None:
 
 def is_valid_id(id: int) -> bool:
     return ActiveWorkoutPlan.objects.filter(id=id).exists()
+
+
+def filter_queryset_by_user(queryset: QuerySet, user: User) -> QuerySet:
+    return queryset.filter(user=user)
 
 
 def start_new_workout_plan(user_id: int, plan_id: int) -> ActiveWorkoutPlan:

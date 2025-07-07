@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from graphql_relay import from_global_id
 
 from graphene import Mutation, Node, ObjectType, InputObjectType, Field, List, DateTime, String
