@@ -1,9 +1,12 @@
+from datetime import date
+
 from graphql_relay import from_global_id
 
 from AwakenFit.domains import workout as WorkoutDomain
 from AwakenFit.domains import set as SetDomain
 from AwakenFit.domains import exercise as ExerciseDomain
 from AwakenFit.domains import movement as MovementDomain
+from AwakenFit.domains import active_workout_plan as ActiveWorkoutPlanDomain
 from AwakenFit.domains import workout_plan as WorkoutPlanDomain
 
 
@@ -19,6 +22,7 @@ ERROR_MESSAGES = {
     "DUPLICATE_RECORD": "Record already exists, please double check your input.",
     "MISSING_MUSCLE_GROUP": "Primary and secondary muscle group are None, please fill in one.",
     "MISSING_WORKOUT_TWO": "Please populate workout two before workout three",
+    "BAD_START_DATE": "Please make sure the start date is today or a future date.",
     "INVALID_ID": "Provided ID does not exist.",
 }
 
@@ -143,5 +147,15 @@ def validate_workout_plan_input(plan, user) -> list[str]:
     if not WorkoutPlanDomain.is_name_available(user.id, plan.name):
         errors.append(ERROR_MESSAGES["INVALID_PLAN_NAME"])
     errors.extend(validate_workout_plan_days_input(plan.days))
+
+    return errors
+
+
+def validate_active_workout_plan_input(plan_id: str, start_date: date) -> list[str]:
+    errors = list()
+    if not ActiveWorkoutPlanDomain.is_valid_id(plan_id):
+        errors.append(ERROR_MESSAGES["INVALID_ID"])
+    if not start_date >= date.today():
+        errors.append(ERROR_MESSAGES["BAD_START_DATE"])
 
     return errors

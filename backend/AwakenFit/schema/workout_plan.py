@@ -124,6 +124,14 @@ class ActiveWorkoutPlanCreate(Mutation):
         else:
             user = info.context.user
 
+        validation_errors = MutationDomain.validate_active_workout_plan_input(input.plan_id, input.start_date)
+        for entry in validation_errors:
+            errors.append(MessageNode(message=entry))
+
+        if not errors:
+            active_plan = ActiveWorkoutPlanDomain.start_new_workout_plan(user.id, input.plan_id, input.start_date)
+            plan = active_plan.plan
+
         return ActiveWorkoutPlanCreate(plan=plan, errors=errors)
 
 
