@@ -60,6 +60,17 @@ class ActiveWorkoutDomainTest(TestCase):
         self.assertTrue(ActiveWorkoutPlanDomain.is_valid_id(self.test_active_plan.id), "ID should be valid")
         self.assertFalse(ActiveWorkoutPlanDomain.is_valid_id(1234), "ID should not have been valid")
 
+    def test_filter_queryset_by_user(self):
+        queryset = ActiveWorkoutPlan.objects.all()
+        result = ActiveWorkoutPlanDomain.filter_queryset_by_user(queryset, self.test_user)
+        self.assertIsNotNone(result, "Should expect at least one record back")
+        self.assertEqual(1, len(result), "Should only get one record back")
+        self.assertEqual(self.test_active_plan, result[0], "Did not get the expected record back")
+
+        result2 = ActiveWorkoutPlanDomain.filter_queryset_by_user(queryset, self.test_user3)
+        self.assertIsNotNone(result2, "No records should have been returned")
+        self.assertEqual(0, len(result2), "Empty queryset should have been returned")
+
     def test_start_new_workout_plan(self):
         existing_active_workout_plans = ActiveWorkoutPlan.objects.all().count()
 
