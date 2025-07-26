@@ -119,13 +119,13 @@ def validate_workout_plan_days_input(days) -> list[str]:
     seen_day_numbers = set()
     for entry in days:
         entry_errors = list()
-        if not WorkoutDomain.is_valid_id(entry.workout_one):
+        if not WorkoutDomain.is_valid_id(from_global_id(entry.workout_one_id).id):
             entry_errors.append(ERROR_MESSAGES["INVALID_ID"])
-        if entry.workout_two and not WorkoutDomain.is_valid_id(entry.workout_two):
+        if entry.workout_two_id and not WorkoutDomain.is_valid_id(from_global_id(entry.workout_two_id).id):
             entry_errors.append(ERROR_MESSAGES["INVALID_ID"])
-        if entry.workout_three and not WorkoutDomain.is_valid_id(entry.workout_three):
+        if entry.workout_three_id and not WorkoutDomain.is_valid_id(from_global_id(entry.workout_three_id).id):
             entry_errors.append(ERROR_MESSAGES["INVALID_ID"])
-        if entry.workout_three and not entry.workout_two:
+        if entry.workout_three_id and not entry.workout_two_id:
             entry_errors.append(ERROR_MESSAGES["MISSING_WORKOUT_TWO"])
         if not entry_errors:
             current_seq_count = len(seen_sequence_numbers)
@@ -153,7 +153,7 @@ def validate_workout_plan_input(plan, user) -> list[str]:
 
 def validate_active_workout_plan_input(plan_id: str, start_date: date) -> list[str]:
     errors = list()
-    if not ActiveWorkoutPlanDomain.is_valid_id(plan_id):
+    if not WorkoutPlanDomain.is_valid_id(from_global_id(plan_id).id):
         errors.append(ERROR_MESSAGES["INVALID_ID"])
     if not start_date >= date.today():
         errors.append(ERROR_MESSAGES["BAD_START_DATE"])

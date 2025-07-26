@@ -10,6 +10,7 @@ from .exercise import Query as ExerciseQuery
 from .user import Query as UserQuery
 
 from .workout import Mutation as WorkoutMutation
+from .workout_plan import Mutation as WorkoutPlanMutation
 from .movement import Mutation as MovementMutation
 
 
@@ -19,7 +20,7 @@ class Query(
     pass
 
 
-class Mutation(WorkoutMutation, MovementMutation, ObjectType):
+class Mutation(WorkoutMutation, WorkoutPlanMutation, MovementMutation, ObjectType):
     pass
 
 

@@ -62,6 +62,21 @@ class WorkoutPlanDomainTest(TestCase):
             "The plan name should be available for this user",
         )
 
+    def test_filter_querset_by_user(self):
+        queryset = WorkoutPlan.objects.all()
+
+        results = WorkoutPlanDomain.filter_queryset_by_user(queryset, self.test_user)
+        expected_results = [self.test_workout1, self.test_workout2]
+        self.assertEqual(len(expected_results), len(results), "Did not get the expected number of records back")
+        for entry in results:
+            self.assertTrue(entry in expected_results, "Received an un-expected record")
+
+        results2 = WorkoutPlanDomain.filter_queryset_by_user(queryset, self.test_user2)
+        expected_results = [self.test_workout3]
+        self.assertEqual(len(expected_results), len(results2), "Did not get the expected number of records back")
+        for entry in results2:
+            self.assertTrue(entry in expected_results, "Received an un-expected record")
+
     def test_create_workout_plan(self):
         self.assertEqual(
             2, len(WorkoutPlanDomain.get_by_user_id(self.test_user.id)), "The user should have two workout plans"

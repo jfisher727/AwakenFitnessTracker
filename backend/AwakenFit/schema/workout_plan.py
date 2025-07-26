@@ -60,9 +60,9 @@ class ActiveWorkoutPlanNode(DjangoObjectType):
 
 
 class WorkoutDayInput(InputObjectType):
-    workout_one = ID(required=True)
-    workout_two = ID(required=False)
-    workout_three = ID(required=False)
+    workout_one_id = ID(required=True)
+    workout_two_id = ID(required=False)
+    workout_three_id = ID(required=False)
     sequence_number = Int(required=True)
     day_number = Int(required=True)
 
@@ -96,7 +96,16 @@ class WorkoutPlanCreate(Mutation):
             errors.append(MessageNode(message=entry))
 
         if not errors:
-            pass
+            plan = WorkoutPlanDomain.create_workout_plan(user.id, input.name, input.type)
+            for entry in input.days:
+                WorkoutDayDomain.create_update_workout_day(
+                    plan.id,
+                    entry.sequence_number,
+                    entry.day_number,
+                    int(from_global_id(entry.workout_one_id).id),
+                    int(from_global_id(entry.workout_two_id).id) if entry.workout_two_id else None,
+                    int(from_global_id(entry.workout_three_id).id) if entry.workout_three_id else None,
+                )
 
         return WorkoutPlanCreate(plan=plan, errors=errors)
 
@@ -117,7 +126,7 @@ class ActiveWorkoutPlanCreate(Mutation):
     def mutate(cls, root, info, input: ActiveWorkoutPlanInput):
         plan = None
         user = None
-        errors = List()
+        errors = list()
 
         if not info.context.user.is_authenticated:
             errors.append(MessageNode(message=UserDomain.ERROR_MESSAGES.get("UNAUTHENTICATED")))
@@ -129,7 +138,9 @@ class ActiveWorkoutPlanCreate(Mutation):
             errors.append(MessageNode(message=entry))
 
         if not errors:
-            active_plan = ActiveWorkoutPlanDomain.start_new_workout_plan(user.id, input.plan_id, input.start_date)
+            active_plan = ActiveWorkoutPlanDomain.start_new_workout_plan(
+                user.id, from_global_id(input.plan_id).id, input.start_date
+            )
             plan = active_plan.plan
 
         return ActiveWorkoutPlanCreate(plan=plan, errors=errors)

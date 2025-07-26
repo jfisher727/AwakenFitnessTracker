@@ -35,7 +35,7 @@ def filter_queryset_by_user(queryset: QuerySet, user: User) -> QuerySet:
     return queryset.filter(user=user)
 
 
-def create_workout_plan(user_id: int, name: str, plan_type: str, block_size: int) -> WorkoutPlan | None:
+def create_workout_plan(user_id: int, name: str, plan_type: str, block_size: int = 7) -> WorkoutPlan | None:
     created_record = None
     if UserDomain.is_valid_id(user_id):
         user = UserDomain.get_by_id(user_id)

@@ -35,6 +35,9 @@ def filter_queryset_by_user(queryset: QuerySet, user: User) -> QuerySet:
 
 def start_new_workout_plan(user_id: int, plan_id: int, start_date: date | None = None) -> ActiveWorkoutPlan:
     created_record = None
+    if start_date is None:
+        start_date = date.today()
+
     if UserDomain.is_valid_id(user_id) and WorkoutPlanDomain.is_valid_id(plan_id) and start_date >= date.today():
         selected_plan = WorkoutPlanDomain.get_by_id(plan_id)
 
@@ -47,10 +50,7 @@ def start_new_workout_plan(user_id: int, plan_id: int, start_date: date | None =
         if created_record is not None:
             created_record.plan = selected_plan
             created_record.day = first_day_of_plan
-            if start_date is None:
-                created_record.start_date = date.today()
-            else:
-                created_record.start_date = start_date
+            created_record.start_date = start_date
             created_record.save()
         else:
             user = UserDomain.get_by_id(user_id)
