@@ -123,6 +123,7 @@ export default function ExerciseSearch({ addExercise }: ExerciseSearchProps) {
                         inputMode="text"
                         defaultValue={name}
                         onChangeText={(newText) => setName(newText)}
+                        onFocus={() => setName("")}
                         style={{
                             ...baseStyles.selectHeader,
                             color:
