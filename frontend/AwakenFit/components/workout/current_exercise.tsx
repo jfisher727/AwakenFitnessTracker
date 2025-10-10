@@ -293,6 +293,15 @@ const SetEntry = ({
         }
     }
 
+    // this is another check to make sure that when the movement Id changes, that we
+    // refresh the component visuals for each set entry
+    useEffect(() => {
+        setReps(item.completedReps?.toString() || "");
+        setWeight(item.weight?.toString() || "");
+        setDuration(item.duration?.toString() || "");
+        setEquipmentIdentifier(item.equipmentIdentifier?.toString() || "");
+    }, [movement.id]);
+
     function handleOnSaveSet() {
         setSaveCalled(true);
         var setIsValid = validateSetInput();
@@ -392,6 +401,8 @@ export default function CurrentExercise({
     }
 
     useEffect(() => {
+        // add logic here to set the current Set based on what data is populate
+        // for this exercise
         setCurrentSet(1);
     }, [exercise.movement.id]);
 
