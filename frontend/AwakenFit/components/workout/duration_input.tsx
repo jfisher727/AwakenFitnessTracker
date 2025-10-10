@@ -35,7 +35,7 @@ export default function DurationInput({
 
     useEffect(() => {
         if (duration.length > 0) {
-            // 00H00M00S
+            // 00:00:00
             setHours(duration.slice(0, 2));
             setMinutes(duration.slice(3, 5));
             setSeconds(duration.slice(6, 8));
@@ -79,16 +79,6 @@ export default function DurationInput({
         const calculatedSeconds = Math.floor(newTotal % 60)
             .toString()
             .padStart(2, "0");
-        console.log(
-            `handleOnStop: ${
-                calculatedHours +
-                "H" +
-                calculatedMinutes +
-                "M" +
-                calculatedSeconds +
-                "S"
-            }`
-        );
         setHours(calculatedHours);
         setMinutes(calculatedMinutes);
         setSeconds(calculatedSeconds);

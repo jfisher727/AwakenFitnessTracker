@@ -1,5 +1,5 @@
-import { useEffect, useReducer } from "react";
-import { View, Text, useColorScheme } from "react-native";
+import { useEffect, useState, useReducer } from "react";
+import { View, useColorScheme } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { useLocalSearchParams, router } from "expo-router";
 
@@ -61,6 +61,7 @@ export default function Workout() {
     const colorScheme = useColorScheme();
 
     const [execute, { loading, error, data }] = useGetWorkoutLazyQuery();
+    const [initialLoad, setInitialLoad] = useState(true);
     const [workoutMutation, workoutMutationResult] =
         useWorkoutCreateCompletedMutation();
 
@@ -194,27 +195,6 @@ export default function Workout() {
         handleChangeScreen(ScreenOptions.CURRENT_EXERCISE);
     }
 
-    function handleButtonsToShow(
-        historical: boolean,
-        add_exercise: boolean,
-        end_workout: boolean,
-        add_set: boolean,
-        edit_movements: boolean,
-        notes: boolean
-    ) {
-        dispatch({
-            type: ActionTypes.UPDATE_BUTTONS,
-            payload: {
-                historical: historical,
-                add_exercise: add_exercise,
-                edit_movements: edit_movements,
-                end_workout: end_workout,
-                add_set: add_set,
-                notes: notes,
-            },
-        });
-    }
-
     function handleEditMovements() {
         dispatch({
             type: ActionTypes.EDIT_MOVEMENTS,
@@ -281,15 +261,16 @@ export default function Workout() {
     }
 
     useEffect(() => {
-        if (params.id) {
+        if (params.id && !data) {
             execute({ variables: { id: params.id } });
         }
     }, []);
 
     useEffect(() => {
-        if (data) {
+        if (data && initialLoad) {
             handleSetExercises(data?.workout?.exercises);
             handleChangeScreen(ScreenOptions.MOVEMENT_LIST);
+            setInitialLoad(false);
         }
     }, [data, loading]);
 
@@ -309,69 +290,6 @@ export default function Workout() {
             console.log(workoutMutationResult.error);
         }
     }, [workoutMutationResult.data, workoutMutationResult.error]);
-
-    useEffect(() => {
-        if (state.screen) {
-            switch (state.screen) {
-                case ScreenOptions.MOVEMENT_LIST: {
-                    handleButtonsToShow(false, true, true, false, true, false);
-                    return;
-                }
-                case ScreenOptions.ADD_EXERCISE: {
-                    handleButtonsToShow(
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false
-                    );
-                    return;
-                }
-                case ScreenOptions.ADD_SETS: {
-                    handleButtonsToShow(
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false
-                    );
-                    return;
-                }
-                case ScreenOptions.CURRENT_EXERCISE: {
-                    handleButtonsToShow(true, false, false, true, false, true);
-                    return;
-                }
-                case ScreenOptions.HISTORICAL: {
-                    handleButtonsToShow(
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false
-                    );
-                    return;
-                }
-                case ScreenOptions.WORKOUT_REVIEW: {
-                    handleButtonsToShow(
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false
-                    );
-                    return;
-                }
-                default: {
-                    handleButtonsToShow(false, true, false, false, true, false);
-                    return;
-                }
-            }
-        }
-    }, [state.screen]);
 
     function stopWorkoutPressed() {
         handleSetStopTime();
@@ -437,7 +355,8 @@ export default function Workout() {
                                 addSets={handleAddSets}
                             />
                         )}
-                        {state.screen === ScreenOptions.ADD_EXERCISE && (
+                        {(state.screen === ScreenOptions.ADD_EXERCISE ||
+                            state.screen === "blank") && (
                             <ExerciseSearch addExercise={handleAddExercise} />
                         )}
                         {state.screen === ScreenOptions.CURRENT_EXERCISE && (
@@ -471,7 +390,7 @@ export default function Workout() {
                     </View>
                     <View style={baseStyles.buttonContainer}>
                         <WorkoutButtons
-                            state={state.buttons}
+                            screen={state.screen}
                             stopWorkoutPressed={stopWorkoutPressed}
                             addExercisePressed={addExercisePressed}
                             editMovementsPressed={handleEditMovements}
