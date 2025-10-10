@@ -403,7 +403,20 @@ export default function CurrentExercise({
     useEffect(() => {
         // add logic here to set the current Set based on what data is populate
         // for this exercise
-        setCurrentSet(1);
+        for (var i = 0; i < exercise.sets.length; i++) {
+            var current_set = exercise.sets[i];
+            if (
+                !(
+                    current_set.completedReps ||
+                    current_set.weight ||
+                    current_set.duration
+                )
+            ) {
+                setCurrentSet(i + 1);
+                break;
+            }
+        }
+        //setCurrentSet(1);
     }, [exercise.movement.id]);
 
     function setSelectedSet(sequence_number: number) {

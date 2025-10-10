@@ -355,7 +355,8 @@ export default function Workout() {
                                 addSets={handleAddSets}
                             />
                         )}
-                        {state.screen === ScreenOptions.ADD_EXERCISE && (
+                        {(state.screen === ScreenOptions.ADD_EXERCISE ||
+                            state.screen === "blank") && (
                             <ExerciseSearch addExercise={handleAddExercise} />
                         )}
                         {state.screen === ScreenOptions.CURRENT_EXERCISE && (
