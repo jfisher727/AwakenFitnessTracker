@@ -17,6 +17,4 @@ class Query(ObjectType):
     week_in_review = Field(WeekInReview)
 
     def resolve_week_in_review(parent, info):
-        temp = AnalyticsDomain.calculate_week_summary(info.context.user.id)
-        print(temp)
-        return temp
+        return AnalyticsDomain.calculate_week_summary(info.context.user.id)

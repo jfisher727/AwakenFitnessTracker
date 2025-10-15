@@ -414,7 +414,6 @@ export default function CurrentExercise({
                 break;
             }
         }
-        //setCurrentSet(1);
     }, [exercise.movement.id]);
 
     function setSelectedSet(sequence_number: number) {
