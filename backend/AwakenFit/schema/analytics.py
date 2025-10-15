@@ -9,6 +9,7 @@ class WeekInReview(ObjectType):
     top_muscle_group = String()
     total_cardio = String()
     favorite_equipment = String()
+    total_workout_duration = String()
     message = String()
 
 
@@ -16,4 +17,6 @@ class Query(ObjectType):
     week_in_review = Field(WeekInReview)
 
     def resolve_week_in_review(parent, info):
-        return AnalyticsDomain.calculate_week_summary(info.context.user.id)
+        temp = AnalyticsDomain.calculate_week_summary(info.context.user.id)
+        print(temp)
+        return temp

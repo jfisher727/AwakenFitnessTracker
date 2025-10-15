@@ -46,6 +46,10 @@ export const baseStyles = StyleSheet.create({
         fontSize: 30,
         margin: 10,
     },
+    text: {
+        fontSize: 20,
+        margin: 10,
+    },
     modal: {
         flexDirection: "column",
         borderRadius: 10,

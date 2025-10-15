@@ -1,10 +1,11 @@
 query weekInReview {
-        weekInReview {
-            message
-            totalWorkouts
-            totalVolume
-            topMuscleGroup
-            totalCardio
-            favoriteEquipment
-        }
+    weekInReview {
+        message
+        totalWorkouts
+        totalVolume
+        topMuscleGroup
+        totalCardio
+        totalWorkoutDuration
+        favoriteEquipment
     }
+}

@@ -27,12 +27,15 @@ def calculate_week_summary(user_id: int):
             "top_muscle_group": "",
             "total_cardio": "N/A",
             "favorite_equipment": "",
+            "total_workout_duration": "",
             "message": "No workouts recorded for this week",
         }
-        return "N/A"
 
     sets = list()
+    duration = 0
     for entry in workouts:
+        diff = entry.stop_time - entry.start_time
+        duration += diff.seconds
         for exercise in entry.exercises.all():
             for set in exercise.sets.all():
                 sets.append(
@@ -60,11 +63,28 @@ def calculate_week_summary(user_id: int):
 
     equipment_counts = dataframe.value_counts("equipment")
 
+    # total duration formatting
+    duration = int(duration / 60)
+    total_duration = []
+    hours = duration // 60
+    minutes = duration % 60
+    total_duration.append("{:02d}".format(hours))
+    if hours > 1:
+        total_duration.append("hours")
+    else:
+        total_duration.append("hour")
+    total_duration.append("{:02d}".format(minutes))
+    if minutes > 1:
+        total_duration.append("minutes")
+    else:
+        total_duration.append("minute")
+
     return {
         "total_workouts": len(workouts),
         "total_volume": str(total_volume),
         "top_muscle_group": top_muscle_group,
         "total_cardio": format_timedelta(total_cardio),
         "favorite_equipment": equipment_counts.idxmax(),
+        "total_workout_duration": " ".join(total_duration),
         "message": "N/A",
     }
