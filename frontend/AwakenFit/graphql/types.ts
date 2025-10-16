@@ -15,8 +15,29 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  Date: { input: any; output: any; }
   DateTime: { input: any; output: any; }
   Decimal: { input: any; output: any; }
+};
+
+export type ActiveWorkoutPlanCreate = {
+  __typename?: 'ActiveWorkoutPlanCreate';
+  errors?: Maybe<Array<Maybe<MessageNode>>>;
+  plan?: Maybe<WorkoutPlanNode>;
+};
+
+export type ActiveWorkoutPlanInput = {
+  planId: Scalars['ID']['input'];
+  startDate: Scalars['Date']['input'];
+};
+
+export type ActiveWorkoutPlanNode = Node & {
+  __typename?: 'ActiveWorkoutPlanNode';
+  day: WorkoutDayNode;
+  /** The ID of the object */
+  id: Scalars['ID']['output'];
+  plan: WorkoutPlanNode;
+  startDate: Scalars['Date']['output'];
 };
 
 export type ExerciseCreateCompletedInput = {
@@ -129,10 +150,17 @@ export type MovementNodeEdge = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  activeWorkoutPlanCreate?: Maybe<ActiveWorkoutPlanCreate>;
   movementCreate?: Maybe<MovementCreate>;
   movementEdit?: Maybe<MovementEdit>;
   workoutCreateCompleted?: Maybe<WorkoutCreateCompleted>;
   workoutCreateTemplate?: Maybe<WorkoutCreateTemplate>;
+  workoutPlanCreate?: Maybe<WorkoutPlanCreate>;
+};
+
+
+export type MutationActiveWorkoutPlanCreateArgs = {
+  input: ActiveWorkoutPlanInput;
 };
 
 
@@ -153,6 +181,11 @@ export type MutationWorkoutCreateCompletedArgs = {
 
 export type MutationWorkoutCreateTemplateArgs = {
   input: WorkoutCreateTemplateInput;
+};
+
+
+export type MutationWorkoutPlanCreateArgs = {
+  input: WorkoutPlanInput;
 };
 
 /** An object with an ID */
@@ -176,6 +209,7 @@ export type PageInfo = {
 
 export type Query = {
   __typename?: 'Query';
+  activeWorkoutPlan?: Maybe<ActiveWorkoutPlanNode>;
   exercise?: Maybe<ExerciseNode>;
   exercises?: Maybe<ExerciseNodeConnection>;
   isSuperUser?: Maybe<Scalars['Boolean']['output']>;
@@ -185,6 +219,8 @@ export type Query = {
   sets?: Maybe<SetNodeConnection>;
   weekInReview?: Maybe<WeekInReview>;
   workout?: Maybe<WorkoutNode>;
+  workoutPlan?: Maybe<WorkoutPlanNode>;
+  workoutPlans?: Maybe<WorkoutPlanNodeConnection>;
   workouts?: Maybe<WorkoutNodeConnection>;
 };
 
@@ -243,6 +279,26 @@ export type QuerySetsArgs = {
 
 export type QueryWorkoutArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type QueryWorkoutPlanArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryWorkoutPlansArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  name_Icontains?: InputMaybe<Scalars['String']['input']>;
+  name_Istartswith?: InputMaybe<Scalars['String']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  planType?: InputMaybe<Scalars['String']['input']>;
+  planType_Icontains?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -326,6 +382,7 @@ export type WeekInReview = {
   topMuscleGroup?: Maybe<Scalars['String']['output']>;
   totalCardio?: Maybe<Scalars['String']['output']>;
   totalVolume?: Maybe<Scalars['String']['output']>;
+  totalWorkoutDuration?: Maybe<Scalars['String']['output']>;
   totalWorkouts?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -352,6 +409,25 @@ export type WorkoutCreateTemplateInput = {
   exercises: Array<InputMaybe<ExerciseCreateTemplateInput>>;
   name: Scalars['String']['input'];
   notes?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type WorkoutDayInput = {
+  dayNumber: Scalars['Int']['input'];
+  sequenceNumber: Scalars['Int']['input'];
+  workoutOneId: Scalars['ID']['input'];
+  workoutThreeId?: InputMaybe<Scalars['ID']['input']>;
+  workoutTwoId?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type WorkoutDayNode = Node & {
+  __typename?: 'WorkoutDayNode';
+  dayNumber: Scalars['Int']['output'];
+  /** The ID of the object */
+  id: Scalars['ID']['output'];
+  sequenceNumber: Scalars['Int']['output'];
+  workoutOne?: Maybe<WorkoutNode>;
+  workoutThree?: Maybe<WorkoutNode>;
+  workoutTwo?: Maybe<WorkoutNode>;
 };
 
 export type WorkoutNode = Node & {
@@ -381,6 +457,45 @@ export type WorkoutNodeEdge = {
   cursor: Scalars['String']['output'];
   /** The item at the end of the edge */
   node?: Maybe<WorkoutNode>;
+};
+
+export type WorkoutPlanCreate = {
+  __typename?: 'WorkoutPlanCreate';
+  errors?: Maybe<Array<Maybe<MessageNode>>>;
+  plan?: Maybe<WorkoutPlanNode>;
+};
+
+export type WorkoutPlanInput = {
+  days: Array<InputMaybe<WorkoutDayInput>>;
+  name: Scalars['String']['input'];
+  type: Scalars['String']['input'];
+};
+
+export type WorkoutPlanNode = Node & {
+  __typename?: 'WorkoutPlanNode';
+  blockSize: Scalars['Int']['output'];
+  /** The ID of the object */
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  planType: Scalars['String']['output'];
+  workoutDays?: Maybe<Array<Maybe<WorkoutDayNode>>>;
+};
+
+export type WorkoutPlanNodeConnection = {
+  __typename?: 'WorkoutPlanNodeConnection';
+  /** Contains the nodes in this connection. */
+  edges: Array<Maybe<WorkoutPlanNodeEdge>>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+};
+
+/** A Relay edge containing a `WorkoutPlanNode` and its cursor. */
+export type WorkoutPlanNodeEdge = {
+  __typename?: 'WorkoutPlanNodeEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<WorkoutPlanNode>;
 };
 
 export type WorkoutCreateCompletedMutationVariables = Exact<{
@@ -445,12 +560,12 @@ export type GetMovementsQueryVariables = Exact<{
 }>;
 
 
-export type GetMovementsQuery = { __typename?: 'Query', movements?: { __typename?: 'MovementNodeConnection', edges: Array<{ __typename?: 'MovementNodeEdge', cursor: string, node?: { __typename?: 'MovementNode', id: string, name: string, description: string, primaryMuscleGroup: string, equipmentType: string, movementType: string } | null } | null> } | null };
+export type GetMovementsQuery = { __typename?: 'Query', movements?: { __typename?: 'MovementNodeConnection', edges: Array<{ __typename?: 'MovementNodeEdge', cursor: string, node?: { __typename?: 'MovementNode', id: string, name: string, description: string, primaryMuscleGroup: string, secondaryMuscleGroup: string, equipmentType: string, movementType: string } | null } | null> } | null };
 
 export type WeekInReviewQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type WeekInReviewQuery = { __typename?: 'Query', weekInReview?: { __typename?: 'WeekInReview', message?: string | null, totalWorkouts?: number | null, totalVolume?: string | null, topMuscleGroup?: string | null, totalCardio?: string | null, favoriteEquipment?: string | null } | null };
+export type WeekInReviewQuery = { __typename?: 'Query', weekInReview?: { __typename?: 'WeekInReview', message?: string | null, totalWorkouts?: number | null, totalVolume?: string | null, topMuscleGroup?: string | null, totalCardio?: string | null, totalWorkoutDuration?: string | null, favoriteEquipment?: string | null } | null };
 
 export type GetWorkoutQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -773,6 +888,7 @@ export const GetMovementsDocument = gql`
         name
         description
         primaryMuscleGroup
+        secondaryMuscleGroup
         equipmentType
         movementType
       }
@@ -825,6 +941,7 @@ export const WeekInReviewDocument = gql`
     totalVolume
     topMuscleGroup
     totalCardio
+    totalWorkoutDuration
     favoriteEquipment
   }
 }

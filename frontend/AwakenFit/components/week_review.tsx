@@ -8,6 +8,14 @@ import { baseStyles, lightColors, darkColors } from "@/styles/global";
 
 export default function WeekReview() {
     const colorScheme = useColorScheme();
+    const headerColor =
+        colorScheme === "light"
+            ? lightColors.primaryColor
+            : darkColors.primaryColor;
+    const secondaryColor =
+        colorScheme === "light"
+            ? lightColors.secondaryColor
+            : darkColors.secondaryColor;
 
     const { loading, error, data } = useWeekInReviewQuery({
         fetchPolicy: "no-cache",
@@ -15,76 +23,129 @@ export default function WeekReview() {
 
     if (error) {
         console.log(error);
-    }
-    if (loading) {
         return (
             <View>
                 <Text
                     style={{
                         ...baseStyles.subHeader,
-                        color:
-                            colorScheme === "light"
-                                ? lightColors.primaryColor
-                                : darkColors.primaryColor,
+                        color: headerColor,
                     }}
                 >
                     Week in Review
-                    <Text>Loading</Text>
                 </Text>
+                <Text>Error</Text>
             </View>
         );
     }
 
-    if (data && data?.weekInReview?.message === "N/A") {
-        return (
-            <View>
-                <Text
-                    style={{
-                        ...baseStyles.subHeader,
-                        color:
-                            colorScheme === "light"
-                                ? lightColors.primaryColor
-                                : darkColors.primaryColor,
-                    }}
-                >
-                    Week in Review
-                </Text>
-                <View>
-                    <View>
-                        <Text>Total Workouts:</Text>
-                        <Text>{data.weekInReview.totalWorkouts}</Text>
-                    </View>
-                    <View>
-                        <Text>Total Volume:</Text>
-                        <Text>{data.weekInReview.totalVolume}</Text>
-                    </View>
-                    <View>
-                        <Text>Top Muscle Group:</Text>
-                        <Text>{data.weekInReview.topMuscleGroup}</Text>
-                    </View>
-                    <View>
-                        <Text>Favorite Equipment:</Text>
-                        <Text>{data.weekInReview.favoriteEquipment}</Text>
-                    </View>
-                </View>
-            </View>
-        );
-    }
     return (
         <View>
             <Text
                 style={{
                     ...baseStyles.subHeader,
-                    color:
-                        colorScheme === "light"
-                            ? lightColors.primaryColor
-                            : darkColors.primaryColor,
+                    color: headerColor,
                 }}
             >
                 Week in Review
             </Text>
             {loading && <Spinner />}
-            {data && <Text>{data?.weekInReview?.message}</Text>}
+            {data && data?.weekInReview?.message === "N/A" && (
+                <View>
+                    <View style={baseStyles.spacedRow}>
+                        <Text
+                            style={{
+                                ...baseStyles.text,
+                                color: secondaryColor,
+                            }}
+                        >
+                            Total Workouts:
+                        </Text>
+                        <Text
+                            style={{
+                                ...baseStyles.text,
+                                color: secondaryColor,
+                            }}
+                        >
+                            {data.weekInReview.totalWorkouts}
+                        </Text>
+                    </View>
+                    <View style={baseStyles.spacedRow}>
+                        <Text
+                            style={{
+                                ...baseStyles.text,
+                                color: secondaryColor,
+                            }}
+                        >
+                            Total Duration:
+                        </Text>
+                        <Text
+                            style={{
+                                ...baseStyles.text,
+                                color: secondaryColor,
+                            }}
+                        >
+                            {data.weekInReview.totalWorkoutDuration}
+                        </Text>
+                    </View>
+                    <View style={baseStyles.spacedRow}>
+                        <Text
+                            style={{
+                                ...baseStyles.text,
+                                color: secondaryColor,
+                            }}
+                        >
+                            Total Volume:
+                        </Text>
+                        <Text
+                            style={{
+                                ...baseStyles.text,
+                                color: secondaryColor,
+                            }}
+                        >
+                            {data.weekInReview.totalVolume}
+                        </Text>
+                    </View>
+                    <View style={baseStyles.spacedRow}>
+                        <Text
+                            style={{
+                                ...baseStyles.text,
+                                color: secondaryColor,
+                            }}
+                        >
+                            Top Muscle Group:
+                        </Text>
+                        <Text
+                            style={{
+                                ...baseStyles.text,
+                                color: secondaryColor,
+                            }}
+                        >
+                            {data.weekInReview.topMuscleGroup}
+                        </Text>
+                    </View>
+                    <View style={baseStyles.spacedRow}>
+                        <Text
+                            style={{
+                                ...baseStyles.text,
+                                color: secondaryColor,
+                            }}
+                        >
+                            Favorite Equipment:
+                        </Text>
+                        <Text
+                            style={{
+                                ...baseStyles.text,
+                                color: secondaryColor,
+                            }}
+                        >
+                            {data.weekInReview.favoriteEquipment}
+                        </Text>
+                    </View>
+                </View>
+            )}
+            {data && data?.weekInReview?.message !== "N/A" && (
+                <Text>{data?.weekInReview?.message}</Text>
+            )}
         </View>
     );
 }

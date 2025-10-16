@@ -9,6 +9,7 @@ class WeekInReview(ObjectType):
     top_muscle_group = String()
     total_cardio = String()
     favorite_equipment = String()
+    total_workout_duration = String()
     message = String()
 
 

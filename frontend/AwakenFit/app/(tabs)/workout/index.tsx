@@ -219,7 +219,7 @@ export default function Workout() {
     function handleRecordWorkout() {
         var mutation_input: WorkoutCreateCompletedInput = {
             startTime: state.start_time,
-            stopTime: state.start_time,
+            stopTime: state.stop_time,
             exercises: [],
         };
         state.exercises.forEach((element) => {

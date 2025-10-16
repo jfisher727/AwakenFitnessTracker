@@ -1,21 +1,26 @@
-import { useColorScheme } from 'react-native';
-import { Redirect, Tabs } from 'expo-router';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, ApolloLink, concat } from '@apollo/client';
+import { useColorScheme } from "react-native";
+import { Redirect, Tabs } from "expo-router";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import {
+    ApolloClient,
+    InMemoryCache,
+    ApolloProvider,
+    HttpLink,
+    ApolloLink,
+    concat,
+} from "@apollo/client";
 
-import { useSession } from '../../auth/AuthContext';
+import { useSession } from "../../auth/AuthContext";
 
-import { darkColors, lightColors } from '@/styles/global';
+import { darkColors, lightColors } from "@/styles/global";
 
-import Spinner from '@/components/general/spinner';
+import Spinner from "@/components/general/spinner";
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
-
 
 export default function TabsLayout() {
     const { session, isLoading } = useSession();
     const colorScheme = useColorScheme();
-
 
     // You can keep the splash screen open, or render a loading screen like we do here.
     if (isLoading) {
@@ -37,7 +42,7 @@ export default function TabsLayout() {
         const token = decoded.token;
         operation.setContext({
             headers: {
-                'X-Session-Token': token ? token : "",
+                "X-Session-Token": token ? token : "",
             },
         });
         return forward(operation);
@@ -45,42 +50,57 @@ export default function TabsLayout() {
 
     const client = new ApolloClient({
         link: concat(authMiddleware, httpLink),
-        cache: new InMemoryCache()
+        cache: new InMemoryCache(),
     });
 
     // This layout can be deferred because it's not the root layout.
     return (
         <ApolloProvider client={client}>
-            <Tabs screenOptions={{
-                headerShown: false,
-                tabBarActiveTintColor: colorScheme === 'light' ? lightColors.primaryColor : darkColors.primaryColor
-            }}>
+            <Tabs
+                screenOptions={{
+                    headerShown: false,
+                    tabBarActiveTintColor:
+                        colorScheme === "light"
+                            ? lightColors.primaryColor
+                            : darkColors.primaryColor,
+                }}
+            >
                 <Tabs.Screen
                     name="index"
                     options={{
-                        title: 'Home',
-                        tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
+                        title: "Home",
+                        tabBarIcon: ({ color }) => (
+                            <FontAwesome size={28} name="home" color={color} />
+                        ),
                     }}
                 />
                 <Tabs.Screen
                     name="management"
                     options={{
-                        title: 'Workout',
-                        tabBarIcon: ({ color }) => <FontAwesome size={28} name="gamepad" color={color} />,
+                        title: "Workout",
+                        tabBarIcon: ({ color }) => (
+                            <FontAwesome
+                                size={28}
+                                name="gamepad"
+                                color={color}
+                            />
+                        ),
                     }}
                 />
                 <Tabs.Screen
                     name="profile"
                     options={{
-                        title: 'Profile',
-                        tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
+                        title: "Profile",
+                        tabBarIcon: ({ color }) => (
+                            <FontAwesome size={28} name="cog" color={color} />
+                        ),
                     }}
                 />
                 <Tabs.Screen
                     name="workout"
                     options={{
                         href: null,
-                        tabBarStyle: { display: 'none' }
+                        tabBarStyle: { display: "none" },
                     }}
                 />
             </Tabs>
