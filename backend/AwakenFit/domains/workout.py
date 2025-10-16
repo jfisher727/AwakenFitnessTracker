@@ -58,8 +58,9 @@ def create_workout(
     start_time: datetime,
     stop_time: datetime,
     template: bool,
-    notes: str,
+    notes: str | None = None,
     name: str = "",
+    template_id: int | None = None,
 ) -> Workout | None:
     created_record = None
     if UserDomain.is_valid_id(user_id):
@@ -69,6 +70,12 @@ def create_workout(
         if len(notes) > MAX_NOTES_LENGTH:
             notes = notes[:MAX_NOTES_LENGTH]
         created_record = Workout.objects.create(
-            user=user, start_time=start_time, stop_time=stop_time, template=template, name=name, notes=notes
+            user=user,
+            start_time=start_time,
+            stop_time=stop_time,
+            template=template,
+            name=name,
+            notes=notes,
+            template_id=template_id,
         )
     return created_record

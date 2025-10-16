@@ -397,6 +397,7 @@ export type WorkoutCreateCompletedInput = {
   notes?: InputMaybe<Scalars['String']['input']>;
   startTime: Scalars['DateTime']['input'];
   stopTime: Scalars['DateTime']['input'];
+  templateId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type WorkoutCreateTemplate = {
@@ -430,6 +431,7 @@ export type WorkoutDayNode = Node & {
   workoutTwo?: Maybe<WorkoutNode>;
 };
 
+/** This object describes a user workout, either completed or template */
 export type WorkoutNode = Node & {
   __typename?: 'WorkoutNode';
   exercises?: Maybe<Array<Maybe<ExerciseNode>>>;

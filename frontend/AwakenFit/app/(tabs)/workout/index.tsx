@@ -38,24 +38,6 @@ function CurrentISOFormattedDate() {
     return new Date().toISOString();
 }
 
-const INITIAL_STATE: workoutStateProps = {
-    screen: "blank",
-    template_id: "",
-    start_time: CurrentISOFormattedDate(),
-    stop_time: "",
-    current_exercise: "",
-    exercises: [],
-    editing: false,
-    buttons: {
-        historical: true,
-        add_exercise: true,
-        end_workout: true,
-        add_set: false,
-        edit_movements: false,
-        notes: false,
-    },
-};
-
 export default function Workout() {
     const params = useLocalSearchParams();
     const colorScheme = useColorScheme();
@@ -64,6 +46,25 @@ export default function Workout() {
     const [initialLoad, setInitialLoad] = useState(true);
     const [workoutMutation, workoutMutationResult] =
         useWorkoutCreateCompletedMutation();
+
+    const INITIAL_STATE: workoutStateProps = {
+        screen: "blank",
+        template_id: "",
+        start_time: CurrentISOFormattedDate(),
+        stop_time: "",
+        current_exercise: "",
+        workout_id: params.id ? String(params.id) : "",
+        exercises: [],
+        editing: false,
+        buttons: {
+            historical: true,
+            add_exercise: true,
+            end_workout: true,
+            add_set: false,
+            edit_movements: false,
+            notes: false,
+        },
+    };
 
     const [state, dispatch] = useReducer(workoutStateReducer, INITIAL_STATE);
 
@@ -222,6 +223,9 @@ export default function Workout() {
             stopTime: state.stop_time,
             exercises: [],
         };
+        if (state.workout_id.length > 0) {
+            mutation_input.templateId = state.workout_id;
+        }
         state.exercises.forEach((element) => {
             var exercise_data: ExerciseCreateCompletedInput = {
                 movementId: element.movement.id,

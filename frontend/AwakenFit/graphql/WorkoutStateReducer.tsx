@@ -6,6 +6,7 @@ export type workoutStateProps = {
     start_time: string;
     stop_time: string;
     current_exercise: string;
+    workout_id: string;
     exercises: ExerciseNode[];
     editing: boolean;
     buttons: {
@@ -19,7 +20,6 @@ export type workoutStateProps = {
 };
 
 export const ActionTypes = {
-    LOAD_STATE: "LOAD_STATE",
     ADD_EXERCISE: "ADD_EXERCISE",
     ADD_SETS: "ADD_SETS",
     SET_EXERCISES: "SET_EXERCISES",
@@ -44,11 +44,6 @@ export const ScreenOptions = {
     WORKOUT_REVIEW: "WORKOUT_REVIEW",
     NOTES: "NOTES",
 };
-
-interface LoadStateAction {
-    type: typeof ActionTypes.LOAD_STATE;
-    payload: workoutStateProps;
-}
 
 interface AddExerciseAction {
     type: typeof ActionTypes.ADD_EXERCISE;
@@ -155,12 +150,6 @@ export function workoutStateReducer(
     action: WorkoutActions
 ): workoutStateProps {
     switch (action.type) {
-        case ActionTypes.LOAD_STATE: {
-            const payload = (action as LoadStateAction).payload;
-            return {
-                ...payload,
-            };
-        }
         case ActionTypes.ADD_EXERCISE: {
             const payload = (action as AddExerciseAction).payload;
             const currentExercises = state.exercises;
