@@ -112,11 +112,13 @@ class WorkoutSchemaTest(GraphQLTestCase):
                 $notes: String,
                 $startTime: DateTime!,
                 $stopTime: DateTime!,
+                $templateId: ID,
                 $exercises: [ExerciseCreateCompletedInput]!
             ) {
                 workoutCreateCompleted(input: {notes: $notes,
                                               startTime: $startTime,
                                               stopTime: $stopTime,
+                                              templateId: $templateId,
                                               exercises: $exercises}) {
                     workout {
                         id
@@ -288,3 +290,48 @@ class WorkoutSchemaTest(GraphQLTestCase):
         self.assertIsNotNone(content["data"]["workoutCreateCompleted"]["workout"])
         self.assertEqual(0, len(content["data"]["workoutCreateCompleted"]["errors"]))
         self.assertTrue(Workout.objects.filter(notes="Mutation Test Note").exists())
+
+    def test_workout_create_completed_mutation_optional_template_id(self):
+        self.assertFalse(Workout.objects.filter(notes="Mutation Test Note").exists())
+
+        self.client.login(username="testuser1", password="testpassword1")
+        response = self.query(
+            self.workout_create_completed_mutation,
+            operation_name="workoutCreateCompleted",
+            variables={
+                "notes": "Mutation Test Note 2",
+                "startTime": timezone.now().isoformat(),
+                "stopTime": (timezone.now() + timedelta(minutes=30)).isoformat(),
+                "templateId": to_global_id("Workout", self.test_workout2.id),
+                "exercises": [
+                    {
+                        "movementId": to_global_id("Movement", self.test_movement.id),
+                        "standardSets": [
+                            {"sequenceNumber": 1, "completedReps": 4, "weight": 135},
+                            {"sequenceNumber": 2, "completedReps": 4, "weight": 135},
+                            {"sequenceNumber": 3, "completedReps": 4, "weight": 135},
+                        ],
+                    },
+                    {
+                        "movementId": to_global_id("Movement", self.test_movement2.id),
+                        "nonStandardSets": {
+                            "setType": "Drop Set",
+                            "associatedSets": [
+                                {"sequenceNumber": 1, "completedReps": 4, "weight": 135},
+                                {"sequenceNumber": 2, "completedReps": 4, "weight": 115},
+                                {"sequenceNumber": 3, "completedReps": 4, "weight": 105},
+                            ],
+                        },
+                    },
+                ],
+            },
+        )
+
+        content = json.loads(response.content)
+
+        self.assertResponseNoErrors(response)
+        self.assertIsNotNone(content["data"]["workoutCreateCompleted"]["workout"])
+        self.assertEqual(0, len(content["data"]["workoutCreateCompleted"]["errors"]))
+        created_workout = Workout.objects.filter(notes="Mutation Test Note 2").first()
+        self.assertIsNotNone(created_workout, "Expected a workout to be created")
+        self.assertEqual(created_workout.template_id, self.test_workout2.id)

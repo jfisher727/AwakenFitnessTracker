@@ -1,6 +1,6 @@
 from graphql_relay import from_global_id
 
-from graphene import Mutation, Node, ObjectType, InputObjectType, Field, List, DateTime, String
+from graphene import Mutation, Node, ObjectType, InputObjectType, Field, List, DateTime, String, ID
 
 from graphene_django import DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
@@ -25,7 +25,7 @@ class WorkoutNode(DjangoObjectType):
     class Meta:
         model = Workout
         interfaces = (Node,)
-        description = ""
+        description = "This object describes a user workout, either completed or template"
         filterset_class = WorkoutFilter
         fields = (
             "id",
@@ -56,6 +56,7 @@ class WorkoutCreateCompletedInput(InputObjectType):
     exercises = List(ExerciseCreateCompletedInput, required=True)
     start_time = DateTime(required=True)
     stop_time = DateTime(required=True)
+    template_id = ID(required=False)
     notes = String(required=False)
 
 
@@ -148,7 +149,18 @@ class WorkoutCreateCompleted(Mutation):
         errors.extend(MutationDomain.validate_workout_completed_input(input))
 
         if not errors:
-            workout = WorkoutDomain.create_workout(user.id, input.start_time, input.stop_time, False, input.notes)
+            template_id = None
+            if input.template_id is not None:
+                template_id = from_global_id(input.template_id).id
+
+            workout = WorkoutDomain.create_workout(
+                user.id,
+                input.start_time,
+                input.stop_time,
+                False,
+                input.notes,
+                template_id=template_id,
+            )
             for entry in input.exercises:
                 created_exercise = ExerciseDomain.create_exercise(
                     from_global_id(entry.movement_id).id,

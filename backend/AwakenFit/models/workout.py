@@ -18,6 +18,7 @@ class Workout(BaseModel):
     template = models.BooleanField(default=False)
     name = models.CharField(max_length=255, blank=True)
     notes = models.CharField(max_length=500, blank=True)
+    template_id = models.IntegerField(default=0, null=True, blank=True)
 
     def __str__(self) -> str:
         repr = list()
