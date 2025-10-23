@@ -5,7 +5,6 @@ import {
     TextInput,
     FlatList,
     Pressable,
-    Button,
     Platform,
     useColorScheme,
     KeyboardAvoidingView,
@@ -15,7 +14,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import { SetNode } from "@/graphql/types";
 import { ExerciseProps, MovementNode } from "@/graphql/properties";
-import { ScreenOptions } from "@/graphql/WorkoutStateReducer";
+import { ScreenOptions } from "@/state/WorkoutStateReducer";
 
 import { baseStyles, lightColors, darkColors } from "@/styles/global";
 
@@ -425,11 +424,16 @@ export default function CurrentExercise({
     }
 
     return (
-        <View style={{ height: "95%" }}>
-            <View style={{ ...baseStyles.leftJustifiedRow, height: "auto" }}>
+        <View>
+            <Pressable
+                style={{ ...baseStyles.leftJustifiedRow, height: "auto" }}
+                onPress={handleNavigateBack}
+            >
                 <FontAwesome size={28} name="chevron-left" color={color} />
-                <Button title="Execise List" onPress={handleNavigateBack} />
-            </View>
+                <Text style={{ ...baseStyles.text, color: color }}>
+                    Exercise List
+                </Text>
+            </Pressable>
             <Text style={{ ...baseStyles.mediumHeader, color: color }}>
                 {exercise.movement.name}
             </Text>
@@ -450,6 +454,7 @@ export default function CurrentExercise({
                     )}
                     keyExtractor={(item) => item.id}
                     ItemSeparatorComponent={HorzontalLine}
+                    // this provides the buffer between the sets and the button row
                     style={{ height: "80%" }}
                 />
             </KeyboardAvoidingView>

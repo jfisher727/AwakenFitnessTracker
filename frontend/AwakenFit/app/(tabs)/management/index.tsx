@@ -1,13 +1,12 @@
-import { useColorScheme } from 'react-native';
-import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
+import { useColorScheme } from "react-native";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import { router } from "expo-router";
 
-import { baseStyles, lightColors, darkColors } from '@/styles/global';
+import { baseStyles, lightColors, darkColors } from "@/styles/global";
 
-import CustomButton from '@/components/general/button';
+import CustomButton from "@/components/general/button";
 
-import Calendar from '@/components/workout/calendar';
-
+import Calendar from "@/components/workout/calendar";
 
 export default function Management() {
     const colorScheme = useColorScheme();
@@ -17,19 +16,32 @@ export default function Management() {
     }
 
     function programPressed() {
-        // will be populated once the workout plan backend is implemented
+        router.navigate("/(tabs)/management/programs");
     }
 
     return (
         <SafeAreaProvider>
-            <SafeAreaView style={{
-                ...baseStyles.container,
-                backgroundColor: colorScheme === 'light' ? lightColors.background : darkColors.background
-            }}>
+            <SafeAreaView
+                style={{
+                    ...baseStyles.container,
+                    backgroundColor:
+                        colorScheme === "light"
+                            ? lightColors.background
+                            : darkColors.background,
+                }}
+            >
                 <Calendar />
 
-                <CustomButton text="Workout Templates" onPress={workoutTemplatesPressed} disabled={false} />
-                <CustomButton text="Workout Programs" onPress={programPressed} disabled={false} />
+                <CustomButton
+                    text="Workout Templates"
+                    onPress={workoutTemplatesPressed}
+                    disabled={false}
+                />
+                <CustomButton
+                    text="Workout Programs"
+                    onPress={programPressed}
+                    disabled={false}
+                />
             </SafeAreaView>
         </SafeAreaProvider>
     );

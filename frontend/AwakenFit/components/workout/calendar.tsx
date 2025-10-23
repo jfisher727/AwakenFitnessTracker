@@ -1,30 +1,37 @@
-import { Text, View, useColorScheme, Pressable } from 'react-native';
-import { useState, useEffect } from 'react';
+import { Text, View, useColorScheme, Pressable } from "react-native";
+import { useState, useEffect } from "react";
 
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
-import { useGetWorkoutsLazyQuery, WorkoutNodeEdge } from '@/graphql/types';
+import { useGetWorkoutsLazyQuery, WorkoutNodeEdge } from "@/graphql/types";
 
-import { baseStyles, lightColors, darkColors } from '@/styles/global';
+import { baseStyles, lightColors, darkColors } from "@/styles/global";
 
-import { date_formatter, getFirstDayOfMonth, getDaysInMonth, getMonthName } from '@/util/date';
+import {
+    date_formatter,
+    getFirstDayOfMonth,
+    getDaysInMonth,
+    getMonthName,
+} from "@/util/date";
 
-import Spinner from '../general/spinner';
+import Spinner from "../general/spinner";
 
 type CalendarGridParams = {
-    month: number,
-    year: number,
-    events: WorkoutNodeEdge[],
-    theme: string
+    month: number;
+    year: number;
+    events: WorkoutNodeEdge[];
+    theme: string;
 };
 
 function CalendarGrid({ month, year, events, theme }: CalendarGridParams) {
     const firstDay = getFirstDayOfMonth(year, month);
     const daysInMonth = getDaysInMonth(year, month);
-    const color = theme === 'light' ? lightColors.primaryColor : darkColors.primaryColor;
-    const badgeColor = theme === 'light' ? lightColors.accent : darkColors.accent;
+    const color =
+        theme === "light" ? lightColors.primaryColor : darkColors.primaryColor;
+    const badgeColor =
+        theme === "light" ? lightColors.accent : darkColors.accent;
 
-    const weekdayLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const weekdayLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const columnCount = 7;
     var rowCount = 5;
 
@@ -49,7 +56,9 @@ function CalendarGrid({ month, year, events, theme }: CalendarGridParams) {
 
     function handleCellPress(day: number | null) {
         if (day) {
-            const formatted_date = date_formatter(new Date(year, month, day).toISOString());
+            const formatted_date = date_formatter(
+                new Date(year, month, day).toISOString()
+            );
             if (formatted_date in groupedEvents) {
                 console.log(groupedEvents[formatted_date]);
             }
@@ -57,28 +66,37 @@ function CalendarGrid({ month, year, events, theme }: CalendarGridParams) {
     }
 
     function getEventsForDay(day: number) {
-        const formatted_date = date_formatter(new Date(year, month, day).toISOString());
+        const formatted_date = date_formatter(
+            new Date(year, month, day).toISOString()
+        );
         return groupedEvents[formatted_date]?.length;
     }
 
     return (
         <View style={{ borderWidth: 1, borderColor: color }}>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{ flexDirection: "row" }}>
                 {weekdayLabels.map((label) => (
-                    <View key={label} style={{
-                        ...baseStyles.cell,
-                        backgroundColor: '#eee'
-                    }}>
-                        <Text style={{
-                            fontWeight: 'bold',
-                            fontSize: 12,
-                            color: color
-                        }}>{label}</Text>
+                    <View
+                        key={label}
+                        style={{
+                            ...baseStyles.cell,
+                            backgroundColor: "#eee",
+                        }}
+                    >
+                        <Text
+                            style={{
+                                fontWeight: "bold",
+                                fontSize: 12,
+                                color: color,
+                            }}
+                        >
+                            {label}
+                        </Text>
                     </View>
                 ))}
             </View>
             {[...Array(rowCount)].map((_, rowIndex) => (
-                <View key={rowIndex} style={{ flexDirection: 'row' }}>
+                <View key={rowIndex} style={{ flexDirection: "row" }}>
                     {[...Array(columnCount)].map((_, colIndex) => {
                         const index = rowIndex * 7 + colIndex;
                         const day = datesArray[index];
@@ -95,23 +113,32 @@ function CalendarGrid({ month, year, events, theme }: CalendarGridParams) {
                                 }}
                             >
                                 <>
-                                    {
-                                        day &&
-                                        <Text style={{
-                                            position: 'absolute',
-                                            top: 4,
-                                            right: 4,
-                                            fontSize: 12,
-                                            fontWeight: 'bold',
-                                            color: color
-                                        }}>{day ?? ''}</Text>
-                                    }
-                                    {
-                                        daysEvents &&
-                                        <View style={{ ...baseStyles.badge, backgroundColor: badgeColor }}>
-                                            <Text style={baseStyles.badgeText}>{daysEvents}</Text>
+                                    {day && (
+                                        <Text
+                                            style={{
+                                                position: "absolute",
+                                                top: 4,
+                                                right: 4,
+                                                fontSize: 12,
+                                                fontWeight: "bold",
+                                                color: color,
+                                            }}
+                                        >
+                                            {day ?? ""}
+                                        </Text>
+                                    )}
+                                    {daysEvents && (
+                                        <View
+                                            style={{
+                                                ...baseStyles.badge,
+                                                backgroundColor: badgeColor,
+                                            }}
+                                        >
+                                            <Text style={baseStyles.badgeText}>
+                                                {daysEvents}
+                                            </Text>
                                         </View>
-                                    }
+                                    )}
                                 </>
                             </Pressable>
                         );
@@ -124,7 +151,10 @@ function CalendarGrid({ month, year, events, theme }: CalendarGridParams) {
 
 export default function Calendar() {
     const colorScheme = useColorScheme();
-    const color = colorScheme === 'light' ? lightColors.primaryColor : darkColors.primaryColor
+    const color =
+        colorScheme === "light"
+            ? lightColors.primaryColor
+            : darkColors.primaryColor;
 
     const now = new Date();
 
@@ -136,7 +166,7 @@ export default function Calendar() {
         const variables = { startMonth: month + 1, startYear: year };
 
         execute({
-            variables: variables
+            variables: variables,
         });
     }, [month, year]);
 
@@ -148,8 +178,7 @@ export default function Calendar() {
         if (month === 0) {
             setMonth(11);
             setYear(year - 1);
-        }
-        else {
+        } else {
             setMonth(month - 1);
         }
     }
@@ -158,31 +187,40 @@ export default function Calendar() {
         if (month === 11) {
             setMonth(0);
             setYear(year + 1);
-        }
-        else {
+        } else {
             setMonth(month + 1);
         }
     }
 
+    var headerFontSize: Number = 40;
     return (
         <View>
             <View style={baseStyles.spacedRow}>
                 <Pressable onPress={handleDecreaseMonth}>
                     <FontAwesome size={28} name="chevron-left" color={color} />
                 </Pressable>
-                <Text style={{ ...baseStyles.header, color: color }}>{getMonthName(month)}, {year}</Text>
+                <Text
+                    style={{
+                        ...baseStyles.header,
+                        color: color,
+                        fontSize: headerFontSize,
+                    }}
+                >
+                    {getMonthName(month)}, {year}
+                </Text>
                 <Pressable onPress={handleIncreaseMonth}>
                     <FontAwesome size={28} name="chevron-right" color={color} />
                 </Pressable>
             </View>
-            {
-                data &&
-                <CalendarGrid month={month} year={year} events={data?.workouts?.edges} color={color} />
-            }
-            {
-                loading &&
-                <Spinner />
-            }
+            {data && (
+                <CalendarGrid
+                    month={month}
+                    year={year}
+                    events={data?.workouts?.edges}
+                    color={color}
+                />
+            )}
+            {loading && <Spinner />}
         </View>
     );
 }

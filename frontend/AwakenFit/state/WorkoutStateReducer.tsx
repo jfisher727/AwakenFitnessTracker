@@ -1,4 +1,4 @@
-import { SetNode, ExerciseNode } from "./types";
+import { SetNode, ExerciseNode } from "../graphql/types";
 
 export type workoutStateProps = {
     screen: string;

@@ -3,7 +3,7 @@ import { View, Pressable, Text, useColorScheme } from "react-native";
 
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
-import { ScreenOptions } from "@/graphql/WorkoutStateReducer";
+import { ScreenOptions } from "@/state/WorkoutStateReducer";
 
 import { baseStyles, lightColors, darkColors } from "@/styles/global";
 import { hexToRGBA } from "@/util/color";
