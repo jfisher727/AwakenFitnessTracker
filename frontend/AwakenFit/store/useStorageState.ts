@@ -26,37 +26,6 @@ export async function storeData(key: string, value: string | null) {
     }
 }
 
-export async function storeAppState(value: string | null) {
-    console.log("store app state called");
-    try {
-        const file = new File(Paths.cache, "state.json");
-        if (file.exists) {
-            file.delete();
-        }
-        console.log(value);
-        if (value === null) {
-            console.log("no value provided, removing file");
-            if (file.exists) {
-                file.delete();
-            }
-        } else {
-            console.log(value);
-            file.create(); // can throw an error if the file already exists or no permission to create it
-            file.write(value);
-            //console.log(file.textSync()); // Hello, world!
-        }
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-export async function getAppState() {
-    const file = new File(Paths.cache, "state.json");
-    const content = file.text();
-    file.delete();
-    return content;
-}
-
 export async function getData(key: string) {
     return localStorage.getItem(key);
 }

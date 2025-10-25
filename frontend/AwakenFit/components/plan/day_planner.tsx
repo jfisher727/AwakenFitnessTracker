@@ -53,7 +53,6 @@ export default function DayPlanner({
         value: "",
     });
     const [workoutsSelected, setWorkoutsSelected] = useState<keyvalue[]>([]);
-    const [showAddWorkout, setShowAddWorkout] = useState(false);
 
     const textColor =
         colorScheme === "light"
@@ -74,7 +73,6 @@ export default function DayPlanner({
     }
 
     function handleSaveDay() {
-        console.log("save day called");
         if (workoutsSelected.length > 0) {
             save_day(
                 day_number,
@@ -83,14 +81,13 @@ export default function DayPlanner({
                 workoutsSelected[2]?.key
             );
             setWorkoutsSelected([]);
-            setShowAddWorkout(false);
+            setCurrentSelection({
+                key: "",
+                value: "",
+            });
         } else {
             add_rest_day();
         }
-    }
-
-    function toggleShowAddWorkout() {
-        setShowAddWorkout(!showAddWorkout);
     }
 
     return (
@@ -98,36 +95,20 @@ export default function DayPlanner({
             <Text style={{ ...baseStyles.subHeader, color: textColor }}>
                 Plan - Day {day_number}
             </Text>
-            {workoutsSelected.length === 0 && (
-                <>
-                    <Text style={{ ...baseStyles.text, color: textColor }}>
-                        Rest Day?
-                    </Text>
-                    <CustomButton
-                        text="Add Workout"
-                        onPress={toggleShowAddWorkout}
-                        disabled={false}
-                    />
-                </>
-            )}
-            {showAddWorkout && (
-                <>
-                    <DropdownSelect
-                        placeHolder="Your Workout Templates"
-                        selectedValue={currentSelection}
-                        options={templateOptions}
-                        onSelect={setCurrentSelection}
-                        showSearch={false}
-                    />
-                    <CustomButton
-                        text="Add Selection"
-                        onPress={handleWorkoutSelected}
-                        disabled={workoutsSelected.length >= 3}
-                    />
-                </>
-            )}
+            <DropdownSelect
+                placeHolder="Your Workout Templates"
+                selectedValue={currentSelection}
+                options={templateOptions}
+                onSelect={setCurrentSelection}
+                showSearch={false}
+            />
+            <CustomButton
+                text="Add Selection"
+                onPress={handleWorkoutSelected}
+                disabled={workoutsSelected.length >= 3}
+            />
             <View style={{ paddingTop: 30 }}>
-                {workoutsSelected.length > 0 && (
+                {workoutsSelected.length > 0 ? (
                     <FlatList
                         data={workoutsSelected}
                         renderItem={({ item, index }) => (
@@ -139,6 +120,10 @@ export default function DayPlanner({
                         )}
                         keyExtractor={(item) => item.key}
                     />
+                ) : (
+                    <Text style={{ ...baseStyles.text, color: textColor }}>
+                        Rest Day - No Workouts Added
+                    </Text>
                 )}
                 <CustomButton
                     text="Save Day"

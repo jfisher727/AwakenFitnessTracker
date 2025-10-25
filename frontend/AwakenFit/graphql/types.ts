@@ -538,6 +538,13 @@ export type WorkoutCreateTemplateMutationVariables = Exact<{
 
 export type WorkoutCreateTemplateMutation = { __typename?: 'Mutation', workoutCreateTemplate?: { __typename?: 'WorkoutCreateTemplate', workout?: { __typename?: 'WorkoutNode', id: string } | null, errors?: Array<{ __typename?: 'MessageNode', message?: string | null } | null> | null } | null };
 
+export type WorkoutPlanCreateMutationVariables = Exact<{
+  input: WorkoutPlanInput;
+}>;
+
+
+export type WorkoutPlanCreateMutation = { __typename?: 'Mutation', workoutPlanCreate?: { __typename?: 'WorkoutPlanCreate', plan?: { __typename?: 'WorkoutPlanNode', id: string } | null, errors?: Array<{ __typename?: 'MessageNode', message?: string | null } | null> | null } | null };
+
 export type GetExercisesQueryVariables = Exact<{
   movementId?: InputMaybe<Scalars['String']['input']>;
   after?: InputMaybe<Scalars['String']['input']>;
@@ -761,6 +768,44 @@ export function useWorkoutCreateTemplateMutation(baseOptions?: Apollo.MutationHo
 export type WorkoutCreateTemplateMutationHookResult = ReturnType<typeof useWorkoutCreateTemplateMutation>;
 export type WorkoutCreateTemplateMutationResult = Apollo.MutationResult<WorkoutCreateTemplateMutation>;
 export type WorkoutCreateTemplateMutationOptions = Apollo.BaseMutationOptions<WorkoutCreateTemplateMutation, WorkoutCreateTemplateMutationVariables>;
+export const WorkoutPlanCreateDocument = gql`
+    mutation workoutPlanCreate($input: WorkoutPlanInput!) {
+  workoutPlanCreate(input: $input) {
+    plan {
+      id
+    }
+    errors {
+      message
+    }
+  }
+}
+    `;
+export type WorkoutPlanCreateMutationFn = Apollo.MutationFunction<WorkoutPlanCreateMutation, WorkoutPlanCreateMutationVariables>;
+
+/**
+ * __useWorkoutPlanCreateMutation__
+ *
+ * To run a mutation, you first call `useWorkoutPlanCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useWorkoutPlanCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [workoutPlanCreateMutation, { data, loading, error }] = useWorkoutPlanCreateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useWorkoutPlanCreateMutation(baseOptions?: Apollo.MutationHookOptions<WorkoutPlanCreateMutation, WorkoutPlanCreateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<WorkoutPlanCreateMutation, WorkoutPlanCreateMutationVariables>(WorkoutPlanCreateDocument, options);
+      }
+export type WorkoutPlanCreateMutationHookResult = ReturnType<typeof useWorkoutPlanCreateMutation>;
+export type WorkoutPlanCreateMutationResult = Apollo.MutationResult<WorkoutPlanCreateMutation>;
+export type WorkoutPlanCreateMutationOptions = Apollo.BaseMutationOptions<WorkoutPlanCreateMutation, WorkoutPlanCreateMutationVariables>;
 export const GetExercisesDocument = gql`
     query GetExercises($movementId: String, $after: String, $before: String, $count: Int) {
   exercises(

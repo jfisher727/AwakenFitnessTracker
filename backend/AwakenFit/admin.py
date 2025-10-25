@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Exercise, Movement, Set, Workout
+from .models import Exercise, Movement, Set, Workout, WorkoutPlan
 
 # Register your models here.
 
@@ -31,4 +31,5 @@ class WorkoutAdmin(admin.ModelAdmin):
 admin.site.register(Movement, MovementAdmin)
 admin.site.register(Workout, WorkoutAdmin)
 admin.site.register(Exercise, ExerciseAdmin)
+admin.site.register(WorkoutPlan)
 admin.site.register(Set)

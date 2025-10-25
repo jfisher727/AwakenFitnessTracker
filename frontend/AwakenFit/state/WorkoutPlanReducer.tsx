@@ -65,7 +65,8 @@ export function workoutPlanReducer(
             const payload = (action as SetDetailsAction).payload;
             return {
                 ...state,
-                name: payload,
+                name: payload.name,
+                type: payload.type,
             };
         }
         case ActionTypes.CHANGE_SCREEN: {

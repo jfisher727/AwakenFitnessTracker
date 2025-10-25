@@ -130,7 +130,6 @@ interface ResetStateAction {
 }
 
 type WorkoutActions =
-    | LoadStateAction
     | AddExerciseAction
     | AddSetsAction
     | SetStopTimeAction

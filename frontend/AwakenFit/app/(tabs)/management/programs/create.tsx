@@ -1,10 +1,14 @@
-import { useState, useEffect, useReducer } from "react";
+import { useReducer } from "react";
 import { View, Text, useColorScheme } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import { router } from "expo-router";
 
 import { baseStyles, lightColors, darkColors } from "@/styles/global";
 
-import { useGetWorkoutTemplatesQuery } from "@/graphql/types";
+import {
+    useGetWorkoutTemplatesQuery,
+    useWorkoutPlanCreateMutation,
+} from "@/graphql/types";
 
 import CustomButton from "@/components/general/button";
 import Spinner from "@/components/general/spinner";
@@ -27,6 +31,8 @@ export default function CreateProgram() {
     const { data, loading, error } = useGetWorkoutTemplatesQuery({
         variables: { count: 20, template: true },
     });
+    const [workoutPlanMutation, workoutPlanMutationResult] =
+        useWorkoutPlanCreateMutation();
 
     const INITIAL_STATE: workoutPlanProps = {
         screen: ScreenOptions.DETAILS,
@@ -38,15 +44,14 @@ export default function CreateProgram() {
 
     const [state, dispatch] = useReducer(workoutPlanReducer, INITIAL_STATE);
 
-    // lets leverage a flat list of selection days based the number of days the
-    // user has selected
-
-    if (loading) {
+    if (loading || workoutPlanMutationResult.loading) {
         return <Spinner />;
     }
-    if (error) {
-        console.log(JSON.stringify(error));
+    if (error || workoutPlanMutationResult.error) {
         return <Text>Error</Text>;
+    }
+    if (workoutPlanMutationResult.called && workoutPlanMutationResult.data) {
+        router.navigate("/(tabs)");
     }
 
     function handleAddDay(
@@ -80,7 +85,17 @@ export default function CreateProgram() {
         });
     }
 
-    function handleSavePressed() {}
+    function handleSavePressed() {
+        workoutPlanMutation({
+            variables: {
+                input: {
+                    name: state.name,
+                    type: state.type,
+                    days: state.days,
+                },
+            },
+        });
+    }
 
     function handleSetDetails(name: string, type: string) {
         dispatch({
@@ -167,22 +182,13 @@ export default function CreateProgram() {
                         </>
                     )}
                     {state.screen === ScreenOptions.REVIEW && (
-                        <>
-                            <Text
-                                style={{
-                                    ...baseStyles.header,
-                                    color: textColor,
-                                }}
-                            >
-                                Review
-                            </Text>
-                            <PlanReview />
-                            <CustomButton
-                                text="Save Plan"
-                                onPress={handleSavePressed}
-                                disabled={false}
-                            />
-                        </>
+                        <PlanReview
+                            name={state.name}
+                            type={state.type}
+                            days={state.days}
+                            templates={data?.workouts?.edges}
+                            handleSavePressed={handleSavePressed}
+                        />
                     )}
                 </View>
             </SafeAreaView>

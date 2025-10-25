@@ -36,6 +36,10 @@ export default function PlanDetails({ name, type, setDetails }: params) {
         setShowDescriptions(!showDescriptions);
     }
 
+    function handleSetDetails() {
+        setDetails(planName, planType.key);
+    }
+
     return (
         <>
             <TextInputField
@@ -82,7 +86,7 @@ export default function PlanDetails({ name, type, setDetails }: params) {
             />
             <CustomButton
                 text="Save Details"
-                onPress={setDetails}
+                onPress={handleSetDetails}
                 disabled={false}
             />
         </>

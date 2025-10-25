@@ -1,4 +1,4 @@
-import { Text, useColorScheme } from "react-native";
+import { View, Text, useColorScheme } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { router } from "expo-router";
 
@@ -18,7 +18,7 @@ export default function Programs() {
     }
 
     function listPressed() {
-        // router.navigate("/(tabs)/management/programs/list");
+        router.navigate("/(tabs)/management/programs/list");
     }
 
     return (
@@ -32,32 +32,34 @@ export default function Programs() {
                             : darkColors.background,
                 }}
             >
-                <Text
-                    style={{
-                        ...baseStyles.subHeader,
-                        color:
-                            colorScheme === "light"
-                                ? lightColors.primaryColor
-                                : darkColors.primaryColor,
-                    }}
-                >
-                    Manage Your Workouts Programs
-                </Text>
-                <CustomButton
-                    text="Create Program"
-                    onPress={createPressed}
-                    disabled={false}
-                />
-                <CustomButton
-                    text="Start a Program"
-                    onPress={startPressed}
-                    disabled={false}
-                />
-                <CustomButton
-                    text="Your Programs"
-                    onPress={listPressed}
-                    disabled={false}
-                />
+                <View style={baseStyles.modal}>
+                    <Text
+                        style={{
+                            ...baseStyles.subHeader,
+                            color:
+                                colorScheme === "light"
+                                    ? lightColors.primaryColor
+                                    : darkColors.primaryColor,
+                        }}
+                    >
+                        Manage Your Workouts Programs
+                    </Text>
+                    <CustomButton
+                        text="Create Program"
+                        onPress={createPressed}
+                        disabled={false}
+                    />
+                    <CustomButton
+                        text="Start a Program"
+                        onPress={startPressed}
+                        disabled={false}
+                    />
+                    <CustomButton
+                        text="Your Programs"
+                        onPress={listPressed}
+                        disabled={false}
+                    />
+                </View>
             </SafeAreaView>
         </SafeAreaProvider>
     );

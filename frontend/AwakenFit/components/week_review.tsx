@@ -94,6 +94,24 @@ export default function WeekReview() {
                                 color: secondaryColor,
                             }}
                         >
+                            Total Cardio:
+                        </Text>
+                        <Text
+                            style={{
+                                ...baseStyles.text,
+                                color: secondaryColor,
+                            }}
+                        >
+                            {data.weekInReview.totalCardio}
+                        </Text>
+                    </View>
+                    <View style={baseStyles.spacedRow}>
+                        <Text
+                            style={{
+                                ...baseStyles.text,
+                                color: secondaryColor,
+                            }}
+                        >
                             Total Volume:
                         </Text>
                         <Text
