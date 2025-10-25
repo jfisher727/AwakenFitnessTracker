@@ -167,7 +167,8 @@ class AnalyticsDomainTest(TestCase):
                 self.bb_squat_set5_volume,
             ]
         )
-        self.duration_total = "02:30:15"
+        self.total_cardio = "02 hours 30 minutes"
+        self.total_workout_duration = "01 hour 30 minutes"
 
     def test_week_in_review(self):
         result = AnalyticsDomain.calculate_week_summary(self.test_user.id)
@@ -180,7 +181,10 @@ class AnalyticsDomainTest(TestCase):
         self.assertEqual(result["total_workouts"], 2, "Did not get the expected number of workouts back")
         self.assertEqual(result["total_volume"], str(self.total_volume), "Did not receive the expected volume")
         self.assertEqual(result["favorite_equipment"], "Barbell", "Did not receive the expected favorite equipment")
-        self.assertEqual(result["total_cardio"], self.duration_total, "Did not get the expected cardio total")
+        self.assertEqual(result["total_cardio"], self.total_cardio, "Did not get the expected cardio total")
+        self.assertEqual(
+            result["total_workout_duration"], self.total_workout_duration, "Did not get the expected total workout time"
+        )
 
     def test_week_in_review_no_workouts(self):
         result = AnalyticsDomain.calculate_week_summary(self.test_user2.id)
