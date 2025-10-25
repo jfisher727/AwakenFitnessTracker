@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
 
-export default function TemplatesLayout() {
+export default function ProgramsLayout() {
     return (
         <Stack>
             <Stack.Screen

@@ -8,7 +8,7 @@ import {
     workoutStateProps,
     ActionTypes,
     ScreenOptions,
-} from "@/graphql/WorkoutStateReducer";
+} from "@/state/WorkoutStateReducer";
 
 import { ExerciseProps } from "@/graphql/properties";
 
@@ -333,76 +333,73 @@ export default function Workout() {
                             : darkColors.background,
                 }}
             >
-                <View style={baseStyles.container}>
-                    <View
-                        style={{
-                            ...baseStyles.screenContainer,
-                        }}
-                    >
-                        {(loading || workoutMutationResult.loading) && (
-                            <Spinner />
-                        )}
-                        {state.screen === ScreenOptions.MOVEMENT_LIST && (
-                            <MovementList
-                                exercises={state.exercises}
-                                editable={state.editing}
-                                showSets={false}
-                                moveExerciseUp={handleMoveExerciseUp}
-                                moveExerciseDown={handleMoveExerciseDown}
-                                setCurrentExercise={handleSetCurrentExercise}
-                                removeExercise={handleRemoveExercise}
-                            />
-                        )}
-                        {state.screen === ScreenOptions.ADD_SETS && (
-                            <AddSets
-                                navigateBack={navigateToCurrentExercise}
-                                addSets={handleAddSets}
-                            />
-                        )}
-                        {(state.screen === ScreenOptions.ADD_EXERCISE ||
-                            state.screen === "blank") && (
-                            <ExerciseSearch addExercise={handleAddExercise} />
-                        )}
-                        {state.screen === ScreenOptions.CURRENT_EXERCISE && (
-                            <CurrentExercise
-                                exercise={getCurrentExercise()}
-                                recordSet={handleRecordSet}
-                                navigateBack={handleChangeScreen}
-                            />
-                        )}
-                        {state.screen === ScreenOptions.HISTORICAL && (
-                            <ExerciseHistorical
-                                movementId={getCurrentExercise().movement.id}
-                                navigateBack={navigateToCurrentExercise}
-                            />
-                        )}
-                        {state.screen === ScreenOptions.NOTES && (
-                            <Notes
-                                exercise={getCurrentExercise()}
-                                navigateBack={navigateToCurrentExercise}
-                            />
-                        )}
-                        {state.screen === ScreenOptions.WORKOUT_REVIEW && (
-                            <WorkoutReview
-                                exercises={state.exercises}
-                                start_time={state.start_time}
-                                stop_time={state.stop_time}
-                                setCurrentExercise={handleSetCurrentExercise}
-                                recordWorkout={handleRecordWorkout}
-                            />
-                        )}
-                    </View>
-                    <View style={baseStyles.buttonContainer}>
-                        <WorkoutButtons
-                            screen={state.screen}
-                            stopWorkoutPressed={stopWorkoutPressed}
-                            addExercisePressed={addExercisePressed}
-                            editMovementsPressed={handleEditMovements}
-                            addSetPressed={addSetPressed}
-                            historicalPressed={historicalPresssed}
-                            notesPressed={notesPressed}
+                <View
+                    id="workout-screen-view"
+                    style={{
+                        ...baseStyles.screenContainer,
+                    }}
+                >
+                    {(loading || workoutMutationResult.loading) && <Spinner />}
+                    {state.screen === ScreenOptions.MOVEMENT_LIST && (
+                        <MovementList
+                            exercises={state.exercises}
+                            editable={state.editing}
+                            showSets={false}
+                            moveExerciseUp={handleMoveExerciseUp}
+                            moveExerciseDown={handleMoveExerciseDown}
+                            setCurrentExercise={handleSetCurrentExercise}
+                            removeExercise={handleRemoveExercise}
                         />
-                    </View>
+                    )}
+                    {state.screen === ScreenOptions.ADD_SETS && (
+                        <AddSets
+                            navigateBack={navigateToCurrentExercise}
+                            addSets={handleAddSets}
+                        />
+                    )}
+                    {(state.screen === ScreenOptions.ADD_EXERCISE ||
+                        state.screen === "blank") && (
+                        <ExerciseSearch addExercise={handleAddExercise} />
+                    )}
+                    {state.screen === ScreenOptions.CURRENT_EXERCISE && (
+                        <CurrentExercise
+                            exercise={getCurrentExercise()}
+                            recordSet={handleRecordSet}
+                            navigateBack={handleChangeScreen}
+                        />
+                    )}
+                    {state.screen === ScreenOptions.HISTORICAL && (
+                        <ExerciseHistorical
+                            movementId={getCurrentExercise().movement.id}
+                            navigateBack={navigateToCurrentExercise}
+                        />
+                    )}
+                    {state.screen === ScreenOptions.NOTES && (
+                        <Notes
+                            exercise={getCurrentExercise()}
+                            navigateBack={navigateToCurrentExercise}
+                        />
+                    )}
+                    {state.screen === ScreenOptions.WORKOUT_REVIEW && (
+                        <WorkoutReview
+                            exercises={state.exercises}
+                            start_time={state.start_time}
+                            stop_time={state.stop_time}
+                            setCurrentExercise={handleSetCurrentExercise}
+                            recordWorkout={handleRecordWorkout}
+                        />
+                    )}
+                </View>
+                <View style={baseStyles.buttonContainer}>
+                    <WorkoutButtons
+                        screen={state.screen}
+                        stopWorkoutPressed={stopWorkoutPressed}
+                        addExercisePressed={addExercisePressed}
+                        editMovementsPressed={handleEditMovements}
+                        addSetPressed={addSetPressed}
+                        historicalPressed={historicalPresssed}
+                        notesPressed={notesPressed}
+                    />
                 </View>
             </SafeAreaView>
         </SafeAreaProvider>

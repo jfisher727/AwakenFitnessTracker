@@ -1,0 +1,10 @@
+mutation workoutPlanCreate($input: WorkoutPlanInput!) {
+    workoutPlanCreate(input: $input) {
+        plan {
+            id
+        }
+        errors {
+            message
+        }
+    }
+}

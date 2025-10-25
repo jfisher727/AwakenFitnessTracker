@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { TextInput, Text, View } from "react-native";
+import { TextInput, Text, View, useColorScheme } from "react-native";
 
-import { baseStyles, darkColors } from "@/styles/global";
+import { baseStyles, darkColors, lightColors } from "@/styles/global";
 
 const DEBOUNCE_DELAY: number = 250; // milliseconds
 
@@ -21,7 +21,14 @@ export default function TextInputField({
     header,
     showHeader,
 }: params) {
+    const colorScheme = useColorScheme();
+
     const [text, setText] = useState(defaultValue);
+
+    const primaryColor =
+        colorScheme === "light"
+            ? lightColors.primaryColor
+            : darkColors.primaryColor;
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
@@ -38,7 +45,7 @@ export default function TextInputField({
             }}
         >
             {showHeader && (
-                <Text style={{ fontSize: 24, color: darkColors.background }}>
+                <Text style={{ fontSize: 24, color: primaryColor }}>
                     {header}
                 </Text>
             )}
@@ -47,7 +54,7 @@ export default function TextInputField({
                 defaultValue={text}
                 inputMode={inputMode}
                 secureTextEntry={secureTextEntry}
-                style={{ fontSize: 20 }}
+                style={{ fontSize: 20, color: primaryColor }}
             />
         </View>
     );

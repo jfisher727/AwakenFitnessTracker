@@ -60,7 +60,6 @@ export default function DurationInput({
         setTimerRunning(false);
         const stopTime = Date.now();
         const newTotal = (stopTime - startTime) / 1000;
-        console.log(`total time: ${(stopTime - startTime) / 1000}`);
         const calculatedHours = Math.floor(newTotal / 3600)
             .toString()
             .padStart(2, "0");

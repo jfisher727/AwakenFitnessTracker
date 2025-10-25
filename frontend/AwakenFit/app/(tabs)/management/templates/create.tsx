@@ -8,13 +8,12 @@ import {
     workoutStateProps,
     ActionTypes,
     ScreenOptions,
-} from "@/graphql/WorkoutStateReducer";
+} from "@/state/WorkoutStateReducer";
 
 import {
     useWorkoutCreateTemplateMutation,
     MovementNode,
     SetNode,
-    WorkoutNode,
     ExerciseCreateTemplateInput,
     WorkoutCreateTemplateInput,
     SetCreateTemplateInput,

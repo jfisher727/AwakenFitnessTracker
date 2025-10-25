@@ -1,4 +1,4 @@
-type KeyValuePair = {
+export type KeyValuePair = {
     key: string;
     value: string;
 };
@@ -38,4 +38,9 @@ export const movementTypeOptions: KeyValuePair[] = [
     { key: "Plyometrics", value: "Plyometrics" },
     { key: "Strength", value: "Strength" },
     { key: "Stretching", value: "Stretching" },
+];
+
+export const workoutPlanTypeOptions: KeyValuePair[] = [
+    { key: "Ongoing", value: "Ongoing" },
+    { key: "Definite", value: "Definite" },
 ];
