@@ -1,0 +1,24 @@
+query activeWorkoutPlan {
+    activeWorkoutPlan {
+        id
+        plan {
+            name
+        }
+        day {
+            id
+            dayNumber
+            workoutOne {
+                id
+                name
+            }
+            workoutTwo {
+                id
+                name
+            }
+            workoutThree {
+                id
+                name
+            }
+        }
+    }
+}

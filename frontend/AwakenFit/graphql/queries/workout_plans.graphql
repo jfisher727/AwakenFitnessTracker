@@ -1,0 +1,18 @@
+query workoutPlans($id: ID, $after: String, $before: String, $count: Int) {
+    workoutPlans(id: $id, after: $after, before: $before, first: $count) {
+        pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+        }
+        edges {
+            cursor
+            node {
+                id
+                name
+                planType
+            }
+        }
+    }
+}

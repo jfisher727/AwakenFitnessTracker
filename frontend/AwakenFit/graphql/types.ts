@@ -500,6 +500,13 @@ export type WorkoutPlanNodeEdge = {
   node?: Maybe<WorkoutPlanNode>;
 };
 
+export type ActiveWorkoutPlanCreateMutationVariables = Exact<{
+  input: ActiveWorkoutPlanInput;
+}>;
+
+
+export type ActiveWorkoutPlanCreateMutation = { __typename?: 'Mutation', activeWorkoutPlanCreate?: { __typename?: 'ActiveWorkoutPlanCreate', plan?: { __typename?: 'WorkoutPlanNode', id: string } | null, errors?: Array<{ __typename?: 'MessageNode', message?: string | null } | null> | null } | null };
+
 export type WorkoutCreateCompletedMutationVariables = Exact<{
   input: WorkoutCreateCompletedInput;
 }>;
@@ -545,6 +552,11 @@ export type WorkoutPlanCreateMutationVariables = Exact<{
 
 export type WorkoutPlanCreateMutation = { __typename?: 'Mutation', workoutPlanCreate?: { __typename?: 'WorkoutPlanCreate', plan?: { __typename?: 'WorkoutPlanNode', id: string } | null, errors?: Array<{ __typename?: 'MessageNode', message?: string | null } | null> | null } | null };
 
+export type ActiveWorkoutPlanQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ActiveWorkoutPlanQuery = { __typename?: 'Query', activeWorkoutPlan?: { __typename?: 'ActiveWorkoutPlanNode', id: string, plan: { __typename?: 'WorkoutPlanNode', name: string }, day: { __typename?: 'WorkoutDayNode', id: string, dayNumber: number, workoutOne?: { __typename?: 'WorkoutNode', id: string, name: string } | null, workoutTwo?: { __typename?: 'WorkoutNode', id: string, name: string } | null, workoutThree?: { __typename?: 'WorkoutNode', id: string, name: string } | null } } | null };
+
 export type GetExercisesQueryVariables = Exact<{
   movementId?: InputMaybe<Scalars['String']['input']>;
   after?: InputMaybe<Scalars['String']['input']>;
@@ -583,6 +595,16 @@ export type GetWorkoutQueryVariables = Exact<{
 
 export type GetWorkoutQuery = { __typename?: 'Query', workout?: { __typename?: 'WorkoutNode', id: string, name: string, notes: string, exercises?: Array<{ __typename?: 'ExerciseNode', id: string, notes: string, movement: { __typename?: 'MovementNode', id: string, name: string, description: string, primaryMuscleGroup: string, equipmentType: string, movementType: string }, sets?: Array<{ __typename?: 'SetNode', id: string, sequenceNumber: number, completedReps: number, minReps: number, maxReps: number, weight: number, duration: string, setType: string } | null> | null } | null> | null } | null };
 
+export type WorkoutPlansQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  count?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type WorkoutPlansQuery = { __typename?: 'Query', workoutPlans?: { __typename?: 'WorkoutPlanNodeConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'WorkoutPlanNodeEdge', cursor: string, node?: { __typename?: 'WorkoutPlanNode', id: string, name: string, planType: string } | null } | null> } | null };
+
 export type GetWorkoutTemplatesQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']['input']>;
   count?: InputMaybe<Scalars['Int']['input']>;
@@ -602,6 +624,44 @@ export type GetWorkoutsQueryVariables = Exact<{
 export type GetWorkoutsQuery = { __typename?: 'Query', workouts?: { __typename?: 'WorkoutNodeConnection', edges: Array<{ __typename?: 'WorkoutNodeEdge', node?: { __typename?: 'WorkoutNode', id: string, startTime: any, name: string } | null } | null> } | null };
 
 
+export const ActiveWorkoutPlanCreateDocument = gql`
+    mutation activeWorkoutPlanCreate($input: ActiveWorkoutPlanInput!) {
+  activeWorkoutPlanCreate(input: $input) {
+    plan {
+      id
+    }
+    errors {
+      message
+    }
+  }
+}
+    `;
+export type ActiveWorkoutPlanCreateMutationFn = Apollo.MutationFunction<ActiveWorkoutPlanCreateMutation, ActiveWorkoutPlanCreateMutationVariables>;
+
+/**
+ * __useActiveWorkoutPlanCreateMutation__
+ *
+ * To run a mutation, you first call `useActiveWorkoutPlanCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useActiveWorkoutPlanCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [activeWorkoutPlanCreateMutation, { data, loading, error }] = useActiveWorkoutPlanCreateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useActiveWorkoutPlanCreateMutation(baseOptions?: Apollo.MutationHookOptions<ActiveWorkoutPlanCreateMutation, ActiveWorkoutPlanCreateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ActiveWorkoutPlanCreateMutation, ActiveWorkoutPlanCreateMutationVariables>(ActiveWorkoutPlanCreateDocument, options);
+      }
+export type ActiveWorkoutPlanCreateMutationHookResult = ReturnType<typeof useActiveWorkoutPlanCreateMutation>;
+export type ActiveWorkoutPlanCreateMutationResult = Apollo.MutationResult<ActiveWorkoutPlanCreateMutation>;
+export type ActiveWorkoutPlanCreateMutationOptions = Apollo.BaseMutationOptions<ActiveWorkoutPlanCreateMutation, ActiveWorkoutPlanCreateMutationVariables>;
 export const WorkoutCreateCompletedDocument = gql`
     mutation WorkoutCreateCompleted($input: WorkoutCreateCompletedInput!) {
   workoutCreateCompleted(input: $input) {
@@ -806,6 +866,64 @@ export function useWorkoutPlanCreateMutation(baseOptions?: Apollo.MutationHookOp
 export type WorkoutPlanCreateMutationHookResult = ReturnType<typeof useWorkoutPlanCreateMutation>;
 export type WorkoutPlanCreateMutationResult = Apollo.MutationResult<WorkoutPlanCreateMutation>;
 export type WorkoutPlanCreateMutationOptions = Apollo.BaseMutationOptions<WorkoutPlanCreateMutation, WorkoutPlanCreateMutationVariables>;
+export const ActiveWorkoutPlanDocument = gql`
+    query activeWorkoutPlan {
+  activeWorkoutPlan {
+    id
+    plan {
+      name
+    }
+    day {
+      id
+      dayNumber
+      workoutOne {
+        id
+        name
+      }
+      workoutTwo {
+        id
+        name
+      }
+      workoutThree {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useActiveWorkoutPlanQuery__
+ *
+ * To run a query within a React component, call `useActiveWorkoutPlanQuery` and pass it any options that fit your needs.
+ * When your component renders, `useActiveWorkoutPlanQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useActiveWorkoutPlanQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useActiveWorkoutPlanQuery(baseOptions?: Apollo.QueryHookOptions<ActiveWorkoutPlanQuery, ActiveWorkoutPlanQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ActiveWorkoutPlanQuery, ActiveWorkoutPlanQueryVariables>(ActiveWorkoutPlanDocument, options);
+      }
+export function useActiveWorkoutPlanLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ActiveWorkoutPlanQuery, ActiveWorkoutPlanQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ActiveWorkoutPlanQuery, ActiveWorkoutPlanQueryVariables>(ActiveWorkoutPlanDocument, options);
+        }
+export function useActiveWorkoutPlanSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ActiveWorkoutPlanQuery, ActiveWorkoutPlanQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ActiveWorkoutPlanQuery, ActiveWorkoutPlanQueryVariables>(ActiveWorkoutPlanDocument, options);
+        }
+export type ActiveWorkoutPlanQueryHookResult = ReturnType<typeof useActiveWorkoutPlanQuery>;
+export type ActiveWorkoutPlanLazyQueryHookResult = ReturnType<typeof useActiveWorkoutPlanLazyQuery>;
+export type ActiveWorkoutPlanSuspenseQueryHookResult = ReturnType<typeof useActiveWorkoutPlanSuspenseQuery>;
+export type ActiveWorkoutPlanQueryResult = Apollo.QueryResult<ActiveWorkoutPlanQuery, ActiveWorkoutPlanQueryVariables>;
 export const GetExercisesDocument = gql`
     query GetExercises($movementId: String, $after: String, $before: String, $count: Int) {
   exercises(
@@ -1089,6 +1207,62 @@ export type GetWorkoutQueryHookResult = ReturnType<typeof useGetWorkoutQuery>;
 export type GetWorkoutLazyQueryHookResult = ReturnType<typeof useGetWorkoutLazyQuery>;
 export type GetWorkoutSuspenseQueryHookResult = ReturnType<typeof useGetWorkoutSuspenseQuery>;
 export type GetWorkoutQueryResult = Apollo.QueryResult<GetWorkoutQuery, GetWorkoutQueryVariables>;
+export const WorkoutPlansDocument = gql`
+    query workoutPlans($id: ID, $after: String, $before: String, $count: Int) {
+  workoutPlans(id: $id, after: $after, before: $before, first: $count) {
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    edges {
+      cursor
+      node {
+        id
+        name
+        planType
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useWorkoutPlansQuery__
+ *
+ * To run a query within a React component, call `useWorkoutPlansQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWorkoutPlansQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWorkoutPlansQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      after: // value for 'after'
+ *      before: // value for 'before'
+ *      count: // value for 'count'
+ *   },
+ * });
+ */
+export function useWorkoutPlansQuery(baseOptions?: Apollo.QueryHookOptions<WorkoutPlansQuery, WorkoutPlansQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<WorkoutPlansQuery, WorkoutPlansQueryVariables>(WorkoutPlansDocument, options);
+      }
+export function useWorkoutPlansLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<WorkoutPlansQuery, WorkoutPlansQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<WorkoutPlansQuery, WorkoutPlansQueryVariables>(WorkoutPlansDocument, options);
+        }
+export function useWorkoutPlansSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<WorkoutPlansQuery, WorkoutPlansQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<WorkoutPlansQuery, WorkoutPlansQueryVariables>(WorkoutPlansDocument, options);
+        }
+export type WorkoutPlansQueryHookResult = ReturnType<typeof useWorkoutPlansQuery>;
+export type WorkoutPlansLazyQueryHookResult = ReturnType<typeof useWorkoutPlansLazyQuery>;
+export type WorkoutPlansSuspenseQueryHookResult = ReturnType<typeof useWorkoutPlansSuspenseQuery>;
+export type WorkoutPlansQueryResult = Apollo.QueryResult<WorkoutPlansQuery, WorkoutPlansQueryVariables>;
 export const GetWorkoutTemplatesDocument = gql`
     query GetWorkoutTemplates($after: String, $count: Int, $name: String, $template: Boolean) {
   workouts(

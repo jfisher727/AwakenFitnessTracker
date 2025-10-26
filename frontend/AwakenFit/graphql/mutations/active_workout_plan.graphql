@@ -1,0 +1,10 @@
+mutation activeWorkoutPlanCreate($input: ActiveWorkoutPlanInput!) {
+    activeWorkoutPlanCreate(input: $input) {
+        plan {
+            id
+        }
+        errors {
+            message
+        }
+    }
+}

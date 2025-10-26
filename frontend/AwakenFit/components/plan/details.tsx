@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from "react";
+import { useState } from "react";
 import { View, Text, useColorScheme } from "react-native";
 
 import { baseStyles, lightColors, darkColors } from "@/styles/global";
