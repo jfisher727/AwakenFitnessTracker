@@ -1,28 +1,46 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { View, Pressable, Text, FlatList, useColorScheme } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { router } from "expo-router";
 
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
-import { useWorkoutPlansLazyQuery, WorkoutPlanNodeEdge } from "@/graphql/types";
+import { useWorkoutPlansLazyQuery, WorkoutPlanNode } from "@/graphql/types";
 
 import Spinner from "@/components/general/spinner";
 
 import { baseStyles, lightColors, darkColors } from "@/styles/global";
+import CustomButton from "@/components/general/button";
 import HorzontalLine from "@/components/general/horizonal_line";
 
-function WorkoutPlanEntry(node: WorkoutPlanNodeEdge, color: string) {
-    console.log(color);
+type params = {
+    node: WorkoutPlanNode;
+    color: string;
+};
+
+function WorkoutPlanEntry({ node, color }: params) {
+    const [expanded, setExpanded] = useState(false);
+
+    function toggleExpand() {
+        setExpanded(!expanded);
+    }
+
     return (
-        <View style={baseStyles.spacedRow}>
-            <Text style={{ ...baseStyles.text, color: color }}>
-                {node.node?.name}
-            </Text>
-            <Text style={{ ...baseStyles.text, color: color }}>
-                {node.node?.planType}
-            </Text>
-        </View>
+        <>
+            <CustomButton
+                text={node.name}
+                onPress={toggleExpand}
+                disabled={false}
+            />
+            {expanded && (
+                <View>
+                    <Text>Type: {node.planType}</Text>
+                    {node.workoutDays && (
+                        <Text>Day Count: {node.workoutDays?.length}</Text>
+                    )}
+                </View>
+            )}
+        </>
     );
 }
 
@@ -72,29 +90,23 @@ export default function ListPrograms() {
                     <Text
                         style={{
                             ...baseStyles.subHeader,
-                            color:
-                                colorScheme === "light"
-                                    ? lightColors.primaryColor
-                                    : darkColors.primaryColor,
+                            color: textColor,
                         }}
                     >
                         Your Workout Programs
                     </Text>
                     {loading && <Spinner />}
                     {data && (
-                        <>
-                            <HorzontalLine />
-                            <FlatList
-                                data={data.workoutPlans?.edges}
-                                renderItem={(item) => (
-                                    <WorkoutPlanEntry
-                                        node={item.item?.node}
-                                        color={textColor}
-                                    />
-                                )}
-                                keyExtractor={(item) => String(item?.node?.id)}
-                            />
-                        </>
+                        <FlatList
+                            data={data.workoutPlans?.edges}
+                            renderItem={({ item }) => (
+                                <WorkoutPlanEntry
+                                    node={item?.node}
+                                    color={textColor}
+                                />
+                            )}
+                            keyExtractor={(item) => String(item?.node?.id)}
+                        />
                     )}
                 </View>
             </SafeAreaView>

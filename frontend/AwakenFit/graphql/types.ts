@@ -414,8 +414,9 @@ export type WorkoutCreateTemplateInput = {
 
 export type WorkoutDayInput = {
   dayNumber: Scalars['Int']['input'];
+  restDay: Scalars['Boolean']['input'];
   sequenceNumber: Scalars['Int']['input'];
-  workoutOneId: Scalars['ID']['input'];
+  workoutOneId?: InputMaybe<Scalars['ID']['input']>;
   workoutThreeId?: InputMaybe<Scalars['ID']['input']>;
   workoutTwoId?: InputMaybe<Scalars['ID']['input']>;
 };
@@ -425,6 +426,7 @@ export type WorkoutDayNode = Node & {
   dayNumber: Scalars['Int']['output'];
   /** The ID of the object */
   id: Scalars['ID']['output'];
+  restDay: Scalars['Boolean']['output'];
   sequenceNumber: Scalars['Int']['output'];
   workoutOne?: Maybe<WorkoutNode>;
   workoutThree?: Maybe<WorkoutNode>;
@@ -603,7 +605,7 @@ export type WorkoutPlansQueryVariables = Exact<{
 }>;
 
 
-export type WorkoutPlansQuery = { __typename?: 'Query', workoutPlans?: { __typename?: 'WorkoutPlanNodeConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'WorkoutPlanNodeEdge', cursor: string, node?: { __typename?: 'WorkoutPlanNode', id: string, name: string, planType: string } | null } | null> } | null };
+export type WorkoutPlansQuery = { __typename?: 'Query', workoutPlans?: { __typename?: 'WorkoutPlanNodeConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ __typename?: 'WorkoutPlanNodeEdge', cursor: string, node?: { __typename?: 'WorkoutPlanNode', id: string, name: string, planType: string, workoutDays?: Array<{ __typename?: 'WorkoutDayNode', id: string } | null> | null } | null } | null> } | null };
 
 export type GetWorkoutTemplatesQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']['input']>;
@@ -1222,6 +1224,9 @@ export const WorkoutPlansDocument = gql`
         id
         name
         planType
+        workoutDays {
+          id
+        }
       }
     }
   }

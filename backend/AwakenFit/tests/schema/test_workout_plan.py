@@ -200,11 +200,18 @@ class WorkoutPlanSchemaTest(GraphQLTestCase):
                         "workoutOneId": to_global_id("Workout", self.test_workout.id),
                         "sequenceNumber": 1,
                         "dayNumber": 1,
+                        "restDay": False,
+                    },
+                    {
+                        "sequenceNumber": 2,
+                        "dayNumber": 2,
+                        "restDay": True,
                     },
                     {
                         "workoutOneId": to_global_id("Workout", self.test_workout.id),
-                        "sequenceNumber": 2,
+                        "sequenceNumber": 3,
                         "dayNumber": 3,
+                        "restDay": False,
                     },
                 ],
             },
@@ -218,13 +225,17 @@ class WorkoutPlanSchemaTest(GraphQLTestCase):
         self.assertTrue(
             WorkoutPlan.objects.filter(name="New Workout Plan").exists(), "A new workout plan should have been created"
         )
+
+        stored_days = WorkoutDay.objects.filter(
+            plan__id=from_global_id(content["data"]["workoutPlanCreate"]["plan"]["id"]).id
+        )
         self.assertEqual(
-            2,
-            WorkoutDay.objects.filter(
-                plan__id=from_global_id(content["data"]["workoutPlanCreate"]["plan"]["id"]).id
-            ).count(),
+            3,
+            stored_days.count(),
             "The expected number of WorkoutDay records was not created",
         )
+        self.assertEqual(1, stored_days.filter(rest_day=True).count(), "One rest day should have been created")
+        self.assertEqual(2, stored_days.filter(rest_day=False).count(), "Two active days should have been created")
 
     def test_active_workout_plan_create_mutation(self):
         self.client.login(username="testuser1", password="testpassword1")

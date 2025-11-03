@@ -63,16 +63,17 @@ def create_update_workout_day(
     plan_id: int,
     sequence_number: int,
     day_number: int,
-    workout_one_id: int,
+    workout_one_id: int | None = None,
     workout_two_id: int | None = None,
     workout_three_id: int | None = None,
+    rest_day: bool = False,
 ) -> WorkoutDay:
     created_record = None
     if WorkoutPlanDomain.is_valid_id(plan_id):
         plan = WorkoutPlanDomain.get_by_id(plan_id)
         if is_sequence_number_day_number_available(plan_id, sequence_number, day_number):
             created_record = WorkoutDay.objects.create(
-                plan=plan, sequence_number=sequence_number, day_number=day_number
+                plan=plan, sequence_number=sequence_number, day_number=day_number, rest_day=rest_day
             )
         else:
             created_record = get_by_plan_sequence_number_day_number(plan_id, sequence_number, day_number)

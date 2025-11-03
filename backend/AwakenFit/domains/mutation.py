@@ -119,7 +119,7 @@ def validate_workout_plan_days_input(days) -> list[str]:
     seen_day_numbers = set()
     for entry in days:
         entry_errors = list()
-        if not WorkoutDomain.is_valid_id(from_global_id(entry.workout_one_id).id):
+        if entry.workout_one_id and not WorkoutDomain.is_valid_id(from_global_id(entry.workout_one_id).id):
             entry_errors.append(ERROR_MESSAGES["INVALID_ID"])
         if entry.workout_two_id and not WorkoutDomain.is_valid_id(from_global_id(entry.workout_two_id).id):
             entry_errors.append(ERROR_MESSAGES["INVALID_ID"])

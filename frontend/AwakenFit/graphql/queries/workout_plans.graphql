@@ -12,6 +12,9 @@ query workoutPlans($id: ID, $after: String, $before: String, $count: Int) {
                 id
                 name
                 planType
+                workoutDays {
+                    id
+                }
             }
         }
     }

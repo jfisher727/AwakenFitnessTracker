@@ -1,6 +1,6 @@
 from graphql_relay import from_global_id
 
-from graphene import Mutation, Node, ObjectType, InputObjectType, Field, List, ID, String, Int, Date
+from graphene import Mutation, Node, ObjectType, InputObjectType, Field, List, ID, String, Int, Date, Boolean
 
 from graphene_django import DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
@@ -21,7 +21,7 @@ class WorkoutDayNode(DjangoObjectType):
         model = WorkoutDay
         interfaces = (Node,)
         description = ""
-        fields = ("id", "workout_one", "workout_two", "workout_three", "sequence_number", "day_number")
+        fields = ("id", "workout_one", "workout_two", "workout_three", "sequence_number", "day_number", "rest_day")
 
 
 class WorkoutPlanNode(DjangoObjectType):
@@ -60,11 +60,12 @@ class ActiveWorkoutPlanNode(DjangoObjectType):
 
 
 class WorkoutDayInput(InputObjectType):
-    workout_one_id = ID(required=True)
+    workout_one_id = ID(required=False)
     workout_two_id = ID(required=False)
     workout_three_id = ID(required=False)
     sequence_number = Int(required=True)
     day_number = Int(required=True)
+    rest_day = Boolean(required=True)
 
 
 class WorkoutPlanInput(InputObjectType):
@@ -102,9 +103,10 @@ class WorkoutPlanCreate(Mutation):
                     plan.id,
                     entry.sequence_number,
                     entry.day_number,
-                    int(from_global_id(entry.workout_one_id).id),
+                    int(from_global_id(entry.workout_one_id).id) if entry.workout_one_id else None,
                     int(from_global_id(entry.workout_two_id).id) if entry.workout_two_id else None,
                     int(from_global_id(entry.workout_three_id).id) if entry.workout_three_id else None,
+                    entry.rest_day,
                 )
 
         return WorkoutPlanCreate(plan=plan, errors=errors)

@@ -23,9 +23,16 @@ function DayPlan({ day, templates, textColor }: DayPlanParams) {
             <Text style={{ ...baseStyles.text, color: textColor }}>
                 Day {day.dayNumber}
             </Text>
-            <Text style={{ ...baseStyles.text, color: textColor }}>
-                Workout 1: {convertIdToName(day.workoutOneId, templates)}
-            </Text>
+            {day.restDay && (
+                <Text style={{ ...baseStyles.text, color: textColor }}>
+                    Rest Day
+                </Text>
+            )}
+            {day.workoutOneId && (
+                <Text style={{ ...baseStyles.text, color: textColor }}>
+                    Workout 1: {convertIdToName(day.workoutOneId, templates)}
+                </Text>
+            )}
             {day.workoutTwoId && (
                 <Text style={{ ...baseStyles.text, color: textColor }}>
                     Workout 2: {convertIdToName(day.workoutTwoId, templates)}

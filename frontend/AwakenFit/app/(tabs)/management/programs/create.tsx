@@ -68,13 +68,19 @@ export default function CreateProgram() {
                 workoutOneId: workoutOneId,
                 workoutTwoId: workoutTwoId,
                 workoutThreeId: workoutThreeId,
+                restDay: false,
             },
         });
     }
 
-    function handleAddRestDay() {
+    function handleAddRestDay(dayNumber: number) {
         dispatch({
             type: ActionTypes.ADD_REST_DAY,
+            payload: {
+                dayNumber: dayNumber,
+                sequenceNumber: state.days.length + 1,
+                restDay: true,
+            },
         });
     }
 
