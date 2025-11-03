@@ -18,6 +18,7 @@ ERROR_MESSAGES = {
     "INVALID_PLAN_NAME": "User already has a plan with the same name",
     "INVALID_SEQUENCE": "The provided sequence number is already being used",
     "INVALID_DAY": "The provided day number is already being used.",
+    "INVALID_REST_DAY": "Did not provide a workout ID and not a Rest day",
     "DESCRIPTION_LENGTH": "Description does not fit the movement requirements.",
     "DUPLICATE_RECORD": "Record already exists, please double check your input.",
     "MISSING_MUSCLE_GROUP": "Primary and secondary muscle group are None, please fill in one.",
@@ -119,6 +120,8 @@ def validate_workout_plan_days_input(days) -> list[str]:
     seen_day_numbers = set()
     for entry in days:
         entry_errors = list()
+        if not entry.workout_one_id and not entry.rest_day:
+            entry_errors.append(ERROR_MESSAGES["INVALID_REST_DAY"])
         if entry.workout_one_id and not WorkoutDomain.is_valid_id(from_global_id(entry.workout_one_id).id):
             entry_errors.append(ERROR_MESSAGES["INVALID_ID"])
         if entry.workout_two_id and not WorkoutDomain.is_valid_id(from_global_id(entry.workout_two_id).id):
