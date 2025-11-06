@@ -200,11 +200,18 @@ class WorkoutPlanSchemaTest(GraphQLTestCase):
                         "workoutOneId": to_global_id("Workout", self.test_workout.id),
                         "sequenceNumber": 1,
                         "dayNumber": 1,
+                        "restDay": False,
+                    },
+                    {
+                        "sequenceNumber": 2,
+                        "dayNumber": 2,
+                        "restDay": True,
                     },
                     {
                         "workoutOneId": to_global_id("Workout", self.test_workout.id),
-                        "sequenceNumber": 2,
+                        "sequenceNumber": 3,
                         "dayNumber": 3,
+                        "restDay": False,
                     },
                 ],
             },
@@ -218,12 +225,59 @@ class WorkoutPlanSchemaTest(GraphQLTestCase):
         self.assertTrue(
             WorkoutPlan.objects.filter(name="New Workout Plan").exists(), "A new workout plan should have been created"
         )
+
+        stored_days = WorkoutDay.objects.filter(
+            plan__id=from_global_id(content["data"]["workoutPlanCreate"]["plan"]["id"]).id
+        )
         self.assertEqual(
-            2,
-            WorkoutDay.objects.filter(
-                plan__id=from_global_id(content["data"]["workoutPlanCreate"]["plan"]["id"]).id
-            ).count(),
+            3,
+            stored_days.count(),
             "The expected number of WorkoutDay records was not created",
+        )
+        self.assertEqual(1, stored_days.filter(rest_day=True).count(), "One rest day should have been created")
+        self.assertEqual(2, stored_days.filter(rest_day=False).count(), "Two active days should have been created")
+
+    def test_workout_plan_bad_day(self):
+        self.assertFalse(
+            WorkoutPlan.objects.filter(name="New Workout Plan").exists(), "The workout plan name should not exist"
+        )
+
+        self.client.login(username="testuser1", password="testpassword1")
+
+        response = self.query(
+            self.workout_plan_create_mutation,
+            operation_name="workoutPlanCreate",
+            variables={
+                "name": "New Workout Plan",
+                "type": "Ongoing",
+                "days": [
+                    {
+                        "workoutOneId": to_global_id("Workout", self.test_workout.id),
+                        "sequenceNumber": 1,
+                        "dayNumber": 1,
+                        "restDay": False,
+                    },
+                    {
+                        "sequenceNumber": 2,
+                        "dayNumber": 2,
+                        "restDay": False,
+                    },
+                    {
+                        "workoutOneId": to_global_id("Workout", self.test_workout.id),
+                        "sequenceNumber": 3,
+                        "dayNumber": 3,
+                        "restDay": False,
+                    },
+                ],
+            },
+        )
+
+        content = json.loads(response.content)
+
+        self.assertResponseNoErrors(response)
+        self.assertIsNone(content["data"]["workoutPlanCreate"]["plan"], "A workout plan should not have been returned")
+        self.assertNotEqual(
+            0, len(content["data"]["workoutPlanCreate"]["errors"]), "At least one error should have been returned"
         )
 
     def test_active_workout_plan_create_mutation(self):

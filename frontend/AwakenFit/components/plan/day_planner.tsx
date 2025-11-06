@@ -38,7 +38,7 @@ type params = {
         workoutTwoId?: string,
         workoutThreeId?: string
     ) => void;
-    add_rest_day: () => void;
+    add_rest_day: (dayNumber: number) => void;
 };
 
 export default function DayPlanner({
@@ -86,7 +86,7 @@ export default function DayPlanner({
                 value: "",
             });
         } else {
-            add_rest_day();
+            add_rest_day(day_number);
         }
     }
 

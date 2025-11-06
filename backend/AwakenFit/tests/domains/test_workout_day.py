@@ -109,3 +109,27 @@ class WorkoutPlanDomainTest(TestCase):
         self.assertEqual(
             existing_workout_days, WorkoutDay.objects.all().count(), "The Workout Day count should have stayed the same"
         )
+
+    def test_create_update_workout_rest_day(self):
+        existing_workout_days = WorkoutDay.objects.all().count()
+
+        result = WorkoutDayDomain.create_update_workout_day(self.test_workout_plan.id, 4, 10, rest_day=True)
+        self.assertIsNotNone(result, "A WorkoutDay should have been created")
+        self.assertEqual(
+            existing_workout_days + 1, WorkoutDay.objects.all().count(), "The Workout Day count should have increased"
+        )
+
+        existing_workout_days = WorkoutDay.objects.all().count()
+        result = WorkoutDayDomain.create_update_workout_day(
+            self.test_workout_plan.id,
+            1,
+            1,
+            workout_one_id=self.test_workout1.id,
+            workout_two_id=self.test_workout2.id,
+            workout_three_id=self.test_workout3.id,
+        )
+        self.assertIsNotNone(result, "A WorkoutDay should have been created")
+        self.assertEqual(self.test_day1.id, result.id, "Should have updated an existing record")
+        self.assertEqual(
+            existing_workout_days, WorkoutDay.objects.all().count(), "The Workout Day count should have stayed the same"
+        )

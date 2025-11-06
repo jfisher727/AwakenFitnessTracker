@@ -42,6 +42,7 @@ interface AddDayAction {
 
 interface AddRestDayAction {
     type: typeof ActionTypes.ADD_REST_DAY;
+    payload: WorkoutDayInput;
 }
 
 interface RemoveDayAction {
@@ -87,8 +88,12 @@ export function workoutPlanReducer(
             };
         }
         case ActionTypes.ADD_REST_DAY: {
+            const payload = (action as AddDayAction).payload;
+            const days = state.days;
+            days.push(payload);
             return {
                 ...state,
+                days: days,
                 currentDay: state.currentDay + 1,
             };
         }

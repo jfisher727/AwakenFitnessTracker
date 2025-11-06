@@ -13,6 +13,7 @@ class WorkoutDay(BaseModel):
     workout_three = models.ForeignKey(Workout, on_delete=models.CASCADE, null=True, related_name="third_workout")
     sequence_number = models.IntegerField(default=1)
     day_number = models.IntegerField(default=1)
+    rest_day = models.BooleanField(default=True)
 
     def __str__(self) -> str:
-        return " ".join([str(self.plan), "Day", self.sequence_number])
+        return " ".join([str(self.plan), "Day", str(self.day_number), "Rest Day:", str(self.rest_day)])
