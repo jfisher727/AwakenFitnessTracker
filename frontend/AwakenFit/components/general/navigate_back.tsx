@@ -20,13 +20,13 @@ export default function NavigateBack({ label, onPress }: params) {
         <Pressable onPress={onPress}>
             <View style={baseStyles.leftJustifiedRow}>
                 <FontAwesome
-                    size={28}
+                    size={20}
                     name="chevron-left"
                     style={{ color: color }}
                 />
                 <Text
                     style={{
-                        fontSize: 25,
+                        fontSize: 20,
                         color: color,
                         paddingLeft: 10,
                     }}

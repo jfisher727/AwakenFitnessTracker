@@ -448,7 +448,7 @@ export default function CurrentExercise({
                     keyExtractor={(item) => item.id}
                     ItemSeparatorComponent={HorzontalLine}
                     // this provides the buffer between the sets and the button row
-                    style={{ height: "85%" }}
+                    style={{ height: "87%" }}
                 />
             </KeyboardAvoidingView>
         </View>
