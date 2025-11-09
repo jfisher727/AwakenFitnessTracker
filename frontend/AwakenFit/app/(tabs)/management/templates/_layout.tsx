@@ -15,6 +15,12 @@ export default function TemplatesLayout() {
                     headerShown: false,
                 }}
             />
+            <Stack.Screen
+                name="list"
+                options={{
+                    headerShown: false,
+                }}
+            />
         </Stack>
     );
 }

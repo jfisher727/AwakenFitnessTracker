@@ -1,12 +1,12 @@
-import { Text, Pressable, useColorScheme, } from 'react-native';
+import { Text, Pressable, useColorScheme } from "react-native";
 
-import { baseStyles, darkColors, lightColors } from '@/styles/global';
+import { baseStyles, darkColors, lightColors } from "@/styles/global";
 
 type params = {
-    text: string,
-    onPress: any,
-    disabled: boolean
-}
+    text: string;
+    onPress: any;
+    disabled: boolean;
+};
 
 export default function CustomButton({ text, onPress, disabled }: params) {
     const colorScheme = useColorScheme();
@@ -16,13 +16,23 @@ export default function CustomButton({ text, onPress, disabled }: params) {
             disabled={disabled}
             style={{
                 ...baseStyles.button,
-                backgroundColor: colorScheme === 'light' ? lightColors.secondaryColor : darkColors.secondaryColor
-            }}>
+                backgroundColor:
+                    colorScheme === "light"
+                        ? lightColors.secondaryColor
+                        : darkColors.secondaryColor,
+            }}
+        >
             <Text
                 style={{
                     fontSize: 25,
-                    color: colorScheme === 'light' ? lightColors.buttonText : darkColors.buttonText
-                }}>{text}</Text>
+                    color:
+                        colorScheme === "light"
+                            ? lightColors.buttonText
+                            : darkColors.buttonText,
+                }}
+            >
+                {text}
+            </Text>
         </Pressable>
     );
 }

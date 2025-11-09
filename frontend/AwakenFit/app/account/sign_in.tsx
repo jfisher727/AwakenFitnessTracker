@@ -1,26 +1,28 @@
-import { useState, useEffect } from 'react';
-import { Text, View, useColorScheme, Platform } from 'react-native';
-import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-import { useNavigation, router } from 'expo-router';
+import { useState, useEffect } from "react";
+import { Text, View, useColorScheme, Platform } from "react-native";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import { useNavigation, router } from "expo-router";
 
-import { useSession } from '@/auth/AuthContext';
-import { baseStyles, lightColors, darkColors } from '@/styles/global';
-import { setup, login, Client } from '@/auth/allauth';
+import { useSession } from "@/auth/AuthContext";
+import { baseStyles, lightColors, darkColors } from "@/styles/global";
+import { setup, login, Client } from "@/auth/allauth";
 
-import TextInputField from '@/components/general/text_input';
-import CustomButton from '@/components/general/button';
-import Spinner from '@/components/general/spinner';
-
+import TextInputField from "@/components/general/text_input";
+import CustomButton from "@/components/general/button";
+import Spinner from "@/components/general/spinner";
 
 export default function SignIn() {
     const colorScheme = useColorScheme();
     const navigation = useNavigation();
     const { signIn } = useSession();
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [response, setResponse] = useState({ fetching: false, content: null });
-    const [error, setError] = useState({ show: false, message: '' });
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [response, setResponse] = useState({
+        fetching: false,
+        content: null,
+    });
+    const [error, setError] = useState({ show: false, message: "" });
 
     useEffect(() => {
         navigation.setOptions({ headerShow: true, title: "Sign In" });
@@ -39,9 +41,11 @@ export default function SignIn() {
         if (response.status === 200) {
             signIn(response.meta.session_token, response.data.user.username);
             router.replace("/");
-        }
-        else {
-            setError({ show: true, message: "Unable to validate username/password" });
+        } else {
+            setError({
+                show: true,
+                message: "Unable to validate username/password",
+            });
             setEmail("");
             setPassword("");
         }
@@ -51,63 +55,79 @@ export default function SignIn() {
         router.navigate("/account/forgotten_password");
     }
 
+    const text_color =
+        colorScheme === "light"
+            ? lightColors.primaryColor
+            : darkColors.primaryColor;
+
     return (
         <SafeAreaProvider style={baseStyles.parent}>
             <SafeAreaView
                 style={{
                     ...baseStyles.container,
-                    backgroundColor: colorScheme === "light" ? lightColors.background : darkColors.background
-                }}>
+                    backgroundColor:
+                        colorScheme === "light"
+                            ? lightColors.background
+                            : darkColors.background,
+                }}
+            >
                 <View>
                     <Text
                         style={{
                             ...baseStyles.header,
-                            color: colorScheme === "light" ? lightColors.primaryColor : darkColors.primaryColor
-                        }}>
+                            color: text_color,
+                        }}
+                    >
                         AwakenFit
                     </Text>
                     <Text
                         style={{
                             ...baseStyles.subHeader,
-                            color: colorScheme === "light" ? lightColors.primaryColor : darkColors.accent
-                        }}>
+                            color:
+                                colorScheme === "light"
+                                    ? lightColors.primaryColor
+                                    : darkColors.accent,
+                        }}
+                    >
                         Sign In
                     </Text>
                 </View>
                 <View style={{ paddingTop: "15%" }}>
-                    {
-                        response.fetching ?
-                            <Spinner /> :
-                            <View style={baseStyles.modal}>
-                                <TextInputField
-                                    onChangeText={setEmail}
-                                    defaultValue={email}
-                                    secureTextEntry={false}
-                                    inputMode="email"
-                                    header="Email"
-                                    showHeader={true}
-                                />
-                                <TextInputField
-                                    onChangeText={setPassword}
-                                    defaultValue={password}
-                                    secureTextEntry={true}
-                                    inputMode="text"
-                                    header="Password"
-                                    showHeader={true}
-                                />
-                                {
-                                    error.show ? (
-                                        <Text>{error.message}</Text>)
-                                        : (
-                                            <></>
-                                        )
-                                }
-                                <CustomButton text="Login" onPress={loginPressed} disabled={response.fetching} />
-                                <CustomButton text="ForgottenPassword" onPress={forgottenPasswordPressed} disabled={false} />
-                            </View>
-                    }
+                    {response.fetching ? (
+                        <Spinner />
+                    ) : (
+                        <View style={baseStyles.modal}>
+                            <TextInputField
+                                onChangeText={setEmail}
+                                defaultValue={email}
+                                secureTextEntry={false}
+                                inputMode="email"
+                                header="Email"
+                                showHeader={true}
+                            />
+                            <TextInputField
+                                onChangeText={setPassword}
+                                defaultValue={password}
+                                secureTextEntry={true}
+                                inputMode="text"
+                                header="Password"
+                                showHeader={true}
+                            />
+                            {error.show ? <Text>{error.message}</Text> : <></>}
+                            <CustomButton
+                                text="Login"
+                                onPress={loginPressed}
+                                disabled={response.fetching}
+                            />
+                            <CustomButton
+                                text="ForgottenPassword"
+                                onPress={forgottenPasswordPressed}
+                                disabled={false}
+                            />
+                        </View>
+                    )}
                 </View>
             </SafeAreaView>
-        </SafeAreaProvider >
+        </SafeAreaProvider>
     );
 }

@@ -8,6 +8,8 @@ import TextInputField from "../general/text_input";
 
 import { baseStyles } from "@/styles/global";
 
+import NavigateBack from "../general/navigate_back";
+
 type addSetParams = {
     navigateBack: () => void;
     addSets: (count: number) => void;
@@ -26,10 +28,10 @@ export default function AddSets({ navigateBack, addSets }: addSetParams) {
 
     return (
         <View>
-            <View style={baseStyles.leftJustifiedRow}>
-                <FontAwesome size={28} name="chevron-left" />
-                <Button title="Current Exercise" onPress={handleNavigateBack} />
-            </View>
+            <NavigateBack
+                onPress={handleNavigateBack}
+                label="Current Exercise"
+            />
             <View style={baseStyles.modal}>
                 <TextInputField
                     inputMode="numeric"

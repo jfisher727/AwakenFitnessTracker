@@ -20,6 +20,7 @@ import { baseStyles, lightColors, darkColors } from "@/styles/global";
 
 import HorzontalLine from "../general/horizonal_line";
 import CustomButton from "../general/button";
+import NavigateBack from "../general/navigate_back";
 
 import DurationInput from "./duration_input";
 
@@ -425,16 +426,8 @@ export default function CurrentExercise({
 
     return (
         <View>
-            <Pressable
-                style={{ ...baseStyles.leftJustifiedRow, height: "auto" }}
-                onPress={handleNavigateBack}
-            >
-                <FontAwesome size={28} name="chevron-left" color={color} />
-                <Text style={{ ...baseStyles.text, color: color }}>
-                    Exercise List
-                </Text>
-            </Pressable>
-            <Text style={{ ...baseStyles.mediumHeader, color: color }}>
+            <NavigateBack label="Exercise List" onPress={handleNavigateBack} />
+            <Text style={{ ...baseStyles.subHeader, color: color }}>
                 {exercise.movement.name}
             </Text>
             <KeyboardAvoidingView
@@ -455,7 +448,7 @@ export default function CurrentExercise({
                     keyExtractor={(item) => item.id}
                     ItemSeparatorComponent={HorzontalLine}
                     // this provides the buffer between the sets and the button row
-                    style={{ height: "80%" }}
+                    style={{ height: "85%" }}
                 />
             </KeyboardAvoidingView>
         </View>

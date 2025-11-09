@@ -21,6 +21,12 @@ export default function ProgramsLayout() {
                     headerShown: false,
                 }}
             />
+            <Stack.Screen
+                name="start"
+                options={{
+                    headerShown: false,
+                }}
+            />
         </Stack>
     );
 }

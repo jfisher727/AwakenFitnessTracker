@@ -1,10 +1,10 @@
-import { View, useColorScheme } from 'react-native';
-import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
+import { View, Text, useColorScheme } from "react-native";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import { router } from "expo-router";
 
-import CustomButton from '@/components/general/button';
+import CustomButton from "@/components/general/button";
 
-import { baseStyles, lightColors, darkColors } from '@/styles/global';
+import { baseStyles, lightColors, darkColors } from "@/styles/global";
 
 export default function Modal() {
     const colorScheme = useColorScheme();
@@ -12,28 +12,41 @@ export default function Modal() {
     function scheduledWorkoutPressed() {
         // need to load the schedule workout's template id?
         //router.navigate('/(tabs)/workout/scheduled_workout');
-        console.log('scheduled workout pressed');
+        console.log("scheduled workout pressed");
     }
 
     function templateWorkoutPressed() {
-        router.navigate('/(tabs)/workout/template_workout');
+        router.navigate("/(tabs)/workout/template_workout");
     }
 
     function blankWorkoutPressed() {
-        router.push({ pathname: '/(tabs)/workout' });
+        router.push({ pathname: "/(tabs)/workout" });
     }
 
     function cancelPressed() {
-        router.navigate('/(tabs)');
+        router.navigate("/(tabs)");
     }
+
+    const textColor =
+        colorScheme === "light"
+            ? lightColors.primaryColor
+            : darkColors.primaryColor;
 
     return (
         <SafeAreaProvider>
-            <SafeAreaView style={{
-                ...baseStyles.container,
-                backgroundColor: colorScheme === 'light' ? lightColors.background : darkColors.background
-            }}>
+            <SafeAreaView
+                style={{
+                    ...baseStyles.container,
+                    backgroundColor:
+                        colorScheme === "light"
+                            ? lightColors.background
+                            : darkColors.background,
+                }}
+            >
                 <View style={baseStyles.modal}>
+                    <Text style={{ ...baseStyles.subHeader, color: textColor }}>
+                        Start a Workout
+                    </Text>
                     <CustomButton
                         text="Scheduled Workout"
                         onPress={scheduledWorkoutPressed}

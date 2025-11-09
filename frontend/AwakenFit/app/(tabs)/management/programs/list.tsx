@@ -11,7 +11,7 @@ import Spinner from "@/components/general/spinner";
 
 import { baseStyles, lightColors, darkColors } from "@/styles/global";
 import CustomButton from "@/components/general/button";
-import HorzontalLine from "@/components/general/horizonal_line";
+import NavigateBack from "@/components/general/navigate_back";
 
 type params = {
     node: WorkoutPlanNode;
@@ -73,19 +73,7 @@ export default function ListPrograms() {
                             : darkColors.background,
                 }}
             >
-                <Pressable
-                    onPress={navigateBack}
-                    style={baseStyles.leftJustifiedRow}
-                >
-                    <FontAwesome
-                        size={28}
-                        name="chevron-left"
-                        color={textColor}
-                    />
-                    <Text style={{ ...baseStyles.text, color: textColor }}>
-                        Programs
-                    </Text>
-                </Pressable>
+                <NavigateBack label="Programs" onPress={navigateBack} />
                 <View style={baseStyles.modal}>
                     <Text
                         style={{

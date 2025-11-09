@@ -1,7 +1,14 @@
 import { useState } from "react";
-import { View, Text, Button, TextInput, FlatList, useColorScheme } from "react-native";
+import {
+    View,
+    Text,
+    Button,
+    TextInput,
+    FlatList,
+    useColorScheme,
+} from "react-native";
 
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import CustomButton from "../general/button";
 
@@ -9,23 +16,32 @@ import { MovementNode, SetNode } from "@/graphql/properties";
 
 import { baseStyles, lightColors, darkColors } from "@/styles/global";
 import HorzontalLine from "../general/horizonal_line";
+import NavigateBack from "../general/navigate_back";
 
 type addSetParams = {
-    movement: MovementNode,
-    navigateBack: () => void,
-    addSets: (setDetails: SetNode[]) => void,
-}
+    movement: MovementNode;
+    navigateBack: () => void;
+    addSets: (setDetails: SetNode[]) => void;
+};
 
 type templateSetEntryParams = {
-    movement: MovementNode,
-    set: SetNode,
-    setMinReps: (id: string, count: string) => void,
-    setMaxReps: (id: string, count: string) => void,
-}
+    movement: MovementNode;
+    set: SetNode;
+    setMinReps: (id: string, count: string) => void;
+    setMaxReps: (id: string, count: string) => void;
+};
 
-function TemplateSetEntry({ movement, set, setMinReps, setMaxReps }: templateSetEntryParams) {
+function TemplateSetEntry({
+    movement,
+    set,
+    setMinReps,
+    setMaxReps,
+}: templateSetEntryParams) {
     const colorScheme = useColorScheme();
-    const color = colorScheme === 'light' ? lightColors.primaryColor : darkColors.primaryColor;
+    const color =
+        colorScheme === "light"
+            ? lightColors.primaryColor
+            : darkColors.primaryColor;
 
     if (movement.movementType === "cardio") {
         return (
@@ -43,29 +59,41 @@ function TemplateSetEntry({ movement, set, setMinReps, setMaxReps }: templateSet
             <View style={baseStyles.setTextInput}>
                 <Text style={{ color: color }}>Min Reps</Text>
                 <TextInput
-                    onChangeText={newText => setMinReps(set.id, newText)}
+                    onChangeText={(newText) => setMinReps(set.id, newText)}
                     value={String(set.minReps)}
-                    inputMode='numeric'
+                    inputMode="numeric"
                     style={baseStyles.selectHeader}
-                    onFocus={() => setMinReps(set.id, '')}
+                    onFocus={() => setMinReps(set.id, "")}
                 />
             </View>
             <View style={baseStyles.setTextInput}>
                 <Text style={{ color: color }}>Max Reps</Text>
                 <TextInput
-                    onChangeText={newText => setMaxReps(set.id, newText)}
+                    onChangeText={(newText) => setMaxReps(set.id, newText)}
                     value={String(set.maxReps)}
-                    inputMode='numeric'
+                    inputMode="numeric"
                     style={baseStyles.selectHeader}
-                    onFocus={() => setMaxReps(set.id, '')}
+                    onFocus={() => setMaxReps(set.id, "")}
                 />
             </View>
         </View>
     );
 }
 
-export default function AddTemplateSets({ movement, navigateBack, addSets }: addSetParams) {
-    const initialSet: SetNode = { id: movement.name + 1, sequenceNumber: 1, minReps: 1, maxReps: 1, duration: '', setType: 'standard', parentSet: '' };
+export default function AddTemplateSets({
+    movement,
+    navigateBack,
+    addSets,
+}: addSetParams) {
+    const initialSet: SetNode = {
+        id: movement.name + 1,
+        sequenceNumber: 1,
+        minReps: 1,
+        maxReps: 1,
+        duration: "",
+        setType: "standard",
+        parentSet: "",
+    };
     const [templateSets, setTemplateSets] = useState([initialSet]);
 
     function handleNavigateBack() {
@@ -74,7 +102,15 @@ export default function AddTemplateSets({ movement, navigateBack, addSets }: add
 
     function handleAddSet() {
         const newId: number = templateSets.length + 1;
-        var addedSet: SetNode = { id: movement.name + newId, sequenceNumber: newId, minReps: 1, maxReps: 1, duration: '', setType: 'standard', parentSet: '' };
+        var addedSet: SetNode = {
+            id: movement.name + newId,
+            sequenceNumber: newId,
+            minReps: 1,
+            maxReps: 1,
+            duration: "",
+            setType: "standard",
+            parentSet: "",
+        };
         setTemplateSets([...templateSets, addedSet]);
     }
 
@@ -110,19 +146,22 @@ export default function AddTemplateSets({ movement, navigateBack, addSets }: add
 
     return (
         <View>
-            <View style={baseStyles.leftJustifiedRow}>
-                <FontAwesome size={28} name="chevron-left" />
-                <Button title="Exercise List" onPress={handleNavigateBack} />
-            </View>
+            <NavigateBack onPress={handleNavigateBack} label="Exercise List" />
             <View>
                 <Text>{movement.name}</Text>
             </View>
             <HorzontalLine />
             <FlatList
                 data={templateSets}
-                renderItem={({ item }) =>
-                    <TemplateSetEntry movement={movement} set={item} setMinReps={updateMinReps} setMaxReps={updateMaxreps} />}
-                keyExtractor={item => item.id}
+                renderItem={({ item }) => (
+                    <TemplateSetEntry
+                        movement={movement}
+                        set={item}
+                        setMinReps={updateMinReps}
+                        setMaxReps={updateMaxreps}
+                    />
+                )}
+                keyExtractor={(item) => item.id}
             />
             <CustomButton
                 text="Add Set"
