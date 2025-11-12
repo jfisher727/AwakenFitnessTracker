@@ -1,4 +1,4 @@
-import { Text, useColorScheme } from "react-native";
+import { Text, View, useColorScheme } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { router } from "expo-router";
 
@@ -28,27 +28,29 @@ export default function Templates() {
                             : darkColors.background,
                 }}
             >
-                <Text
-                    style={{
-                        ...baseStyles.subHeader,
-                        color:
-                            colorScheme === "light"
-                                ? lightColors.primaryColor
-                                : darkColors.primaryColor,
-                    }}
-                >
-                    Manage Your Template Workouts
-                </Text>
-                <CustomButton
-                    text="Create Template"
-                    onPress={createPressed}
-                    disabled={false}
-                />
-                <CustomButton
-                    text="Template List"
-                    onPress={listPressed}
-                    disabled={false}
-                />
+                <View style={baseStyles.modal}>
+                    <Text
+                        style={{
+                            ...baseStyles.subHeader,
+                            color:
+                                colorScheme === "light"
+                                    ? lightColors.primaryColor
+                                    : darkColors.primaryColor,
+                        }}
+                    >
+                        Manage Your Template Workouts
+                    </Text>
+                    <CustomButton
+                        text="Create Template"
+                        onPress={createPressed}
+                        disabled={false}
+                    />
+                    <CustomButton
+                        text="Template List"
+                        onPress={listPressed}
+                        disabled={false}
+                    />
+                </View>
             </SafeAreaView>
         </SafeAreaProvider>
     );

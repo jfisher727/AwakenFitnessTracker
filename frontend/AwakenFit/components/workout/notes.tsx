@@ -7,6 +7,7 @@ import { baseStyles, lightColors, darkColors } from "@/styles/global";
 import { ExerciseNode } from "@/graphql/types";
 
 import HorzontalLine from "../general/horizonal_line";
+import NavigateBack from "../general/navigate_back";
 
 type notesParams = {
     exercise: ExerciseNode;
@@ -26,14 +27,10 @@ export default function Notes({ exercise, navigateBack }: notesParams) {
 
     return (
         <View>
-            <View style={baseStyles.leftJustifiedRow}>
-                <FontAwesome
-                    size={28}
-                    name="chevron-left"
-                    color={enabledColor}
-                />
-                <Button title="Current Exercise" onPress={handleNavigateBack} />
-            </View>
+            <NavigateBack
+                label="Current Exercise"
+                onPress={handleNavigateBack}
+            />
             <Text style={{ ...baseStyles.header, color: enabledColor }}>
                 {exercise.movement.name}
             </Text>

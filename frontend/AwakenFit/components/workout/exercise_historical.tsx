@@ -21,6 +21,7 @@ import {
 
 import HorzontalLine from "../general/horizonal_line";
 import Spinner from "../general/spinner";
+import NavigateBack from "../general/navigate_back";
 
 import { date_formatter } from "@/util/date";
 import { hexToRGBA } from "@/util/color";
@@ -240,14 +241,10 @@ export default function ExerciseHistorical({
 
     return (
         <View>
-            <View style={baseStyles.leftJustifiedRow}>
-                <FontAwesome
-                    size={28}
-                    name="chevron-left"
-                    color={enabledColor}
-                />
-                <Button title="Current Exercise" onPress={handleNavigateBack} />
-            </View>
+            <NavigateBack
+                label="Current Exercise"
+                onPress={handleNavigateBack}
+            />
             {loading ? (
                 <Spinner />
             ) : (
